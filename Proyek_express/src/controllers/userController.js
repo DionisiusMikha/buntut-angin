@@ -54,7 +54,7 @@ module.exports = {
                 return res.status(400).json({msg: "File not supported"});
             }
 
-            const {username, email, display_name, date_of_birth, password, confirm_password} = req.body;
+            const {username, email, display_name, date_of_birth, password, confirm_password, phone_number} = req.body;
 
             const schema = joi.object({
                 username : joi.string().required().external(checkUsername).messages({
@@ -70,6 +70,11 @@ module.exports = {
                 display_name : joi.string().required().messages({
                     'string.empty' : "Invalid data field name",
                     'any.required' : "Invalid data field name"
+                }),
+                phone_number: joi.string().required().regex(/^[0-9]{10}$/).messages({
+                    'string.empty' : "Invalid data field phone number",
+                    'any.required' : "Invalid data field phone number",
+                    'string.pattern.base' : "Invalid phone number format"
                 }),
                 date_of_birth : joi.date().format('YYYY-MM-DD').required().messages({
                     'string.empty' : "Invalid data field date",
@@ -112,6 +117,7 @@ module.exports = {
                 email : email,
                 username : username,
                 password : password,
+                phone_number : phone_number,
                 birthdate : date_of_birth,
                 balance : 0,
                 profile_picture : `/assets/${username}.png`
@@ -122,10 +128,48 @@ module.exports = {
                 "username" : username,
                 "email" : email,
                 "display_name" : display_name,
+                "phone_number" : phone_number,
                 "balance" : 0,
                 "profile_picture" : `/assets/${username}.png`
             }
             res.status(201).json(result);
         })
+    },
+    loginUser: async function(req, res){
+        const {username, password} = req.body;
+        const checkUser = await db.User.findAll({
+            where: {
+                username: username
+            }
+        })
+
+        if (checkUser.length == 0){
+            const result = {
+                "message" : "User not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            if (checkUser[0].dataValues.password == password){
+                const token = jwt.sign({
+                    id: checkUser.id,
+                    username: username
+                }, PRIVATE_KEY, {
+                    expiresIn: 86400
+                });
+
+                const result = {
+                    "message" : "Login success",
+                    "token" : token
+                }
+                res.status(200).json(result);
+            }
+            else {
+                const result = {
+                    "message" : "Wrong Password"
+                }
+                res.status(400).json(result);
+            }
+        }
     }
 }
