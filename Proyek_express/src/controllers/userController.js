@@ -71,7 +71,7 @@ module.exports = {
                     'string.empty' : "Invalid data field name",
                     'any.required' : "Invalid data field name"
                 }),
-                phone_number: joi.string().required().regex(/^[0-9]{10}$/).messages({
+                phone_number: joi.string().required().regex(/^[0-9]{11}$/).messages({
                     'string.empty' : "Invalid data field phone number",
                     'any.required' : "Invalid data field phone number",
                     'string.pattern.base' : "Invalid phone number format"
@@ -171,5 +171,48 @@ module.exports = {
                 res.status(400).json(result);
             }
         }
+    },
+    editUser: async function(req, res){
+        const idUser = req.params.id_user
+        const {username, email, phone_number, date_of_birth, display_name} = req.body;
+
+
+        const checkUser = await db.User.findByPk(idUser)
+        if (!checkUser){
+            const result = {
+                "message" : "User not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            // if (checkUser.dataValues.username == username){
+            //     const result = {
+            //         "message" : "User already exists"
+            //     }
+            //     res.status(400).json(result);
+            // }
+            // else {
+                await checkUser.update({
+                    username: username,
+                    email: email,
+                    phone_number: phone_number,
+                    birthdate: date_of_birth,
+                    display_name: display_name,
+                }, {
+                    where: {
+                        id: idUser
+                    }
+                })
+                const result = {
+                    "message" : "Data updated",
+                    "username" : username,
+                    "email" : email,
+                    "phone_number" : phone_number,
+                    "birthdate" : date_of_birth,
+                    "display_name" : display_name,
+                }
+                res.status(200).json(result);
+            }
+        // }
     }
 }
