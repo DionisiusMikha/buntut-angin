@@ -173,51 +173,66 @@ module.exports = {
         }
     },
     editUser: async function(req, res){
-        const idUser = req.params.id_user;
-        const {username, email, phone_number, date_of_birth, display_name} = req.body;
-
-
-        const checkUser = await db.User.findByPk(idUser)
-        if (!checkUser){
-            const result = {
-                "message" : "User not found"
+        const uploadFile = upload.single("profile_picture");
+        uploadFile(req, res, async function (err){
+            if (err instanceof multer.MulterError){
+                return res.status(400).send({msg: "File too large"});
             }
-            res.status(404).json(result);
-        }
-        else {
-            // if (checkUser.dataValues.username == username){
-            //     const result = {
-            //         "message" : "User already exists"
-            //     }
-            //     res.status(400).json(result);
-            // }
-            // else {
-                try{
-                    const updateUser = await db.User.update({
-                        username: username,
-                        email: email,
-                        phone_number: phone_number,
-                        birthdate: date_of_birth,
-                        display_name: display_name,
-                    }, {
-                        where: {
-                            id: idUser
-                        }
-                    })
+            else if (err){
+                return res.status(400).send({msg: "File not supported"});
+            }
+
+            const idUser = req.params.id_user;
+            const {username, email, phone_number, date_of_birth, display_name} = req.body;
+
+            const checkUser = await db.User.findByPk(idUser)
+            if (!checkUser){
+                const result = {
+                    "message" : "User not found"
+                }
+                res.status(404).json(result);
+            }
+            else {
+                if (checkUser.dataValues.username == username){
                     const result = {
-                        "message" : "Data updated",
-                        "username" : checkUser.dataValues.username,
-                        "email" : checkUser.dataValues.email,
-                        "phone_number" : checkUser.dataValues.phone_number,
-                        "birthdate" : checkUser.dataValues.date_of_birth,
-                        "display_name" : checkUser.dataValues.display_name,
+                        "message" : "User already exists"
                     }
-                    res.status(200).json(result);
+                    res.status(400).json(result);
                 }
-                catch(err){
-                    return res.status(400).json({message: "Error updating data", error: err.message});
+                else {
+                    try{
+                        fs.renameSync(
+                            `./uploads/${req.file.filename}`,
+                            `./assets/${checkUser.dataValues.username}.png`
+                        );
+                        const updateUser = await db.User.update({
+                            username: username,
+                            email: email,
+                            phone_number: phone_number,
+                            birthdate: date_of_birth,
+                            display_name: display_name,
+                            profile_picture : `/assets/${checkUser.dataValues.username}.png`
+                        }, {
+                            where: {
+                                id: idUser
+                            }
+                        })
+                        const result = {
+                            "message" : "Data updated",
+                            "username" : username,
+                            "email" : email,
+                            "phone_number" : phone_number,
+                            "birthdate" : date_of_birth,
+                            "display_name" : display_name,
+                            "profile_picture" : `/assets/${checkUser.dataValues.username}.png`
+                        }
+                        res.status(200).json(result);
+                    }
+                    catch(err){
+                        return res.status(400).json({message: "Error updating data", error: err.message});
+                    }
                 }
-            // }
-        }
+            }
+        })
     }
 }
