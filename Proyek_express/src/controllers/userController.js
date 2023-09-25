@@ -173,7 +173,7 @@ module.exports = {
         }
     },
     editUser: async function(req, res){
-        const idUser = req.params.id_user
+        const idUser = req.params.id_user;
         const {username, email, phone_number, date_of_birth, display_name} = req.body;
 
 
@@ -192,27 +192,32 @@ module.exports = {
             //     res.status(400).json(result);
             // }
             // else {
-                await checkUser.update({
-                    username: username,
-                    email: email,
-                    phone_number: phone_number,
-                    birthdate: date_of_birth,
-                    display_name: display_name,
-                }, {
-                    where: {
-                        id: idUser
+                try{
+                    const updateUser = await db.User.update({
+                        username: username,
+                        email: email,
+                        phone_number: phone_number,
+                        birthdate: date_of_birth,
+                        display_name: display_name,
+                    }, {
+                        where: {
+                            id: idUser
+                        }
+                    })
+                    const result = {
+                        "message" : "Data updated",
+                        "username" : checkUser.dataValues.username,
+                        "email" : checkUser.dataValues.email,
+                        "phone_number" : checkUser.dataValues.phone_number,
+                        "birthdate" : checkUser.dataValues.date_of_birth,
+                        "display_name" : checkUser.dataValues.display_name,
                     }
-                })
-                const result = {
-                    "message" : "Data updated",
-                    "username" : username,
-                    "email" : email,
-                    "phone_number" : phone_number,
-                    "birthdate" : date_of_birth,
-                    "display_name" : display_name,
+                    res.status(200).json(result);
                 }
-                res.status(200).json(result);
-            }
-        // }
+                catch(err){
+                    return res.status(400).json({message: "Error updating data", error: err.message});
+                }
+            // }
+        }
     }
 }
