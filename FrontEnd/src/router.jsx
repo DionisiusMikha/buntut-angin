@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "./Pages/Login.jsx";
+import Login from "./Pages/index.jsx";
 import Register from "./Pages/Register.jsx";
 
 const Router = createBrowserRouter([
