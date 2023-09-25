@@ -21,14 +21,17 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      birthdate: {
-        type: Sequelize.DATE
-      },
       phone_number: {
         type: Sequelize.STRING
       },
+      birthdate: {
+        type: Sequelize.DATE
+      },
       balance: {
         type: Sequelize.INTEGER
+      },
+      role: {
+        type: Sequelize.STRING
       },
       profile_picture: {
         type: Sequelize.STRING

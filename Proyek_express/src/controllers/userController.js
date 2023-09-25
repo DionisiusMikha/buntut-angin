@@ -54,7 +54,7 @@ module.exports = {
                 return res.status(400).json({msg: "File not supported"});
             }
 
-            const {username, email, display_name, date_of_birth, password, confirm_password, phone_number} = req.body;
+            const {username, email, display_name, date_of_birth, password, confirm_password, role, phone_number} = req.body;
 
             const schema = joi.object({
                 username : joi.string().required().external(checkUsername).messages({
@@ -88,6 +88,10 @@ module.exports = {
                 confirm_password : joi.string().required().messages({
                     'string.empty' : "Invalid data field confirm password",
                     'any.required' : "Invalid data field confirm password"
+                }),
+                role: joi.string().required().messages({
+                    'string.empty' : "Invalid data field role",
+                    'any.required' : "Invalid data field role"
                 })
             })
 
@@ -119,6 +123,7 @@ module.exports = {
                 password : password,
                 phone_number : phone_number,
                 birthdate : date_of_birth,
+                role: role,
                 balance : 0,
                 profile_picture : `/assets/${username}.png`
             })
@@ -129,6 +134,7 @@ module.exports = {
                 "email" : email,
                 "display_name" : display_name,
                 "phone_number" : phone_number,
+                "role" : role,
                 "balance" : 0,
                 "profile_picture" : `/assets/${username}.png`
             }
@@ -181,7 +187,6 @@ module.exports = {
             else if (err){
                 return res.status(400).send({msg: "File not supported"});
             }
-
             const idUser = req.params.id_user;
             const {username, email, phone_number, date_of_birth, display_name} = req.body;
 
@@ -201,10 +206,6 @@ module.exports = {
                 }
                 else {
                     try{
-                        fs.renameSync(
-                            `./uploads/${req.file.filename}`,
-                            `./assets/${checkUser.dataValues.username}.png`
-                        );
                         const updateUser = await db.User.update({
                             username: username,
                             email: email,
@@ -217,6 +218,10 @@ module.exports = {
                                 id: idUser
                             }
                         })
+                        fs.renameSync(
+                            `./uploads/${req.file.filename}`,
+                            `./assets/${checkUser.dataValues.username}.png`
+                        );
                         const result = {
                             "message" : "Data updated",
                             "username" : username,
