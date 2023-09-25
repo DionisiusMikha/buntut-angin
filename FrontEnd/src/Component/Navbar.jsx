@@ -9,7 +9,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-
   Button
 } from '@chakra-ui/react'
 
@@ -27,7 +26,6 @@ function Navbar (){
   return(
     <>
       <div className="navbar flex justify-between p-5 w-full shadow-lg z-10">
-
         <div className="left z-10">
           <a href="/">
             <img src={logo} alt="" style={{height: "80px"}}/>

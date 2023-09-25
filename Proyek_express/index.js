@@ -10,6 +10,7 @@ app.use("/api", router);
 
 const port = process.env.PORT;
 app.listen(port, function(){
+    console.clear();
     console.log(`Listening to Port ${port}`);
 });
 
