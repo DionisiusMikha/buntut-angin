@@ -22,24 +22,24 @@ const checkUsername = async(username) => {
 }
 
 module.exports = {
-    cekToken : async function (req, res, next){
-        const token = req.headers['x-auth-token'];
-        if (!token){
-            return res.status(401).json({
-                message : "Unauthorized!"
-            })
-        }
+    // cekToken : async function (req, res, next){
+    //     const token = req.headers['x-auth-token'];
+    //     if (!token){
+    //         return res.status(401).json({
+    //             message : "Unauthorized!"
+    //         })
+    //     }
 
-        try {
-            const user = jwt.verify(token, PRIVATE_KEY);
-            req.user = user;
-            next();
-        }
-        catch(err){
-            console.log(err);
-            return res.status(400).send(err);
-        }
-    },
+    //     try {
+    //         const user = jwt.verify(token, PRIVATE_KEY);
+    //         req.user = user;
+    //         next();
+    //     }
+    //     catch(err){
+    //         console.log(err);
+    //         return res.status(400).send(err);
+    //     }
+    // },
     getAllUser: async function (req, res){
         const users = await db.User.findAll();
         return res.status(200).json(users);
@@ -144,7 +144,7 @@ module.exports = {
     },
     loginUser: async function(req, res){
         const {username, password} = req.body;
-        const checkUser = await db.User.findAll({
+        const checkUser = await db.User.findOne({
             where: {
                 username: username
             }
@@ -157,17 +157,20 @@ module.exports = {
             res.status(404).json(result);
         }
         else {
-            if (checkUser[0].dataValues.password == password){
+            if (checkUser.dataValues.password == password){
+                const role = checkUser.dataValues.role;
                 const token = jwt.sign({
                     id: checkUser.id,
-                    username: username
+                    username: username,
+                    role: role
                 }, PRIVATE_KEY, {
                     expiresIn: 86400
                 });
 
                 const result = {
                     "message" : "Login success",
-                    "token" : token
+                    "token" : token,
+                    "role" : role
                 }
                 res.status(200).json(result);
             }
@@ -242,7 +245,7 @@ module.exports = {
         })
     },
     cekProfilKonsultan: async function(req, res){
-        const idKonsultan = req.params.id_konsultan;
+        // const idKonsultan = req.params.id_konsultan;
         const token = req.headers['x-auth-token'];
 
         if (!token){
@@ -251,7 +254,34 @@ module.exports = {
             })
         }
         else {
-            
+            try{
+                let userdata = jwt.verify(token, PRIVATE_KEY);
+                
+                if (userdata.role == 'dietisian'){
+                    const cariKonsultan = db.User.findAll({
+                        where: {
+                            role: 'konsultan',
+                            status: 1
+                        }
+                    })
+    
+                    const result = {
+                        "Name" : cariKonsultan[0].dataValues.display_name,
+                        "Phone Number" : cariKonsultan[0].dataValues.phone_number,
+                        "Email" : cariKonsultan[0].dataValues.email,
+                    }
+                    res.status(200).json(result);
+                }
+                else {
+                    const result = {
+                        "message" : "Bukan dietisian"
+                    }
+                    res.status(400).json(result);
+                }
+            }
+            catch(err){
+                return res.status(400).send('Invalid JWT Key')
+            }
         }
     }
 }

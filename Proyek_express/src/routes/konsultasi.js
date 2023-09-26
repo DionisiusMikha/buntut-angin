@@ -3,5 +3,4 @@ const konsultasiController = require("../controllers/konsultasiController");
 const router = Router();
 
 
-
 module.exports = router;
