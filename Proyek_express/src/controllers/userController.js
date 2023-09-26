@@ -247,7 +247,7 @@ module.exports = {
     cekProfilKonsultan: async function(req, res){
         // const idKonsultan = req.params.id_konsultan;
         const token = req.headers['x-auth-token'];
-
+        // console.log(token);
         if (!token){
             return res.status(401).json({
                 message: "Unauthorized!"
@@ -255,32 +255,45 @@ module.exports = {
         }
         else {
             try{
-                let userdata = jwt.verify(token, PRIVATE_KEY);
+                let userdata;
+                try {
+                    userdata = jwt.verify(token, PRIVATE_KEY);
+                } catch (error) {
+                    return res.status(400).send('Invalid JWT Key')    
+                }
                 
                 if (userdata.role == 'dietisian'){
-                    const cariKonsultan = db.User.findAll({
+                    const cariKonsultan = await db.User.findAll({
                         where: {
                             role: 'konsultan',
                             status: 1
                         }
                     })
-    
-                    const result = {
-                        "Name" : cariKonsultan[0].dataValues.display_name,
-                        "Phone Number" : cariKonsultan[0].dataValues.phone_number,
-                        "Email" : cariKonsultan[0].dataValues.email,
+
+                    if(cariKonsultan.length > 0){
+                        const results = cariKonsultan.map((konsultan) => {
+                            return {
+                              "Name": konsultan.dataValues.display_name,
+                              "Phone Number": konsultan.dataValues.phone_number,
+                              "Email": konsultan.dataValues.email,
+                            };
+                        });
+                        return res.status(200).json(results);
                     }
-                    res.status(200).json(result);
-                }
-                else {
+
                     const result = {
-                        "message" : "Bukan dietisian"
+                        message: "No active consultant"
                     }
-                    res.status(400).json(result);
+                    return res.status(400).json(result);
                 }
+                
+                const result = {
+                    "message" : "Bukan dietisian"
+                }
+                return res.status(400).json(result);
             }
             catch(err){
-                return res.status(400).send('Invalid JWT Key')
+                return res.status(400).send(err)
             }
         }
     }
