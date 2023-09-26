@@ -125,6 +125,7 @@ module.exports = {
                 birthdate : date_of_birth,
                 role: role,
                 balance : 0,
+                status: 1,
                 profile_picture : `/assets/${username}.png`
             })
 
@@ -239,5 +240,18 @@ module.exports = {
                 }
             }
         })
+    },
+    cekProfilKonsultan: async function(req, res){
+        const idKonsultan = req.params.id_konsultan;
+        const token = req.headers['x-auth-token'];
+
+        if (!token){
+            return res.status(401).json({
+                message: "Unauthorized!"
+            })
+        }
+        else {
+            
+        }
     }
 }

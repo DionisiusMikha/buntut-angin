@@ -30,11 +30,11 @@ module.exports = {
       balance: {
         type: Sequelize.INTEGER
       },
-      role: {
-        type: Sequelize.STRING
-      },
       profile_picture: {
         type: Sequelize.STRING
+      },
+      status: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
