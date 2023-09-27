@@ -254,46 +254,41 @@ module.exports = {
             })
         }
         else {
-            try{
-                let userdata;
-                try {
-                    userdata = jwt.verify(token, PRIVATE_KEY);
-                } catch (error) {
-                    return res.status(400).send('Invalid JWT Key')    
-                }
-                
+            try {
+                let userdata = jwt.verify(token, PRIVATE_KEY);
                 if (userdata.role == 'dietisian'){
                     const cariKonsultan = await db.User.findAll({
-                        where: {
+                        where:{
                             role: 'konsultan',
                             status: 1
                         }
                     })
-
-                    if(cariKonsultan.length > 0){
-                        const results = cariKonsultan.map((konsultan) => {
+                    if (cariKonsultan.length == 0){
+                        const result = {
+                            "message" : "Tidak ada konsultan"
+                        }
+                        res.status(404).json(result);
+                    }
+                    else {
+                        const result = cariKonsultan.map((konsultan) => {
                             return {
-                              "Name": konsultan.dataValues.display_name,
-                              "Phone Number": konsultan.dataValues.phone_number,
-                              "Email": konsultan.dataValues.email,
-                            };
+                                "Name" : konsultan.dataValues.display_name,
+                                "Phone Number" : konsultan.dataValues.phone_number,
+                                "Email" : konsultan.dataValues.email
+                            }
                         });
-                        return res.status(200).json(results);
+                        res.status(200).json(result);
                     }
-
+                }
+                else {
                     const result = {
-                        message: "No active consultant"
+                        "message" : "Bukan dietisian"
                     }
-                    return res.status(400).json(result);
+                    res.status(400).json(result);
                 }
-                
-                const result = {
-                    "message" : "Bukan dietisian"
-                }
-                return res.status(400).json(result);
             }
             catch(err){
-                return res.status(400).send(err)
+                return res.status(400).send('Invalid JWT Key');
             }
         }
     }

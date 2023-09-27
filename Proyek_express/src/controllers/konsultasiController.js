@@ -8,3 +8,6 @@ const upload = multer({
     dest : "./uploads",
 })
 
+module.exports = {
+    
+}

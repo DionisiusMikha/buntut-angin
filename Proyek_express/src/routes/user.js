@@ -6,6 +6,6 @@ router.get("/", userController.getAllUser);
 router.post("/register", userController.registerUser);
 router.post("/login", userController.loginUser);
 router.put("/edit/:id_user", userController.editUser);
-router.get("/cek-profil", userController.cekProfilKonsultan);
+router.get("/cekProfil", userController.cekProfilKonsultan);
 
 module.exports = router;
