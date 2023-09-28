@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import "./navstyle.css";
 import logo from "/img/Logo-lebar.png"
+import logo2  from "/img/Logo-lebar 1.png"
 import burger from "/img/burger.png"
 import { Avatar } from "@mui/material";
 import { deepOrange } from '@mui/material/colors';
@@ -25,49 +26,45 @@ function Navbar (){
   }
   return(
     <>
-      <div className="navbar flex justify-between p-5 w-full shadow-lg z-10">
-        <div className="left z-10">
+      <div className="navbar flex justify-between p-5 w-full">
+        {/* Logo */}
+        <div className=""> 
           <a href="/">
-            <img src={logo} alt="" style={{height: "80px"}}/>
-
+            <img src={logo2} alt="" style={{height: "80px"}}/>
           </a>
         </div>
-        <div className="right hidden lg:block z-10">
+        {/* MENU */}
+        <div className="right hidden lg:block ">
+          {/* MENU HOME */}
           <ul className="flex align-middle text-xl">
             <li className="mt-2 me-16">
               <a href="/">
-                homee
-
+                Home
               </a>
             </li>
             <li className="mt-2 me-16">
-              <a href="/acara">
-                item 1
-
+              <a href="#">
+                About Us
               </a>
             </li>
-            <li className="mt-2 me-16">
-              <a href="/wisata">
-                item 2
 
-              </a>
-            </li>
+            {/* Menu login register */}
             <div className="login-register" style={{display: !sessionStorage.getItem("token") ? "block" : "none"}}>
               <ul className="flex">
                 <li className=" me-4">
                   <a href="/login">
-                    <button className="btn btn-success w-28 text-lg">Login</button>
-
+                    <button className="w-28 text-lg text-blue-700 font-semibold underline underline-offset-8 pt-3.5">Sign In</button>
                   </a>
                 </li>
                 <li>
                   <a href="/register">
-                    <button className="btn btn-outline btn-primary w-28 text-lg">Register</button>
+                    <button className="btn btn-primary w-28 text-lg">Register</button>
 
                   </a>
                 </li>
               </ul>
             </div>
+
             <div className="profile hidden me-6 z-10" style={{display: sessionStorage.getItem("token") ? "block" : "none"}}>
               <Menu>
                 <MenuButton as={Button}>

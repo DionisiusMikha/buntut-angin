@@ -4,7 +4,7 @@ import Navbar from '../../Component/Navbar'
 const LoginPage = () => {
     return (
         <>
-            <Navbar />
+        <Navbar />
         </>
     );
 };

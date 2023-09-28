@@ -1,5 +1,6 @@
 
 import React from 'react'
+import './try.css'
 
 const Try = () => {
     // const { login, username, password, error } =
@@ -13,3 +14,5 @@ const Try = () => {
 };
 
 export default Try;
+
+// npx tailwindcss build ./src/index.css -o ./src/Component/navstyle.css
