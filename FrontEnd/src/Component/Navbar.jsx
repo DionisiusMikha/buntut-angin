@@ -26,24 +26,24 @@ function Navbar (){
   }
   return(
     <>
-      <div className="navbar flex justify-between p-5 w-full">
+      <div className="navbar flex justify-between p-5 w-full ">
         {/* Logo */}
         <div className=""> 
           <a href="/">
-            <img src={logo2} alt="" style={{height: "80px"}}/>
+            <img src={logo2} alt="" style={{height: "80px", marginLeft:"50px"}}/>
           </a>
         </div>
         {/* MENU */}
         <div className="right hidden lg:block ">
           {/* MENU HOME */}
-          <ul className="flex align-middle text-xl">
+          <ul className="flex grow align-middle text-xl">
             <li className="mt-2 me-16">
-              <a href="/">
+              <a href="/"> {/* HOME */}
                 Home
               </a>
             </li>
             <li className="mt-2 me-16">
-              <a href="#">
+              <a href="#"> {/* About Us */}
                 About Us
               </a>
             </li>
@@ -51,15 +51,14 @@ function Navbar (){
             {/* Menu login register */}
             <div className="login-register" style={{display: !sessionStorage.getItem("token") ? "block" : "none"}}>
               <ul className="flex">
-                <li className=" me-4">
+                <li className=" me-4"> {/* Login */}
                   <a href="/login">
-                    <button className="w-28 text-lg text-blue-700 font-semibold underline underline-offset-8 pt-3.5">Sign In</button>
+                    <button className="w-28 text-lg text-blue-500 font-semibold pt-2.5 decoration-2">S<span className="underline underline-offset-8">ign I</span>n</button>
                   </a>
                 </li>
-                <li>
+                <li> {/* Register */}
                   <a href="/register">
-                    <button className="btn btn-primary w-28 text-lg">Register</button>
-
+                    <button className="border rounded-full w-28 text-lg bg-blue-500 hover:bg-blue-600 text-white px-3 py-2">Register</button>
                   </a>
                 </li>
               </ul>
