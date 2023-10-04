@@ -26,7 +26,7 @@ function Navbar (){
   }
   return(
     <>
-      <div className="navbar flex justify-between p-5 w-full ">
+      <div className="navbar flex justify-between p-5 w-full h-36">
         {/* Logo */}
         <div className=""> 
           <a href="/">
@@ -37,7 +37,7 @@ function Navbar (){
         <div className="right hidden lg:block ">
           {/* MENU HOME */}
           <ul className="flex grow align-middle text-xl">
-            <li className="mt-2 me-16">
+            <li className="mt-2 me-16 underline underline-offset-4 decoration-gray-400 font-semibold">
               <a href="/"> {/* HOME */}
                 Home
               </a>
