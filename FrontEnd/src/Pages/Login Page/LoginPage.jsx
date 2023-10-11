@@ -1,12 +1,10 @@
 import React from 'react';
 import Navbar from '../../Component/Navbar'
 import gambar from '/img/gbr-login-register.png'
-// import {RxCrossCircled} from '@react-icons/all-files/rx/RxCrossCircled';
-import {RxCrossCircled} from 'react-icons/rx';
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 
 const LoginPage = () => {
     const bg = "url('img/background-login-register.png')";
-    console.log(RxCrossCircled)
 
     return (
         <>
@@ -26,25 +24,14 @@ const LoginPage = () => {
                     <div className='mt-24'> {/* login */}
                         <div className='font-bold text-4xl'>Welcome Back</div>
                         <div>
-                            <input type="email" name="" id="" value="" placeholder='Email' />
-                            <img src={RxCrossCircled} alt="icon" id='icon' />
+                            {/* <input type="email" name="" id="" value="" placeholder='Email' /> */}
+                            <InputGroup>
+                                <InputLeftElement pointerEvents='none'>
+                                {/* <PhoneIcon color='gray.300' /> */}
+                                </InputLeftElement>
+                                <Input type='tel' placeholder='Phone number' />
+                            </InputGroup>
                         </div>
-                        {/* import "./styles.css";
-
-                        export default function App() {
-                        return (
-                            <div className="App">
-                            <label htmlFor="copy-button">
-                                <input name="copy-button" aria-label="copy-button" value="123456789" />
-                                <img
-                                id="icon"
-                                src="https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/copy-duplicate-multiply-clone-512.png"
-                                alt="icon"
-                                />
-                            </label>
-                            </div>
-                        );
-                        } */}
                     </div>
                 </div>
             </div>
