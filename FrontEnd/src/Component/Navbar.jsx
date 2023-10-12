@@ -26,105 +26,33 @@ function Navbar (){
   }
   return(
     <>
-      <div className="navbar flex justify-between p-5 w-full h-36">
-        {/* Logo */}
-        <div className=""> 
-          <a href="/">
-            <img src={logo2} alt="" style={{height: "80px", marginLeft:"50px"}}/>
-          </a>
+      <div className="flex flex-row pt-5 h-36 text-xl navbar w-full">
+        <div className="ms-16 w-1/3">
+          <img src={logo2} alt="" width="250px"/>
         </div>
-        {/* MENU */}
-        <div className="right hidden lg:block ">
-          {/* MENU HOME */}
-          <ul className="flex grow align-middle text-xl">
-            <li className="mt-2 me-16 underline underline-offset-4 decoration-gray-400 font-semibold">
-              <a href="/"> {/* HOME */}
-                Home
-              </a>
-            </li>
-            <li className="mt-2 me-16">
-              <a href="#"> {/* About Us */}
-                About Us
-              </a>
-            </li>
-
-            {/* Menu login register */}
-            <div className="login-register" style={{display: !sessionStorage.getItem("token") ? "block" : "none"}}>
-              <ul className="flex">
-                <li className=" me-4"> {/* Login */}
-                  <a href="/login">
-                    <button className="w-28 text-lg text-blue-500 font-semibold pt-2.5 decoration-2">S<span className="underline underline-offset-8">ign I</span>n</button>
-                  </a>
-                </li>
-                <li> {/* Register */}
-                  <a href="/register">
-                    <button className="border rounded-full w-28 text-lg bg-blue-500 hover:bg-blue-600 text-white px-3 py-2">Register</button>
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="profile hidden me-6 z-10" style={{display: sessionStorage.getItem("token") ? "block" : "none"}}>
-              <Menu>
-                <MenuButton as={Button}>
-                  <Avatar
-                  sx={{ bgcolor: deepOrange[500] }}
-                  alt="Remy Sharp"
-                  src="/broken-image.jpg"
-                  >
-                    {sessionStorage.getItem("display_name") ? sessionStorage.getItem("display_name")[0] : ""}
-                  </Avatar>
-                </MenuButton>
-                <MenuList className=" bg-gray-100 rounded-xl p-4 w-48" >
-                  <a href="/profile">
-                    <MenuItem className="btn bg-white mb-4">Profile</MenuItem>
-
-                  </a>
-                  <a href="/master-wisata">
-                    <MenuItem className="btn bg-info mb-4">Kelola</MenuItem>
-
-                  </a>
-                  <MenuItem className="btn bg-red-500" onClick={logoutHandler}>Logout</MenuItem>
-                </MenuList>
-              </Menu>
-            
-            </div>
-          </ul>
+        <div className="lg:block hidden w-1/3">
+          <div className="flex flex-row items-center align-middle w-full">
+            <div className="text-center w-4/12 py-5 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="./">Home</a></div>
+            <div className="text-center w-4/12 py-5 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="#">About Us</a></div>
+          </div>
         </div>
-        <div className=" lg:hidden">
+        <div className="lg:block hidden w-1/3">
+          <div className="flex flex-row justify-center me-10 ">
+            <div className="text-center py-3 w-3/12 font-semibold">
+              <a href="/login" className=" hover:text-blue-500">
+                S
+                <span className="hover:underline underline-offset-8 hover:decoration-blue-500 ">ign I</span>
+                n 
+              </a>
+            </div>
+            <div className="text-center w-3/12 rounded-2xl bg-blue-500 text-white py-3 font-semibold hover:bg-blue-700"><a href="/register">Register</a></div>
+          </div>
+        </div>
+        <div className="lg:hidden">
           <button className="btn btn-ghost" onClick={navClickHandler}>
             <img src={burger} alt="" style={{height: "50px"}} />
           </button>
         </div>
-      </div>
-
-      <div className="navMenu hidden z-0" style={{display: navClick ? "block" : "none"}}>
-        <ul className="text-lg">
-          <li className="">
-            <a href="/">
-              <button className="btn rounded-none w-full">Beranda</button>
-
-            </a>
-          </li>
-          <li className="">
-            <a href="/acara">
-              <button className="btn rounded-none w-full">Acara</button>
-
-            </a>
-          </li>
-          <li className="">
-            <a href="/wisata">
-              <button className="btn rounded-none w-full">Wisata</button>
-
-            </a>
-          </li>
-          <li>
-            <a href="/login">
-              <button className="btn bg-green-600 rounded-none text-lg w-full shadow-xl">Login</button>
-
-            </a>
-          </li>
-        </ul>
       </div>
     </>
   )

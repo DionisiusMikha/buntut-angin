@@ -1,7 +1,8 @@
 import React from 'react';
 import Navbar from '../../Component/Navbar'
 import gambar from '/img/gbr-login-register.png'
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
+// import Inputs from '../../Component/Inputs'
+import email from '/img/Logo-kecil.png'
 
 const LoginPage = () => {
     const bg = "url('img/background-login-register.png')";
@@ -21,16 +22,26 @@ const LoginPage = () => {
                     <div className='flex flex-col justify-end h-full'> {/* GAMBAR */}
                         <img src={gambar} alt="" className='w-full'/>
                     </div>
-                    <div className='mt-24'> {/* login */}
+                    <div className='mt-24 w-8/12'> {/* login */}
                         <div className='font-bold text-4xl'>Welcome Back</div>
+                        <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-20 items-center'>
+                            <img src={email} alt="" className='' width="40px"/>
+                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-xs items-center"/>
+                            <img src={email} alt="" className='' width="40px"/>
+                        </div>
+                        <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
+                            <img src={email} alt="" className='' width="40px"/>
+                            <input type="text" placeholder="Enter Your Password"  className="input input-ghost w-full max-w-xs items-center"/>
+                            <img src={email} alt="" className='' width="40px"/>
+                        </div>
+                        <div className='text-right text-sm text-gray-500 mt-2'>
+                            Recover Password?
+                        </div>
+                        <div className='text-center bg-blue-600 rounded-2xl my-16 py-3 text-white'>
+                            Sign Up  
+                        </div>
                         <div>
-                            {/* <input type="email" name="" id="" value="" placeholder='Email' /> */}
-                            <InputGroup>
-                                <InputLeftElement pointerEvents='none'>
-                                {/* <PhoneIcon color='gray.300' /> */}
-                                </InputLeftElement>
-                                <Input type='tel' placeholder='Phone number' />
-                            </InputGroup>
+                            ------------
                         </div>
                     </div>
                 </div>
