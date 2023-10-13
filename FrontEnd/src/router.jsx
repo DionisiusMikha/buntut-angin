@@ -5,10 +5,10 @@ import Try from "./Pages/Try/try";
 import LandingPage from "./Pages/Landing Page/LandingPages";
 
 const Router = createBrowserRouter([
-  // {
-  //   path: "/",
-  //   element: <LandingPage />,
-  // },
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
   {
     path: "/login",
     element: <Login />,
@@ -16,8 +16,7 @@ const Router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
-  }
-  ,
+  },
   {
     path: "/try",
     element: <Try />,

@@ -1,12 +1,12 @@
 import React from 'react';
 import Navbar from '../../Component/Navbar'
 
-const LoginPage = () => {
-    return (
-        <>
-        <Navbar />
-        </>
-    );
-};
+function LandingPages() {
+    return <>
+        <div>
+            <Navbar />
+        </div>
+    </>
+}
 
-export default LoginPage;
+export default LandingPages;

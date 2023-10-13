@@ -1,8 +1,10 @@
 import React from 'react';
 import Navbar from '../../Component/Navbar'
 import gambar from '/img/gbr-login-register.png'
-// import Inputs from '../../Component/Inputs'
 import email from '/img/Logo-kecil.png'
+import iconGoogle from '/icon/google icon.png'
+import iconFacebook from '/icon/facebook icon.png'
+import iconApple from '/icon/apple icon.png'
 
 const LoginPage = () => {
     const bg = "url('img/background-login-register.png')";
@@ -40,8 +42,25 @@ const LoginPage = () => {
                         <div className='text-center bg-blue-600 rounded-2xl my-16 py-3 text-white'>
                             Sign Up  
                         </div>
-                        <div>
-                            ------------
+                        <div className='flex flex-row justify-center items-center'>
+                            <div className='w-1/3'>
+                                <hr className='border-gray-300 border' />
+                            </div>
+                            <div className='w-1/3 text-center text-gray-500'>Or continue with</div>
+                            <div className='w-1/3'>
+                                <hr className='border-gray-300 border' />
+                            </div>
+                        </div>
+                        <div className='my-10 flex justify-between items-center'>
+                            <div className='w-1/4 py-3 rounded-lg bg-white items-center shadow-xl place-content-center'>
+                                <img src={iconGoogle} alt="" width="30px" className='mx-auto'/>
+                            </div>
+                            <div className='w-1/4 py-3 rounded-lg bg-white shadow-xl'>
+                                <img src={iconApple} alt="" width="30px" className='mx-auto'/>
+                            </div>
+                            <div className='w-1/4 py-3 rounded-lg bg-white shadow-xl'>
+                                <img src={iconFacebook} alt="" width="30px" className='mx-auto'/>
+                            </div>
                         </div>
                     </div>
                 </div>

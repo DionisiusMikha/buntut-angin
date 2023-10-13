@@ -20,10 +20,6 @@ function Navbar (){
     setNavClick(!navClick)
   }
 
-  function logoutHandler(){
-    sessionStorage.clear()
-    window.location.replace("/")
-  }
   return(
     <>
       <div className="flex flex-row pt-5 h-36 text-xl navbar w-full">
@@ -40,12 +36,12 @@ function Navbar (){
           <div className="flex flex-row justify-center me-10 ">
             <div className="text-center py-3 w-3/12 font-semibold">
               <a href="/login" className=" hover:text-blue-500">
-                S
-                <span className="hover:underline underline-offset-8 hover:decoration-blue-500 ">ign I</span>
-                n 
+                S<span className="hover:underline underline-offset-8 hover:decoration-blue-500 ">ign I</span>n 
               </a>
             </div>
-            <div className="text-center w-3/12 rounded-2xl bg-blue-500 text-white py-3 font-semibold hover:bg-blue-700"><a href="/register">Register</a></div>
+            <div className="text-center w-3/12 rounded-2xl bg-blue-500 text-white py-3 font-semibold hover:bg-blue-700">
+              <a href="/register">Register</a>
+            </div>
           </div>
         </div>
         <div className="lg:hidden">
