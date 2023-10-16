@@ -39,9 +39,11 @@ function Navbar (){
                 S<span className="hover:underline underline-offset-8 hover:decoration-blue-500 ">ign I</span>n 
               </a>
             </div>
-            <div className="text-center w-3/12 rounded-2xl bg-blue-500 text-white py-3 font-semibold hover:bg-blue-700">
-              <a href="/register">Register</a>
-            </div>
+            <a href="/register" className="text-center w-3/12 rounded-2xl bg-blue-500 text-white py-3 font-semibold hover:bg-blue-700">
+              <div className="">
+                Register
+              </div>
+            </a>
           </div>
         </div>
         <div className="lg:hidden">
