@@ -5,9 +5,9 @@ import hati from "/icon/hati.png"
 import fitur1 from "/icon/fitur1.png"
 import fitur2 from "/icon/fitur2.png"
 import fitur3 from "/icon/fitur3.png"
-import Card from '../../Component/Card'
-import makanan from '/img/makanan.png'
-import logo from '/img/Logo-kecil.png'
+import video from '/video/about-us.mp4'
+import buah from '/img/buah.png'
+import bgBuah from '/img/bg-buah.png'
 
 function LandingPages() {
     const bg = "url('img/background-landingPages.png')";
@@ -25,7 +25,7 @@ function LandingPages() {
                         <img src={hati} alt="" width="40px" className='' />
                     </div>
                     <div className='text-6xl font-bold py-8'>
-                        <div className='text-blue-500'>One Step Solution</div>
+                        <div className='text-green-500'>One Step Solution</div>
                         <div className='pt-3'>for all your dietary</div>
                         <div className='pt-3'>needs.</div>
                     </div>
@@ -41,7 +41,7 @@ function LandingPages() {
             {/* FITUR */}
             <div className='flex flex-row items-center mx-16 justify-between h-96'>
                 <div className=''>
-                    <div className='text-blue-500 font-bold text-4xl tracking-widest'>FEATURES WE PROVIDE</div>
+                    <div className='text-green-500 font-bold text-4xl tracking-widest mb-4'>FEATURES WE PROVIDE</div>
                     <div className='text-6xl font-bold py-1'>Calculating BMI</div>
                     <div className='flex flex-row my-3'>
                         <div className='text-6xl font-bold pe-4'>is easier </div>
@@ -75,75 +75,53 @@ function LandingPages() {
                 </div>
             </div>
 
-            {/* CARD */}
-            <div className='mx-16 py-10'>
-                <div className='text-blue-500 font-bold text-4xl tracking-widest'>HELP TOPICS</div>
+            {/* ABOUT US */}
+            <div className='mx-16 mt-16'>
+                <div className='text-4xl font-bold tracking-widest text-green-500'>About Us</div>
                 <div className='text-6xl font-bold py-5'>Enhance Your Lifestyle</div>
-                <div className='flex flex-row'>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
-                </div>
-                <div className='flex flex-row mt-10'>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
-                    <Card img={makanan} title="Product Name" text="Lorem ipsum dolor sit amet."/>
+                <div className='flex flex-row justify-center mt-28'>
+                    <div className='bg-orange-100 w-1/2 ps-20 pe-28 pt-14 py-36 mb-28 rounded-3xl' style={{marginTop:"-100px"}}>
+                        <div className='text-4xl font-bold'>Make a Helpful Nutrition</div>
+                        <div className='text-2xl text-gray-400 py-14'>
+                        We often hear that it is necessary for us to be healthy. But how do we become healthy? Due to a balanced diet. Now, what is a balanced diet? Why is it so important? And is it the same for everyone? Let's find out more about it.
+                        </div>
+                    </div>
+                    <div className='w-1/2' style={{marginLeft:"-100px"}}>
+                        <div className='w-full h-full'>
+                            {/* <iframe src={video} className='rounded-3xl w-full h-full px-1.5'allow="autoplay; fullscreen;" allowFullScreen="1" autoPlay="1" loop></
+                            iframe> */}
+                            
+                            <video controls className='rounded-3xl w-full h-full px-1.5' autoPlay="1">
+                                <source src={video}/>
+                            </video>
+                        </div>
+                    </div>
                 </div>
             </div>
-            {/* FOOTER */}
-            <div className='bg-white rounded-t-2xl px-16 py-10'>
-                <div className='flex flex-row justify-between items-center'>
-                    <div className='w-1/6'>
-                        <img src={logo} alt="" />
-                    </div>
-                    <div className='text-xl'>
-                        <div className='text-blue-500 font-semibold text-2xl'>Products</div>
-                        <div className='text-gray-500 pt-5'>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                        </div>
-                    </div>
-                    <div className='text-xl'>
-                        <div className='text-blue-500 font-semibold text-2xl'>Products</div>
-                        <div className='text-gray-500 pt-5'>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                        </div>
-                    </div>
-                    <div className='text-xl'>
-                        <div className='text-blue-500 font-semibold text-2xl'>Products</div>
-                        <div className='text-gray-500 pt-5'>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                        </div>
-                    </div>
-                    <div className='text-xl'>
-                        <div className='text-blue-500 font-semibold text-2xl'>Contact Us</div>
-                        <div className='text-gray-500 pt-5'>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                            <div>Lorem</div>
-                        </div>
-                    </div>
+            {/* our history */}
+            <div className='flex flex-row pt-10 pb-5 justify-evenly items-center'>
+                <div className='w-1/4'><img src={buah} alt="" /></div>
+                <div className='w-1/3 pe-12'>
+                    <div className='text-5xl text-green-600 font-semibold'><span className='underline underline-offset-8 decoration-red-500'>Ou</span>r History</div>
+                    <div className='py-8 text-2xl'>Diet is basically an eating pattern, where the method and type of food is regulated. The goal is to maintain overall body health. Apart from that, diet also aims to achieve or maintain a controlled body weight.</div>
                 </div>
-                <hr className='mt-10 border'/>
-                <div className='flex flex-row justify-between pt-4'>
-                    <div>Copyright &copy; 2023</div>
-                    <div>All Rights Reserved | <span className='text-blue-500 underline'>Terms and Conditions</span> | <span className='text-blue-500 underline'>Privacy Policy</span></div>
+            </div>
+
+            {/* Specialty */}
+            <div className="bg-[url('/img/bg-buah.png')] bg-cover bg-no-repeat bg-center flex items-center py-52 justify-end">
+                <div className='w-1/4 bg-white mx-52 text-center py-16 px-10'>
+                    <div className='text-rose-700 font-bold text-3xl pb-5'>Specialty & Seasonal</div>
+                    <div className='text-xl text-gray-500'>We bring in produce just for you! Whether the items are in-season or uncommon, every week our specialty list changes.</div>
                 </div>
+            </div>
+
+            {/* Progress */}
+            <div className="bg-[url('/img/progress.png')] bg-cover bg-no-repeat bg-center py-96">
+                <div className='py-10'></div>
+            </div>
+            {/* Footer */}
+            <div>
+
             </div>
         </div>
     </>

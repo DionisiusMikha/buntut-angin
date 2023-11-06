@@ -21,7 +21,7 @@ function Navbar (){
             <div className="text-center py-5 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="./">Home</a></div>
             <div className="text-center py-5 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="#">About Us</a></div>
             <div className="flex flex-row justify-center me-10 ">
-            <a href="/login" className="text-center rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 px-8 font-bold text-2xl">
+            <a href="/login" className="text-center rounded-2xl bg-gradient-to-r from-green-500 to-lime-200 text-white py-3 px-8 font-bold text-2xl">
                 Log In
             </a>
           </div>
