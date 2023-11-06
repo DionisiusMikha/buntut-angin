@@ -18,7 +18,7 @@ function LandingPages() {
             {/* CAROUSEL */}
             <div className='my-5 flex flex-row items-center justify-between'> 
                 <div className='w-8/12 ms-16'>
-                    <div className='flex flex-row border rounded-3xl font-semibold text-gray-600 text-xl border-gray-400 bg-white/50 w-1/5 px-5  items-center py-2 '>
+                    <div className='flex flex-row border rounded-3xl font-semibold text-gray-600 text-xl border-gray-400 bg-white/50 w-1/5 px-2  items-center py-2 '>
                         <div className='pe-2 text-center'>
                             Health Matters 
                         </div>
@@ -76,7 +76,7 @@ function LandingPages() {
             </div>
 
             {/* ABOUT US */}
-            <div className='mx-16 mt-16'>
+            <div className='mx-16 mt-16' id='aboutus'>
                 <div className='text-4xl font-bold tracking-widest text-green-500'>About Us</div>
                 <div className='text-6xl font-bold py-5'>Enhance Your Lifestyle</div>
                 <div className='flex flex-row justify-center mt-28'>
@@ -88,11 +88,8 @@ function LandingPages() {
                     </div>
                     <div className='w-1/2' style={{marginLeft:"-100px"}}>
                         <div className='w-full h-full'>
-                            {/* <iframe src={video} className='rounded-3xl w-full h-full px-1.5'allow="autoplay; fullscreen;" allowFullScreen="1" autoPlay="1" loop></
-                            iframe> */}
-                            
-                            <video controls className='rounded-3xl w-full h-full px-1.5' autoPlay="1">
-                                <source src={video}/>
+                            <video autoPlay loop muted className='rounded-3xl px-1.5' width="100%" height="100%">
+                                <source src={video} type="video/mp4"/>
                             </video>
                         </div>
                     </div>
@@ -108,7 +105,7 @@ function LandingPages() {
             </div>
 
             {/* Specialty */}
-            <div className="bg-[url('/img/bg-buah.png')] bg-cover bg-no-repeat bg-center flex items-center py-52 justify-end">
+            <div className="bg-[url('/img/bg-buah.png')] bg-fill bg-no-repeat flex items-center py-52 justify-end">
                 <div className='w-1/4 bg-white mx-52 text-center py-16 px-10'>
                     <div className='text-rose-700 font-bold text-3xl pb-5'>Specialty & Seasonal</div>
                     <div className='text-xl text-gray-500'>We bring in produce just for you! Whether the items are in-season or uncommon, every week our specialty list changes.</div>
