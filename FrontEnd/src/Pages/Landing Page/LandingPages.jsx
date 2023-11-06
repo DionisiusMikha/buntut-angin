@@ -7,7 +7,10 @@ import fitur2 from "/icon/fitur2.png"
 import fitur3 from "/icon/fitur3.png"
 import video from '/video/about-us.mp4'
 import buah from '/img/buah.png'
-import bgBuah from '/img/bg-buah.png'
+import logo from '/img/Logo-kecil.png'
+import pin from '/icon/pin.png'
+import email from '/icon/email.png'
+import phone from '/icon/phone.png'
 
 function LandingPages() {
     const bg = "url('img/background-landingPages.png')";
@@ -16,8 +19,8 @@ function LandingPages() {
         <div className="bg-cover min-h-screen" style={{backgroundImage: bg}}>
             <Navbar />
             {/* CAROUSEL */}
-            <div className='my-5 flex flex-row items-center justify-between'> 
-                <div className='w-8/12 ms-16'>
+            <div className='mb-5 flex flex-row items-center mt-24 justify-between'> 
+                <div className='w-7/12 ms-24'>
                     <div className='flex flex-row border rounded-3xl font-semibold text-gray-600 text-xl border-gray-400 bg-white/50 w-1/5 px-2  items-center py-2 '>
                         <div className='pe-2 text-center'>
                             Health Matters 
@@ -35,11 +38,11 @@ function LandingPages() {
                     </div>
                 </div>
                 <div className=''>
-                    <img src={gambar} alt="" width="500px" className='mx-10' />
+                    <img src={gambar} alt="" width="500px" className='mx-24' />
                 </div>
             </div>
             {/* FITUR */}
-            <div className='flex flex-row items-center mx-16 justify-between h-96'>
+            <div className='flex flex-row items-center mx-16 mt-52 justify-between h-96'>
                 <div className=''>
                     <div className='text-green-500 font-bold text-4xl tracking-widest mb-4'>FEATURES WE PROVIDE</div>
                     <div className='text-6xl font-bold py-1'>Calculating BMI</div>
@@ -76,7 +79,10 @@ function LandingPages() {
             </div>
 
             {/* ABOUT US */}
-            <div className='mx-16 mt-16' id='aboutus'>
+            <div className='pt-10' id='aboutus' >
+                
+            </div>
+            <div className='mx-16 mt-16'>
                 <div className='text-4xl font-bold tracking-widest text-green-500'>About Us</div>
                 <div className='text-6xl font-bold py-5'>Enhance Your Lifestyle</div>
                 <div className='flex flex-row justify-center mt-28'>
@@ -113,12 +119,140 @@ function LandingPages() {
             </div>
 
             {/* Progress */}
-            <div className="bg-[url('/img/progress.png')] bg-cover bg-no-repeat bg-center py-96">
-                <div className='py-10'></div>
+            <div className="bg-[url('/img/progress.png')] bg-fill bg-no-repeat bg-center py-72">
+                <div className='py-32'></div>
             </div>
             {/* Footer */}
-            <div>
-
+            <div className='bg-white rounded-t-2xl px-16 py-10'>
+                <div className='flex flex-row justify-between'>
+                    <div className='w-1/6'>
+                        <img src={logo} alt="" width="70%"/>
+                    </div>
+                    <div className='text-xl w-1/5 py-7'>
+                        <div className='text-blue-500 font-semibold text-2xl'>Products</div>
+                        <div className='text-gray-500 pt-5'>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                        </div>
+                    </div>
+                    <div className='text-xl w-1/5 py-7'>
+                        <div className='text-blue-500 font-semibold text-2xl'>Products</div>
+                        <div className='text-gray-500 pt-5'>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                        </div>
+                    </div>
+                    <div className='text-xl w-1/5 py-7'>
+                        <div className='text-blue-500 font-semibold text-2xl'>Products</div>
+                        <div className='text-gray-500 pt-5'>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                            <div className="pt-2">Lorem</div>
+                        </div>
+                    </div>
+                    <div className='text-xl w-1/5 py-7'>
+                        <div className='text-blue-500 font-semibold text-2xl'>Contact Us</div>
+                        <div className='text-gray-500 pt-5'>
+                            <div className='flex flex-row pt-2'>
+                                <img src={email} alt=""width={"25px"} />
+                                <div className='px-3'>
+                                    Turunberat@gmail.care
+                                </div>
+                            </div>
+                            <div className='flex flex-row pt-2'>
+                                <img src={phone} alt=""width={"25px"} />
+                                <div className='px-3'>
+                                    0812903129038
+                                </div>
+                            </div>
+                            <div className='flex flex-row pt-2'>
+                                <img src={pin} alt="" width={"25px"}/>
+                                <div className='px-3'>
+                                    Ngagel
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* <table className="table-fixed">
+                        <thead>
+                            <tr>
+                                <th>Products</th>
+                                <th>Products</th>
+                                <th>Products</th>
+                                <th>Contact Us</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lorem</td>
+                                <td>Lorem</td>
+                                <td>Lorem</td>
+                                <td>1961</td>
+                            </tr>
+                            <tr>
+                                <td>Lorem</td>
+                                <td>Lorem</td>
+                                <td>Lorem</td>
+                                <td>1961</td>
+                            </tr>
+                            <tr>
+                                <td>Lorem</td>
+                                <td>Lorem</td>
+                                <td>Lorem</td>
+                                <td>1961</td>
+                            </tr>
+                        </tbody>
+                    </table> */}
+                    {/* <div className='flex flex-col justify-evenly w-full'>
+                        <div className='flex flex-row justify-evenly w-full'>
+                            <div className='text-blue-500 font-semibold text-2xl'>Products</div>
+                            <div className='text-blue-500 font-semibold text-2xl'>Products</div>
+                            <div className='text-blue-500 font-semibold text-2xl'>Products</div>
+                            <div className='text-blue-500 font-semibold text-2xl'>Contact Us</div>
+                        </div>
+                        <div className='flex flex-row justify-evenly w-full'>
+                            <div className='text-gray-700 text-xl flex flex-col'>
+                                <div className=''>Lorem</div>
+                                <div className=''>Lorem</div>
+                                <div className=''>Lorem</div>
+                                <div className=''>Lorem</div>
+                                <div className=''>Lorem</div>
+                            </div>
+                            <div className='text-gray-700 text-xl'>
+                                <div className='text-gray-700 text-xl flex flex-col justify-start'>
+                                    <div className=''>Lorem</div>
+                                    <div className=''>Lorem</div>
+                                    <div className=''>Lorem</div>
+                                    <div className=''>Lorem</div>
+                                    <div className=''>Lorem</div>
+                                </div>
+                            </div>
+                            <div className='text-gray-700 text-xl'>
+                                <div className='text-gray-700 text-xl flex flex-col'>
+                                    <div className=''>Lorem</div>
+                                    <div className=''>Lorem</div>
+                                    <div className=''>Lorem</div>
+                                    <div className=''>Lorem</div>
+                                    <div className=''>Lorem</div>
+                                </div>
+                            </div>
+                            <div className='text-gray-700 text-xl'>Contact Us</div>
+                        </div>
+                    </div> */}
+                </div>
+                <hr className='mt-10 border'/>
+                <div className='flex flex-row justify-between pt-4'>
+                    <div>Copyright &copy; 2023</div>
+                    <div>All Rights Reserved | <span className='text-blue-500 underline'>Terms and Conditions</span> | <span className='text-blue-500 underline'>Privacy Policy</span></div>
+                </div>
             </div>
         </div>
     </>
