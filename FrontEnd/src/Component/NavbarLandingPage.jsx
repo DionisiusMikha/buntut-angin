@@ -13,15 +13,15 @@ function Navbar (){
 
   return(
     <>
-      <div className="flex flex-row pt-5 h-36 text-xl navbar w-full justify-between">
-        <div className="ms-16 w-1/4">
+      <div className="flex flex-row pt-5 h-36 text-2xl navbar w-full justify-between">
+        <div className="ms-16">
           <img src={logo2} alt="" width="250px"/>
         </div>
-        <div className="lg:block hidden w-1/5">
+        <div className="lg:block hidden">
           <div className="flex flex-row items-center align-middle w-full justify-between">
-            <div className="text-center py-5 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="./">Home</a></div>
-            <div className="text-center py-5 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="#aboutus">About Us</a></div>
-            <div className="flex flex-row justify-center me-10 ">
+            <div className="text-center py-5 px-10 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="./">Home</a></div>
+            <div className="text-center py-5 px-10 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="#aboutus">About Us</a></div>
+            <div className="flex flex-row justify-center mx-10 ">
             <a href="/login" className="text-center rounded-2xl bg-gradient-to-r from-green-500 to-lime-200 text-white py-3 px-8 font-bold text-2xl">
                 Log In
             </a>

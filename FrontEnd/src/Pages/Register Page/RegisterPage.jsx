@@ -18,21 +18,21 @@ const RegisterPage = () => {
                         <div className='font-bold text-5xl'>get your nutriens</div>
 
                         <div className='font-semibold text-2xl mt-24'>if you already have an account</div>
-                        <div className='font-semibold text-2xl'>you can <span className='underline text-blue-500'><a href="/login">Login here!</a></span></div>
+                        <div className='font-semibold text-2xl'>you can <span className='underline text-green-500'><a href="/login">Login here!</a></span></div>
                     </div>
                     <div className='flex flex-col justify-end h-full'> {/* GAMBAR */}
                         <img src={gambar} alt="" className='w-full'/>
                     </div>
-                    <div className='mt-12 w-8/12'> {/* Register */}
+                    <div className='mt-12 w-10/12'> {/* Register */}
                         <div className='font-bold text-4xl'>Welcome New User</div>
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-10 items-center'>
                             <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-xs items-center"/>
+                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-s items-center"/>
                             <img src={email} alt="" className='' width="40px"/>
                         </div>
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
                             <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Password"  className="input input-ghost w-full max-w-xs items-center"/>
+                            <input type="text" placeholder="Enter Your Password"  className="input input-ghost w-full max-w-s items-center"/>
                             <img src={email} alt="" className='' width="40px"/>
                         </div>
                         <div className='flex flex-row  mt-5 items-center'>
@@ -54,7 +54,7 @@ const RegisterPage = () => {
                         <div className='text-right text-sm text-gray-500 my-4'>
                             Having Problem?
                         </div>
-                        <div className='text-center bg-blue-600 rounded-2xl my-14 py-3 text-white'>
+                        <div className='text-center bg-green-500 rounded-2xl my-14 py-3 text-white hover:bg-green-600'>
                             Register 
                         </div>
                         <div className='flex flex-row justify-center items-center'>
