@@ -54,9 +54,11 @@ const RegisterPage = () => {
                         <div className='text-right text-sm text-gray-500 my-4'>
                             Having Problem?
                         </div>
-                        <div className='text-center bg-green-500 rounded-2xl my-14 py-3 text-white hover:bg-green-600'>
-                            Register 
-                        </div>
+                        <a href="/loading">
+                            <div className='text-center bg-green-500 rounded-2xl my-14 py-3 text-white hover:bg-green-600'>
+                                Register 
+                            </div>
+                        </a>
                         <div className='flex flex-row justify-center items-center'>
                             <div className='w-1/3'>
                                 <hr className='border-gray-300 border' />

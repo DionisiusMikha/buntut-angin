@@ -21,7 +21,7 @@ function LandingPages() {
             {/* CAROUSEL */}
             <div className='mb-5 flex flex-row items-center mt-24 justify-between'> 
                 <div className='w-7/12 ms-24'>
-                    <div className='flex flex-row border rounded-3xl font-semibold text-gray-600 text-xl border-gray-400 bg-white/50 w-1/5 px-2  items-center py-2 '>
+                    <div className='flex flex-row border rounded-3xl font-semibold text-gray-600 text-xl border-gray-400 bg-white/50 w-1/5 px-2 justify-center items-center py-2 '>
                         <div className='pe-2 text-center'>
                             Health Matters 
                         </div>

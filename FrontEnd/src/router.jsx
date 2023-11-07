@@ -4,6 +4,7 @@ import Register from "./Pages/Register Page/RegisterPage";
 import DietisianHomepage from "./Pages/Dietisian/Homepage"
 import Try from "./Pages/Try/try";
 import LandingPage from "./Pages/Landing Page/LandingPages";
+import Loader from "./Component/Loader";
 
 const Router = createBrowserRouter([
   {
@@ -17,6 +18,14 @@ const Router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/loading",
+    element: <Loader />,
+  },
+  {
+    path: "/registersuccess",
+    element: <Loader />,
   },
   {
     path: "/dietisian/",
