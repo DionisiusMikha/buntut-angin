@@ -58,7 +58,9 @@ function SideNavbar({hovered}){
                             {jam}:{menit}
                         </div>
                     </div>
-                    <div className='bg-rose-300 border-black border rounded-xl w-2/3 py-3 mt-9 text-xl font-semibold -rotate-6 flex flex-col justify-center items-center'>
+                    <div className='bg-rose-300 border-black border rounded-xl w-2/3 py-3 mt-9 text-xl font-semibold -rotate-6 flex flex-col justify-center items-center' onClick={()=>{
+                        window.location.href = "/login";
+                    }}>
                         Log Out
                     </div>
                 </div>

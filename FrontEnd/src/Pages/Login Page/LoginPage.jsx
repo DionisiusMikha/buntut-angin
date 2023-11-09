@@ -9,14 +9,38 @@ import iconApple from '/icon/apple icon.png'
 import Dietisian from '../../Services/Dietisian/dietisian'
 
 import { useForm } from 'react-hook-form'
+import Joi from 'joi'
+import { joiResolver } from "@hookform/resolvers/joi"
+import { useState } from 'react';
 
 const LoginPage = () => {
-    const { register, reset, handleSubmit, formState: { errors } } = useForm();
+    const schema = Joi.object({
+        username: Joi.string().required().messages({
+            "string.empty":"username tidak boleh kosong"
+        }),
+        password: Joi.string().required().messages({
+            "string.empty":"password tidak boleh kosong"
+        }),
+    })
+    
+    const {register, handleSubmit, reset, formState: { errors }  } = useForm({
+        resolver: joiResolver(schema)
+      });
+
     const bg = "url('img/background-login-register.png')";
+    
+    const [error, setError] = useState("");
 
     const submit = async data => {
-        const res = await Dietisian.loginUser(data.username, data.ps);
+        const res = await Dietisian.loginUser(data.username, data.password);
         console.log(res);
+        
+        if(res == 200){
+            window.location.href = "/dietisian/";
+        } else {
+            setError(res.data.message);
+            reset();
+        }
     }
 
     return (
@@ -41,19 +65,22 @@ const LoginPage = () => {
                             <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-s items-center" {...register("username")}/>
                             <img src={email} alt="" className='' width="40px"/>
                         </div>
+                        {errors.username && <span className="" style={{ color:"red" }}>{errors.username.message}</span>}
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
                             <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Password"  className="input input-ghost w-full max-w-s items-center" {...register("ps")}/>
+                            <input type="text" placeholder="Enter Your Password"  className="input input-ghost w-full max-w-s items-center" {...register("password")}/>
                             <img src={email} alt="" className='' width="40px"/>
                         </div>
+                        {errors.password && <span className="" style={{ color:"red" }}>{errors.password.message}</span>}
                         <div className='text-right text-sm text-gray-500 mt-2'>
                             Recover Password?
                         </div>
-                        <button className='w-full text-center font-semibold bg-green-500 rounded-2xl my-16 py-3 text-white hover:bg-green-600'>
+                        <button className='w-full text-center font-semibold bg-green-500 rounded-2xl mt-16 py-3 text-white hover:bg-green-600'>
                             Sign In
                         </button>
+                        {error != "" && <span className="flex justify-center" style={{ color:"red" }}>{error}</span>}
 
-                        <div className='flex flex-row justify-center items-center'>
+                        <div className='flex flex-row justify-center items-center mt-16'>
                             <div className='w-1/3'>
                                 <hr className='border-gray-300 border' />
                             </div>

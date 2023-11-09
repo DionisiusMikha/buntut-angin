@@ -156,11 +156,11 @@ module.exports = {
             }
         })
 
-        if (checkUser.length == 0){
+        if (checkUser == null){
             const result = {
                 "message" : "User not found"
             }
-            res.status(404).json(result);
+            return res.status(404).json(result);
         }
         else {
             if (checkUser.dataValues.password == password){
@@ -178,13 +178,13 @@ module.exports = {
                     "token" : token,
                     "role" : role
                 }
-                res.status(200).json(result);
+                return res.status(200).json(result);
             }
             else {
                 const result = {
                     "message" : "Wrong Password"
                 }
-                res.status(400).json(result);
+                return res.status(400).json(result);
             }
         }
     },

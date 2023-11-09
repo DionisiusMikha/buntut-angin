@@ -17,11 +17,31 @@ function registerUser(username, email, display_name, date_of_birth, password, co
     });
 }
 function loginUser(username, ps){
+    // return client.post("/login", {
+    //     username: username,
+    //     password: ps
+    // });
+
     return client.post("/login", {
         username: username,
         password: ps
+    })
+    .then((response) => {
+        console.log(response.status);
+        return response.status
+    })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            return error={
+                data : error.response.data,
+                status : error.response.status
+            };
+        } 
     });
 }
+
 function editUser(){
     return client.get("/edit/:id_user");
 }
