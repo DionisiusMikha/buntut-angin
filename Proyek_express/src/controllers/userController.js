@@ -54,7 +54,7 @@ module.exports = {
                 return res.status(400).json({msg: "File not supported"});
             }
 
-            const {username, email, display_name, date_of_birth, password, confirm_password, role, phone_number} = req.body;
+            const {username, email, display_name, date_of_birth, password, confirm_password, role, phone_number, address} = req.body;
 
             const schema = joi.object({
                 username : joi.string().required().external(checkUsername).messages({
@@ -92,6 +92,10 @@ module.exports = {
                 role: joi.string().required().messages({
                     'string.empty' : "Invalid data field role",
                     'any.required' : "Invalid data field role"
+                }),
+                address: joi.string().required().messages({
+                    'string.empty' : 'Invalid data field address',
+                    'any.required' : 'Invalid data field adrress'
                 })
             })
 
@@ -124,6 +128,7 @@ module.exports = {
                 phone_number : phone_number,
                 birthdate : date_of_birth,
                 role: role,
+                address: address,
                 balance : 0,
                 status: 1,
                 profile_picture : `/assets/${username}.png`
@@ -136,6 +141,7 @@ module.exports = {
                 "display_name" : display_name,
                 "phone_number" : phone_number,
                 "role" : role,
+                "address" : address,
                 "balance" : 0,
                 "profile_picture" : `/assets/${username}.png`
             }

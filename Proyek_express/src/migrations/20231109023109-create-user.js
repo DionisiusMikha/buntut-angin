@@ -21,23 +21,20 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      phone_number: {
-        type: Sequelize.STRING
-      },
       birthdate: {
         type: Sequelize.DATE
-      },
-      role: {
-        type: Sequelize.STRING
       },
       balance: {
         type: Sequelize.INTEGER
       },
+      phone_number: {
+        type: Sequelize.STRING
+      },
       profile_picture: {
         type: Sequelize.STRING
       },
-      status: {
-        type: Sequelize.INTEGER
+      address: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
