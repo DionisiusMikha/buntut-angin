@@ -6,8 +6,18 @@ import iconGoogle from '/icon/google icon.png'
 import iconFacebook from '/icon/facebook icon.png'
 import iconApple from '/icon/apple icon.png'
 
+import Dietisian from '../../Services/Dietisian/dietisian'
+
+import { useForm } from 'react-hook-form'
+
 const LoginPage = () => {
+    const { register, reset, handleSubmit, formState: { errors } } = useForm();
     const bg = "url('img/background-login-register.png')";
+
+    const submit = async data => {
+        const res = await Dietisian.loginUser(data.email, data.ps);
+        console.log(res);
+    }
 
     return (
         <>
@@ -24,24 +34,25 @@ const LoginPage = () => {
                     <div className='flex flex-col justify-end h-full'> {/* GAMBAR */}
                         <img src={gambar} alt="" className='w-full'/>
                     </div>
-                    <div className='mt-24 w-10/12'> {/* login */}
+                    <form onSubmit={handleSubmit(submit)} className='mt-24 w-10/12'> {/* login */}
                         <div className='font-bold text-4xl'>Welcome Back</div>
                         <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-20 items-center'>
                             <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-s items-center"/>
+                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-s items-center" {...register("email")}/>
                             <img src={email} alt="" className='' width="40px"/>
                         </div>
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
                             <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Password"  className="input input-ghost w-full max-w-s items-center"/>
+                            <input type="text" placeholder="Enter Your Password"  className="input input-ghost w-full max-w-s items-center" {...register("ps")}/>
                             <img src={email} alt="" className='' width="40px"/>
                         </div>
                         <div className='text-right text-sm text-gray-500 mt-2'>
                             Recover Password?
                         </div>
-                        <div className='text-center font-semibold bg-green-500 rounded-2xl my-16 py-3 text-white hover:bg-green-600'>
-                            Sign Up  
-                        </div>
+                        <button className='w-full text-center font-semibold bg-green-500 rounded-2xl my-16 py-3 text-white hover:bg-green-600'>
+                            Sign In
+                        </button>
+
                         <div className='flex flex-row justify-center items-center'>
                             <div className='w-1/3'>
                                 <hr className='border-gray-300 border' />
@@ -62,7 +73,7 @@ const LoginPage = () => {
                                 <img src={iconFacebook} alt="" width="30px" className='mx-auto'/>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </>

@@ -1,17 +1,28 @@
 import client from "./client";
 
-export default function getAllUsers(){
+function getAllUsers(){
     return client.get("/");
 }
-export default function registerUser(){
+function registerUser(){
     return client.get("/register");
 }
-export default function loginUser(){
-    return client.get("/login");
+function loginUser(username, ps){
+    return client.post("/login", {
+        username: username,
+        password: ps
+    });
 }
-export default function editUser(){
+function editUser(){
     return client.get("/edit/:id_user");
 }
-export default function cekProfilKonsultan(){
+function cekProfilKonsultan(){
     return client.get("/cekProfil");
+}
+
+export default {
+    getAllUsers,
+    registerUser,
+    loginUser,
+    editUser,
+    cekProfilKonsultan
 }
