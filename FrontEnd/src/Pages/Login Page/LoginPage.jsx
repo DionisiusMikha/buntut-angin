@@ -15,7 +15,7 @@ const LoginPage = () => {
     const bg = "url('img/background-login-register.png')";
 
     const submit = async data => {
-        const res = await Dietisian.loginUser(data.email, data.ps);
+        const res = await Dietisian.loginUser(data.username, data.ps);
         console.log(res);
     }
 
@@ -38,7 +38,7 @@ const LoginPage = () => {
                         <div className='font-bold text-4xl'>Welcome Back</div>
                         <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-20 items-center'>
                             <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-s items-center" {...register("email")}/>
+                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-s items-center" {...register("username")}/>
                             <img src={email} alt="" className='' width="40px"/>
                         </div>
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
