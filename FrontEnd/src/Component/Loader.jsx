@@ -23,7 +23,7 @@ const Loader = () => {
                 {timer()}
             </div> 
             : 
-            <div className="w-1/2 flex flex-col mx-auto px-40 justify-center items-center h-screen bg-white">
+            <div className="w-1/2 flex flex-col -m-52 mx-auto px-40 justify-center items-center h-screen bg-white">
                 <Lottie className="h-screen mx-auto" animationData={success} loop={true} />
                 <div className="font-bold text-6xl -my-40">Register Succesfull</div>
                 {timer2()}
