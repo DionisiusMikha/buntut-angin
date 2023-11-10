@@ -6,7 +6,7 @@ import iconGoogle from '/icon/google icon.png'
 import iconFacebook from '/icon/facebook icon.png'
 import iconApple from '/icon/apple icon.png'
 
-import Dietisian from '../../Services/Dietisian/dietisian'
+import DietisianService from '../../Services/Dietisian/Dietisian';
 
 import { useForm } from 'react-hook-form'
 import Joi from 'joi'
@@ -25,14 +25,14 @@ const LoginPage = () => {
     
     const {register, handleSubmit, reset, formState: { errors }  } = useForm({
         resolver: joiResolver(schema)
-      });
+    });
 
     const bg = "url('img/background-login-register.png')";
     
     const [error, setError] = useState("");
 
     const submit = async data => {
-        const res = await Dietisian.loginUser(data.username, data.password);
+        const res = await DietisianService.loginUser(data.username, data.password);
         console.log(res);
         
         if(res == 200){

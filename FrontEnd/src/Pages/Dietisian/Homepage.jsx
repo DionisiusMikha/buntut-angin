@@ -3,9 +3,7 @@ import menu from "/icon/menu.png";
 
 function Homepage () {
     return <>
-        <div className="bg-gray-200 w-full h-screen flex flex-row justify-between">
-            <SideNavbar hovered="home"></SideNavbar>
-
+        <div className="w-full h-screen flex flex-row justify-between overflow-y-auto">
             {/* chart */}
             <div>
                 Chart..
