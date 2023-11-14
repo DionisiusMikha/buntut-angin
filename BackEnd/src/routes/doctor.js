@@ -7,5 +7,7 @@ const {
 } = doctorController
 
 router.get("/get-user-by-id/:id", getUserByID);
+router.post("/register", doctorController.registerDoctor);
+router.post("/login", doctorController.loginDoctor);
 
 module.exports = router;
