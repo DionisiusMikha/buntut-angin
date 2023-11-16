@@ -21,13 +21,16 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      profile_picture: {
-        type: Sequelize.STRING
+      birthdate: {
+        type: Sequelize.DATE
       },
       phone_number: {
         type: Sequelize.STRING
       },
-      addres: {
+      address: {
+        type: Sequelize.STRING
+      },
+      profile_picture: {
         type: Sequelize.STRING
       },
       createdAt: {
