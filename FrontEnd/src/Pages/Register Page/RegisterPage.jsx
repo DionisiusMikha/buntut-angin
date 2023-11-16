@@ -13,9 +13,14 @@ import { joiResolver } from "@hookform/resolvers/joi"
 import { useState } from 'react';
 
 const RegisterPage = () => {
+    const [role, setRole] = useState();
+    
     const schema = Joi.object({
+        email: Joi.string().required().messages({
+            "string.empty":"Email tidak boleh kosong"
+        }),
         username: Joi.string().required().messages({
-            "string.empty":"username tidak boleh kosong"
+            "string.empty":"Username tidak boleh kosong"
         }),
         display_name: Joi.string().required().messages({
             "string.empty":"display name tidak boleh kosong"
@@ -33,6 +38,13 @@ const RegisterPage = () => {
     const submit = data => {
         console.log(data);
     }
+
+    const handleTimeout = () => {
+        setErrorsTimeout(setTimeout(() => {
+          reset();
+          setErrorsTimeout(null);
+        }, 2000));
+    };
 
     return (
         <>
@@ -53,8 +65,20 @@ const RegisterPage = () => {
                         <div className='font-bold text-4xl'>Welcome New User</div>
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-10 items-center'>
                             <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-s items-center bg-transparent border-none outline-none" {...register("email")}/>
+                            <input type="text" placeholder={`${errors.email ? errors?.email?.message : "Enter Your Email" }`}  className={`input input-ghost w-full max-w-s items-center bg-transparent border-none outline-none ${errors.email ? 'placeholder-red-500' : ''}`} {...register("email")}/>
                             <img src={email} alt="" className='' width="40px"/>
+                        </div>
+                        <div className='w-full flex gap-x-4'>
+                            <div className='w-1/2 flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
+                                <img src={email} alt="" className='' width="40px"/>
+                                <input type="text" placeholder={`${errors.username ? errors?.username?.message : "Enter Your Username"}`}  className={`input input-ghost w-full max-w-s items-center bg-transparent border-none outline-none ${errors.username ? 'placeholder-red-500' : ''}`} {...register("username")}/>
+                                <img src={email} alt="" className='' width="40px"/>
+                            </div>
+                            <div className='w-1/2 flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
+                                <img src={email} alt="" className='' width="40px"/>
+                                <input type="text" placeholder="Enter Display Name"  className="input input-ghost w-full max-w-s items-center bg-transparent border-none outline-none" {...register("display")}/>
+                                <img src={email} alt="" className='' width="40px"/>
+                            </div>
                         </div>
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
                             <img src={email} alt="" className='' width="40px"/>
@@ -68,7 +92,7 @@ const RegisterPage = () => {
                         </div>
                         <div className='flex flex-row  mt-5 items-center'>
                             <div className='w-1/3 px-2 py-2 bg-gray-200 rounded-xl me-5'>
-                                <input type="text" placeholder="Age"  className="input input-ghost items-center w-full" {...register("age")}/>
+                                <input type="text" placeholder="Age"  className="input input-ghost items-center w-full bg-transparent border-none outline-none" {...register("age")}/>
                             </div>
                             <div className='w-2/3 px-2 py-2 bg-gray-200 rounded-xl '>
                                 {/* <input type="text" placeholder="Gender" className="input input-ghost items-center w-full" {...register("gender")}/> */}
@@ -80,10 +104,10 @@ const RegisterPage = () => {
                         </div>
                         <div className='flex flex-row  mt-5 items-center'>
                             <div className='w-1/2 px-2 py-2 bg-gray-200 rounded-xl me-5'>
-                                <input type="text" placeholder="Height"  className="input input-ghost items-center w-full" {...register("height")}/>
+                                <input type="text" placeholder="Height"  className="input input-ghost items-center w-full bg-transparent border-none outline-none" {...register("height")}/>
                             </div>
                             <div className='w-1/2 px-2 py-2 bg-gray-200 rounded-xl '>
-                                <input type="text" placeholder="Weight"  className="input input-ghost items-center w-full" {...register("weight")}/>
+                                <input type="text" placeholder="Weight"  className="input input-ghost items-center w-full bg-transparent border-none outline-none" {...register("weight")}/>
                             </div>
                         </div>
                         <div className='text-right text-sm text-gray-500 my-4'>
