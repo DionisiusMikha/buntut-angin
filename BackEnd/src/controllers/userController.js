@@ -317,5 +317,6 @@ module.exports = {
                 return res.status(400).send('Invalid JWT Key');
             }
         }
-    }
+    },
+    lihat
 }

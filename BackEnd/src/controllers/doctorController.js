@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const upload = multer({
     dest : "./uploads",
 })
+const { Op } = db.Sequelize; 
 
 
 // Get User
@@ -147,7 +148,7 @@ module.exports = {
 
         if (checkUser == null){
             const result = {
-                "message" : "User not found"
+                "message" : "Doctor not found"
             }
             return res.status(404).json(result);
         }
@@ -239,4 +240,139 @@ module.exports = {
             }
         })
     },
+    addRecipe: async function(req, res){
+        const doctorId = req.body.doctor_id;
+        const name = req.body.name;
+        const desc = req.body.description;
+        const ingredients = req.body.ingredients;
+        const steps = req.body.steps;
+
+        const cekDokter = await db.Doctor.findByPk(doctorId);
+        const noResep = await db.Recipes.findAll();
+
+        if (!cekDokter){
+            const result = {
+                "message" : "Doctor not found"
+            }
+            res.status(404).json(result);
+        }
+        else { 
+            let noUrut = noResep.length + 1;
+            let newId = "REC" + noUrut.toString().padStart(3, '0');
+            let resep = await db.Recipes.create({
+                id: newId,
+                name: name,
+                description: desc,
+                doctor_id: doctorId
+            })
+
+            const getResep = await db.Recipes.findAll();
+            for (let i = 0 ; i < ingredients.length; i++){
+                let bahan = await db.Ingredients.create({
+                    name: ingredients[i].name,
+                    qty: ingredients[i].qty,
+                    uom: ingredients[i].uom,
+                    recipe_id: newId
+                })
+            }
+
+            for (let i = 0; i < steps.length; i++){
+                let langkah = await db.Steps.create({
+                    desc: steps[i],
+                    recipe_id: newId
+                })
+            }
+
+            const result = {
+                "recipe_id" : newId,
+                "doctor_id" : doctorId,
+                "name" : name,
+                "description" : desc,
+                "by" : cekDokter.dataValues.display_name,
+                "total_ingredients" : ingredients.length,
+                "total_steps" : steps.length
+            }
+            res.status(201).json(result);
+        }
+    },
+    viewUser: async function(req, res){
+        const display_name = req.body.display_name;
+        const cariUser = await db.User.findAll({
+            where: {
+                display_name: {
+                    [Op.like]: '%'+display_name+'%'
+                }
+            }
+        })
+
+        if (cariUser.length == 0){
+            const result = {
+                "message" : "User not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            const user = [];
+            for (let i = 0; i < cariUser.length; i++){
+                user.push({
+                    id: cariUser[i].dataValues.id,
+                    username: cariUser[i].dataValues.username,
+                    display_name: cariUser[i].dataValues.display_name,
+                    age: cariUser[i].dataValues.age,
+                    height: cariUser[i].dataValues.height,
+                    weight: cariUser[i].dataValues.weight,
+                    phone_number: cariUser[i].dataValues.phone_number,
+                    address: cariUser[i].dataValues.address
+                })
+            }
+    
+            const result = {
+                user
+            }
+            res.status(200).json(result);
+        }
+    },
+    rekomendasiMenu: async function(req, res){
+        const namaDokter = req.body.nama_dokter;
+        const nama = req.body.nama_resep;
+
+        // const cariResep = await db.Recipes.findAll({
+        //     where: {
+        //         name: {
+        //             [Op.like] : '%'+nama+'%'
+        //         }
+        //     }
+        // })
+
+        const cariResep = await db.Recipes.findAll({
+            where: {
+                name: nama
+            }
+        })
+
+        const cariDokter = await db.Doctor.findAll({
+            where: {
+                display_name: namaDokter
+            }
+        })
+
+        if (cariDokter.length == 0) {
+            const result = {
+                "message" : "Doctor not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            const newRecommendation = await db.Recommendation.create({
+                recipe_id: cariResep[0].dataValues.id,
+                doctor_id: cariDokter[0].dataValues.id
+            })
+
+            const result = {
+                "Nama resep" : nama,
+                "Recommended by" : namaDokter
+            }
+            res.status(201).json(result);
+        }
+    }
 }
