@@ -50,7 +50,7 @@ module.exports = {
             if (err instanceof multer.MulterError){
                 return res.status(400).json({msg: "File too large"})
             }
-            else if (err){
+            else if (err){  
                 return res.status(400).json({msg: "File not supported"});
             }
 
@@ -168,7 +168,6 @@ module.exports = {
                 const token = jwt.sign({
                     id: checkUser.id,
                     username: username,
-                    role: role
                 }, PRIVATE_KEY, {
                     expiresIn: 86400
                 });
@@ -176,7 +175,6 @@ module.exports = {
                 const result = {
                     "message" : "Login success",
                     "token" : token,
-                    "role" : role
                 }
                 return res.status(200).json(result);
             }
@@ -186,6 +184,38 @@ module.exports = {
                 }
                 return res.status(400).json(result);
             }
+        }
+    },
+    getLoginUser: async function(req, res){
+        // const idUser = req.params.id_user;
+        // const token = req.headers['x-auth-token'];
+        console.log(req.headers["x-auth-token"]);
+        const token = req.headers['x-auth-token'];
+        console.log(token)
+        if (!token){
+            return res.status(401).json({
+                message: "Unauthorized!"
+            })
+        }
+        const user = await db.User.findByPk(idUser);
+        if (!user){
+            const result = {
+                "message" : "User not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            const result = {
+                "message" : "User found",
+                "username" : user.dataValues.username,
+                "email" : user.dataValues.email,
+                "display_name" : user.dataValues.display_name,
+                "phone_number" : user.dataValues.phone_number,
+                "birthdate" : user.dataValues.birthdate,
+                "address" : user.dataValues.address,
+                "profile_picture" : user.dataValues.profile_picture
+            }
+            res.status(200).json(result);
         }
     },
     editUser: async function(req, res){

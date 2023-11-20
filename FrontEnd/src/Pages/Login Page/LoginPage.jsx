@@ -1,12 +1,14 @@
 import React from 'react';
 import Navbar from '../../Component/Navbar'
 import gambar from '/img/gbr-login-register.png'
-import email from '/img/Logo-kecil.png'
+import no from '/icon/no.png'
+import view from '/icon/view.png'
+import hide from '/icon/hide.png'
 import iconGoogle from '/icon/google icon.png'
 import iconFacebook from '/icon/facebook icon.png'
 import iconApple from '/icon/apple icon.png'
 
-import DietisianService from '../../Services/Dietisian/Dietisian';
+import DietisianService from '../../Services/Dietisian/dietisian';
 
 import { useForm } from 'react-hook-form'
 import Joi from 'joi'
@@ -35,13 +37,24 @@ const LoginPage = () => {
         const res = await DietisianService.loginUser(data.username, data.password);
         console.log(res);
         
-        if(res == 200){
+        if(res.status == 200){
+            // simpen id user
+            localStorage.setItem("token", res.data.token);
+            // console.log(res.data.token);
             window.location.href = "/dietisian/";
         } else {
             setError(res.data.message);
             reset();
         }
     }
+
+    const resetText = () => {
+        reset({
+            username: "",
+        })
+    }
+
+    const [see, setSee] = useState("password");
 
     return (
         <>
@@ -61,24 +74,38 @@ const LoginPage = () => {
                     <form onSubmit={handleSubmit(submit)} className='mt-24 w-10/12'> {/* login */}
                         <div className='font-bold text-4xl'>Welcome Back</div>
                         <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-20 items-center'>
-                            <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-s items-center" {...register("username")}/>
-                            <img src={email} alt="" className='' width="40px"/>
+                            <input type="text" placeholder={`${errors.username ? errors?.username?.message : "Enter Your Username" }`}  className={`input w-full max-w-s items-center bg-transparent border-none outline-none ${errors.username ? 'placeholder-red-500' : ''}`} {...register("username")}/>
+                            <div onClick={()=>{
+                                resetText()
+                            }}>
+                                <img src={no} alt="" className='mx-3' width="30px"/>
+                            </div>
                         </div>
-                        {errors.username && <span className="" style={{ color:"red" }}>{errors.username.message}</span>}
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
-                            <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Password"  className="input input-ghost w-full max-w-s items-center" {...register("password")}/>
-                            <img src={email} alt="" className='' width="40px"/>
+                            <input type={see} placeholder={`${errors.password ? errors?.password?.message : "Enter Your Password" }`}  className={`input w-full max-w-s items-center bg-transparent border-none outline-none ${errors.password ? 'placeholder-red-500' : ''}`} {...register("password")}/>
+                            <div onClick={
+                                ()=>{
+                                    if(see == "password"){
+                                        setSee("text");
+                                    } else {
+                                        setSee("password");
+                                    }
+                                }
+                            }>
+                                {see === "password" ? 
+                                <img src={hide} alt="" className='mx-3' width="30px"/> : 
+                                <img src={view} alt="" className='mx-3' width="30px"/>}
+                            </div>
                         </div>
-                        {errors.password && <span className="" style={{ color:"red" }}>{errors.password.message}</span>}
                         <div className='text-right text-sm text-gray-500 mt-2'>
                             Recover Password?
                         </div>
-                        <button className='w-full text-center font-semibold bg-green-500 rounded-2xl mt-16 py-3 text-white hover:bg-green-600'>
-                            Sign In
-                        </button>
-                        {error != "" && <span className="flex justify-center" style={{ color:"red" }}>{error}</span>}
+                        <div className='h-32'>
+                            <button className='w-full text-center font-semibold bg-green-500 rounded-2xl mt-16 py-3 text-white hover:bg-green-600'>
+                                Sign In
+                            </button>
+                            {error != "" && <span className="flex justify-center" style={{ color:"red" }}>{error}</span>}
+                        </div>
 
                         <div className='flex flex-row justify-center items-center mt-16'>
                             <div className='w-1/3'>

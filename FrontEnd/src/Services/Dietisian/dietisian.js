@@ -17,18 +17,13 @@ function registerUser(username, email, display_name, date_of_birth, password, co
     });
 }
 function loginUser(username, ps){
-    // return client.post("/login", {
-    //     username: username,
-    //     password: ps
-    // });
-
     return client.post("/login", {
         username: username,
         password: ps
     })
     .then((response) => {
         console.log(response.status);
-        return response.status
+        return response;
     })
     .catch((error) => {
         if (error.response) {
@@ -49,10 +44,21 @@ function cekProfilKonsultan(){
     return client.get("/cekProfil");
 }
 
+function getUserById(token){
+    console.log(token)
+    return client.get("/getUser", {
+        headers: {
+            "x-auth-token": `${token}`,
+        },
+    
+    });
+}
+
 export default {
     getAllUsers,
     registerUser,
     loginUser,
     editUser,
-    cekProfilKonsultan
+    cekProfilKonsultan,
+    getUserById,
 }

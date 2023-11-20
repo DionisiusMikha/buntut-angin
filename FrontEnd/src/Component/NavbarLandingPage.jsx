@@ -22,7 +22,7 @@ function Navbar (){
             <div className="text-center py-5 px-10 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="./">Home</a></div>
             <div className="text-center py-5 px-10 hover:underline underline-offset-8 decoration-gray-400 hover:font-semibold"><a href="#aboutus">About Us</a></div>
             <div className="flex flex-row justify-center mx-10 ">
-            <a href="/login" className="text-center rounded-2xl bg-gradient-to-r from-green-500 to-lime-200 text-white py-3 px-8 font-bold text-2xl">
+            <a href="/login" className="text-center rounded-2xl bg-gradient-to-r from-green-500 to-lime-200 text-white py-3 px-8 font-bold text-2xl hover:bg-gradient-to-r hover:from-green-600 hover:to-lime-300">
                 Log In
             </a>
           </div>

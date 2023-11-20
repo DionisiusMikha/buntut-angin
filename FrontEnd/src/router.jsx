@@ -28,18 +28,16 @@ const Router = createBrowserRouter([
     path: "/registersuccess",
     element: <Loader />,
   },
-  // {
-  //   path: "/dietisian/",
-  //   element: <DietisianHomepage />,
-  // },
   {
-    // path: "/dietisian/",
-    element: <SideNavbar />,
-    // errorElement: <ErrorElement />,
-    children: [
-        { path: "/dietisian/", element: <DietisianHomepage /> },
-      ],
-    },
+    path: "/dietisian/",
+    element: <DietisianHomepage />,
+  },
+  // {
+  //   element: <SideNavbar />,
+  //   children: [
+  //       { path: "/dietisian/", element: <DietisianHomepage /> },
+  //     ],
+  // },
   {
     path: "/try",
     element: <Try />,
