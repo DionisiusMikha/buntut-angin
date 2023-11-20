@@ -36,6 +36,15 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
+      age: {
+        type: Sequelize.INTEGER
+      },
+      weight: {
+        type: Sequelize.INTEGER
+      },
+      height: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

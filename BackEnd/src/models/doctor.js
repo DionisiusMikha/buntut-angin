@@ -14,14 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Doctor.init({
-    display_name: DataTypes.STRING,
+    isplay_name: DataTypes.STRING,
     email: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
     birthdate: DataTypes.DATE,
+    balance: DataTypes.INTEGER,
     phone_number: DataTypes.STRING,
-    address: DataTypes.STRING,
-    profile_picture: DataTypes.STRING
+    profile_picture: DataTypes.STRING,
+    address: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Doctor',

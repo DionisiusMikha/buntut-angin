@@ -14,8 +14,10 @@ import { useForm } from 'react-hook-form'
 import Joi from 'joi'
 import { joiResolver } from "@hookform/resolvers/joi"
 import { useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 
 const LoginPage = () => {
+    const navigate = useNavigate();
     const schema = Joi.object({
         username: Joi.string().required().messages({
             "string.empty":"username tidak boleh kosong"
@@ -34,14 +36,13 @@ const LoginPage = () => {
     const [error, setError] = useState("");
 
     const submit = async data => {
+        // cek dietisian
         const res = await DietisianService.loginUser(data.username, data.password);
         console.log(res);
         
         if(res.status == 200){
-            // simpen id user
             localStorage.setItem("token", res.data.token);
-            // console.log(res.data.token);
-            window.location.href = "/dietisian/";
+            navigate("/dietisian");
         } else {
             setError(res.data.message);
             reset();

@@ -16,19 +16,17 @@ function registerUser(username, email, display_name, date_of_birth, password, co
         address: address
     });
 }
+
 function loginUser(username, ps){
     return client.post("/login", {
         username: username,
         password: ps
     })
     .then((response) => {
-        console.log(response.status);
         return response;
     })
     .catch((error) => {
         if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
             return error={
                 data : error.response.data,
                 status : error.response.status
@@ -40,18 +38,26 @@ function loginUser(username, ps){
 function editUser(){
     return client.get("/edit/:id_user");
 }
+
 function cekProfilKonsultan(){
     return client.get("/cekProfil");
 }
 
-function getUserById(token){
-    console.log(token)
-    return client.get("/getUser", {
+function getUserLogin(token){
+    return client.get("/getLoginUser", {
         headers: {
             "x-auth-token": `${token}`,
         },
-    
-    });
+    }).then((response) => {
+        return response;
+    }).catch((error) => {
+        if (error.response) {
+            return error={
+                data : error.response.data,
+                status : error.response.status
+            };
+        } 
+    })
 }
 
 export default {
@@ -60,5 +66,5 @@ export default {
     loginUser,
     editUser,
     cekProfilKonsultan,
-    getUserById,
+    getUserLogin,
 }

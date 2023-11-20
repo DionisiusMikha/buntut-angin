@@ -4,6 +4,7 @@ const multer = require("multer");
 const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
+const { date } = require("joi");
 const upload = multer({
     dest : "./uploads",
 })
@@ -54,7 +55,7 @@ module.exports = {
                 return res.status(400).json({msg: "File not supported"});
             }
 
-            const {username, email, display_name, date_of_birth, password, confirm_password, role, phone_number, address} = req.body;
+            const {username, email, display_name, date_of_birth, password, confirm_password, role, phone_number, address, weight, height} = req.body;
 
             const schema = joi.object({
                 username : joi.string().required().external(checkUsername).messages({
@@ -89,14 +90,18 @@ module.exports = {
                     'string.empty' : "Invalid data field confirm password",
                     'any.required' : "Invalid data field confirm password"
                 }),
-                role: joi.string().required().messages({
-                    'string.empty' : "Invalid data field role",
-                    'any.required' : "Invalid data field role"
-                }),
                 address: joi.string().required().messages({
                     'string.empty' : 'Invalid data field address',
                     'any.required' : 'Invalid data field adrress'
-                })
+                }),
+                weight : joi.number().required().messages({
+                    'any.integer' : 'Invalid data field weight',
+                    'any.required' : 'Invalid data field weight'
+                }),
+                height : joi.number().required().messages({
+                    'any.integer' : 'Invalid data field height',
+                    'any.required' : 'Invalid data field height'
+                }),
             })
 
             try {
@@ -119,6 +124,11 @@ module.exports = {
                 `./uploads/${req.file.filename}`,
                 `./assets/${username}.png`
             );
+            
+            //dapet umur dari dob
+            const today = new Date();
+            const birthDate = new Date(date_of_birth);
+            let umur = today.getFullYear() - birthDate.getFullYear();
 
             const newUser = db.User.create({
                 display_name : display_name,
@@ -127,10 +137,12 @@ module.exports = {
                 password : password,
                 phone_number : phone_number,
                 birthdate : date_of_birth,
-                role: role,
                 address: address,
                 balance : 0,
                 status: 1,
+                weight : weight,
+                height : height,
+                age : umur,
                 profile_picture : `/assets/${username}.png`
             })
 
@@ -140,9 +152,11 @@ module.exports = {
                 "email" : email,
                 "display_name" : display_name,
                 "phone_number" : phone_number,
-                "role" : role,
+                "birthdate" : date_of_birth,
                 "address" : address,
-                "balance" : 0,
+                "weight" : weight,
+                "height" : height,
+                "age" : umur,
                 "profile_picture" : `/assets/${username}.png`
             }
             res.status(201).json(result);
@@ -187,35 +201,30 @@ module.exports = {
         }
     },
     getLoginUser: async function(req, res){
-        // const idUser = req.params.id_user;
-        // const token = req.headers['x-auth-token'];
-        console.log(req.headers["x-auth-token"]);
         const token = req.headers['x-auth-token'];
-        console.log(token)
         if (!token){
             return res.status(401).json({
                 message: "Unauthorized!"
             })
         }
-        const user = await db.User.findByPk(idUser);
-        if (!user){
-            const result = {
-                "message" : "User not found"
+        try{
+            const userLogin = jwt.verify(token, PRIVATE_KEY);
+            const user = await db.User.findByPk(userLogin.id);
+            if (!user){
+                const result = {
+                    "message" : "User not found"
+                }
+                res.status(404).json(result);
             }
-            res.status(404).json(result);
-        }
-        else {
-            const result = {
-                "message" : "User found",
-                "username" : user.dataValues.username,
-                "email" : user.dataValues.email,
-                "display_name" : user.dataValues.display_name,
-                "phone_number" : user.dataValues.phone_number,
-                "birthdate" : user.dataValues.birthdate,
-                "address" : user.dataValues.address,
-                "profile_picture" : user.dataValues.profile_picture
+            else {
+                const result = {
+                    "message" : "User found",
+                    data : user
+                }
+                res.status(200).json(result);
             }
-            res.status(200).json(result);
+        } catch(err){
+            return res.status(400).send('Invalid JWT Key');
         }
     },
     editUser: async function(req, res){

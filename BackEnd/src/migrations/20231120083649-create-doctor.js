@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      display_name: {
+      isplay_name: {
         type: Sequelize.STRING
       },
       email: {
@@ -24,13 +24,16 @@ module.exports = {
       birthdate: {
         type: Sequelize.DATE
       },
+      balance: {
+        type: Sequelize.INTEGER
+      },
       phone_number: {
         type: Sequelize.STRING
       },
-      address: {
+      profile_picture: {
         type: Sequelize.STRING
       },
-      profile_picture: {
+      address: {
         type: Sequelize.STRING
       },
       createdAt: {

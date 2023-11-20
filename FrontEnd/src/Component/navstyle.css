@@ -1589,6 +1589,11 @@ html {
   margin-bottom: 1rem;
 }
 
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .mb-28 {
   margin-bottom: 7rem;
 }
@@ -1613,8 +1618,8 @@ html {
   margin-inline-end: 1.25rem;
 }
 
-.ms-10 {
-  margin-inline-start: 2.5rem;
+.ms-14 {
+  margin-inline-start: 3.5rem;
 }
 
 .ms-16 {
@@ -1623,10 +1628,6 @@ html {
 
 .ms-24 {
   margin-inline-start: 6rem;
-}
-
-.ms-5 {
-  margin-inline-start: 1.25rem;
 }
 
 .mt-10 {
@@ -1675,18 +1676,6 @@ html {
 
 .mt-9 {
   margin-top: 2.25rem;
-}
-
-.ms-12 {
-  margin-inline-start: 3rem;
-}
-
-.ms-1 {
-  margin-inline-start: 0.25rem;
-}
-
-.ms-14 {
-  margin-inline-start: 3.5rem;
 }
 
 .flex {
@@ -1771,6 +1760,10 @@ html {
 
 .w-2\/4 {
   width: 50%;
+}
+
+.w-32 {
+  width: 8rem;
 }
 
 .w-7\/12 {
@@ -1900,6 +1893,11 @@ html {
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
 
+.border-gray-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
+
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
@@ -1977,8 +1975,8 @@ html {
   background-repeat: no-repeat;
 }
 
-.p-4 {
-  padding: 1rem;
+.p-2 {
+  padding: 0.5rem;
 }
 
 .px-1 {
@@ -2209,6 +2207,10 @@ html {
 
 .font-semibold {
   font-weight: 600;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 
 .tracking-wide {
