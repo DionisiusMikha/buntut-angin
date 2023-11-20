@@ -5,7 +5,7 @@ import DietisianHomepage from "./Pages/Dietisian/Homepage"
 import Try from "./Pages/Try/try";
 import LandingPage from "./Pages/Landing Page/LandingPages";
 import Loader from "./Component/Loader";
-import SideNavbar from "./Component/SideNavbar";
+import ProfileDietisian from "./Pages/Dietisian/Profile";
 
 const Router = createBrowserRouter([
   {
@@ -32,12 +32,10 @@ const Router = createBrowserRouter([
     path: "/dietisian/",
     element: <DietisianHomepage />,
   },
-  // {
-  //   element: <SideNavbar />,
-  //   children: [
-  //       { path: "/dietisian/", element: <DietisianHomepage /> },
-  //     ],
-  // },
+  {
+    path : "/dietisian/profile",
+    element : <ProfileDietisian/>,
+  },
   {
     path: "/try",
     element: <Try />,

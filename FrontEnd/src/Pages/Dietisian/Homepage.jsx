@@ -48,15 +48,17 @@ function Homepage () {
             <div className="bg-green-200 w-1/4 py-10 px-3">
               <div className="flex flex-row justify-between items-center mx-8">
                 <div className="text-3xl font-semibold">PROFILE</div>
-                <div className="border border-gray-500 rounded-full p-2">
+                <button className="border border-gray-500 rounded-full p-2" onClick={()=>{
+                  navigate("/dietisian/profile");
+                }}>
                   <img src={menu} width="30px" alt="" />
-                </div>
+                </button>
               </div>
               {/* profile detail */}
               <div className="w-32 flex flex-col justify-center items-center m-auto pt-10">
                 {user.profile_picture ? <img src={user.profile_picture} alt="ADA" /> : <img src={iconUser} alt="KOSONG" />}
-                <div className="text-xl font-semibold py-3 uppercase">{user.display_name}</div>
               </div>
+              <div className="text-center text-xl font-semibold py-3 uppercase">{user.display_name}</div>
               <div className="mx-8">
                 <hr className="border border-gray-300 w-full my-6"/>
                 <div className="flex flex-row justify-center items-center">

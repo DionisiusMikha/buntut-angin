@@ -23,24 +23,6 @@ const checkUsername = async(username) => {
 }
 
 module.exports = {
-    // cekToken : async function (req, res, next){
-    //     const token = req.headers['x-auth-token'];
-    //     if (!token){
-    //         return res.status(401).json({
-    //             message : "Unauthorized!"
-    //         })
-    //     }
-
-    //     try {
-    //         const user = jwt.verify(token, PRIVATE_KEY);
-    //         req.user = user;
-    //         next();
-    //     }
-    //     catch(err){
-    //         console.log(err);
-    //         return res.status(400).send(err);
-    //     }
-    // },
     getAllUser: async function (req, res){
         const users = await db.User.findAll();
         return res.status(200).json(users);
@@ -125,7 +107,6 @@ module.exports = {
                 `./assets/${username}.png`
             );
             
-            //dapet umur dari dob
             const today = new Date();
             const birthDate = new Date(date_of_birth);
             let umur = today.getFullYear() - birthDate.getFullYear();
