@@ -7,7 +7,7 @@ import iconFacebook from '/icon/facebook icon.png'
 import iconApple from '/icon/apple icon.png'
 
 import { useForm } from 'react-hook-form'
-import DietisianService from '../../Services/Dietisian/Dietisian';
+import DietisianService from '../../Services/Dietisian/dietisian';
 import Joi from 'joi'
 import { joiResolver } from "@hookform/resolvers/joi"
 import { useState } from 'react';
@@ -48,20 +48,20 @@ const RegisterPage = () => {
 
     return (
         <>
-            <div className="bg-cover bg-center h-screen" style={{backgroundImage: bg}}>
+            <div className="bg-cover bg-center h-screen bg-gray-400" style={{backgroundImage: bg}}>
                 <Navbar />
                 <div className="grid grid-cols-3 gap-6 h-[calc(100vh-9rem)]">
-                    <div className='mx-20 mt-48'> {/* kata2 */}
+                    <div className='mx-20 mt-48'>
                         <div className='font-bold text-5xl'>Register to to</div>
                         <div className='font-bold text-5xl'>get your nutriens</div>
 
                         <div className='font-semibold text-2xl mt-24'>if you already have an account</div>
                         <div className='font-semibold text-2xl'>you can <span className='underline text-green-500'><a href="/login">Login here!</a></span></div>
                     </div>
-                    <div className='flex flex-col justify-end h-full'> {/* GAMBAR */}
+                    <div className='flex flex-col justify-end h-full'> 
                         <img src={gambar} alt="" className='w-full'/>
                     </div>
-                    <form onSubmit={handleSubmit(submit)} className='mt-12 w-10/12'> {/* Register */}
+                    <form onSubmit={handleSubmit(submit)} className='mt-3 w-10/12'> 
                         <div className='font-bold text-4xl'>Welcome New User</div>
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-10 items-center'>
                             <img src={email} alt="" className='' width="40px"/>
@@ -95,7 +95,6 @@ const RegisterPage = () => {
                                 <input type="text" placeholder="Age"  className="input input-ghost items-center w-full bg-transparent border-none outline-none" {...register("age")}/>
                             </div>
                             <div className='w-2/3 px-2 py-2 bg-gray-200 rounded-xl '>
-                                {/* <input type="text" placeholder="Gender" className="input input-ghost items-center w-full" {...register("gender")}/> */}
                                 <select placeholder="Gender" className="input input-ghost items-center w-full bg-transparent border-none outline-none" {...register("gender")}>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
