@@ -8,5 +8,6 @@ router.post("/login", userController.loginUser);
 router.get("/getLoginUser", userController.getLoginUser);
 router.put("/edit/:id_user", userController.editUser);
 router.get("/cekProfil", userController.cekProfilKonsultan);
+router.get("/resep", userController.getAllResep);
 
 module.exports = router;

@@ -9,6 +9,8 @@ const upload = multer({
     dest : "./uploads",
 })
 
+const { Op } = db.Sequelize
+
 //==========================================
 
 const checkUsername = async(username) => {
@@ -318,5 +320,22 @@ module.exports = {
             }
         }
     },
-    lihat
+    getAllResep: async function(req, res){
+        const nama = req.body.nama;
+
+        const getResep = await db.Recipes.findAll();
+
+        let resep = []
+        for (let i = 0; i < getResep.length; i++){
+            resep.push({
+                nama : getResep[i].dataValues.name,
+                description : getResep[i].dataValues.description
+            })
+        }
+        
+        const result = {
+            resep
+        }
+        res.status(200).json(result)
+    }
 }
