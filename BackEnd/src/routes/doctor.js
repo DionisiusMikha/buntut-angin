@@ -12,5 +12,6 @@ router.post("/login", doctorController.loginDoctor);
 router.post("/recipes", doctorController.addRecipe);
 router.post("/viewUser", doctorController.viewUser);
 router.post("/rekomendasiMenu", doctorController.rekomendasiMenu);
+router.get("/", doctorController.getAllDoctor);    
 
 module.exports = router;

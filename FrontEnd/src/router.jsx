@@ -6,12 +6,16 @@ import Try from "./Pages/Try/try";
 import LandingPage from "./Pages/Landing Page/LandingPages";
 import Loader from "./Component/Loader";
 import ProfileDietisian from "./Pages/Dietisian/Profile";
+import KonsultanHomepage from "./Pages/Konsultan/Homepage";
 
 // Dietisian
 import Home from './Pages/Dietisian/components/home';
 import Recipes from './Pages/Dietisian/components/recipes';
 import Report from './Pages/Dietisian/components/report';
 import Chat from './Pages/Dietisian/components/chat';
+
+// Konsultan
+// Admin
 
 const Router = createBrowserRouter([
   {
@@ -37,6 +41,28 @@ const Router = createBrowserRouter([
   {
     path: "/dietisian",
     element: <DietisianHomepage />,
+    children: [
+      {
+        path: "home",
+        element: <Home/>
+      },
+      {
+        path: "recipes",
+        element: <Recipes/>
+      },
+      {
+        path: "report",
+        element: <Report/>
+      },
+      {
+        path: "chat",
+        element: <Chat/>
+      }
+    ]
+  },
+  {
+    path: "/konsultan",
+    element: <KonsultanHomepage />,
     children: [
       {
         path: "home",

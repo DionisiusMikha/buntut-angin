@@ -109,10 +109,10 @@ module.exports = {
                 res.status(400).json(result);
             }
 
-            fs.renameSync(
-                `./uploads/${req.file.filename}`,
-                `./assets/${username}.png`
-            );
+            // fs.renameSync(
+            //     `./uploads/${req.file.filename}`,
+            //     `./assets/${username}.png`
+            // );
 
             const newUser = db.Doctor.create({
                 display_name : display_name,
@@ -374,5 +374,11 @@ module.exports = {
             }
             res.status(201).json(result);
         }
+    },
+    getAllDoctor : async function (req, res){
+        const getAllDoctor = await db.Doctor.findAll()
+
+        return res.status(200).send(getAllDoctor)
     }
+    
 }

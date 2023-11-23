@@ -158,7 +158,7 @@ module.exports = {
 
         if (!checkUser){
             return res.status(404).json({
-                message: "not_found"
+                message: "user not found"
             });
         }
         else {
@@ -180,7 +180,7 @@ module.exports = {
             }
             else {
                 const result = {
-                    "message" : "incorrect_password"
+                    "message" : "incorrect password"
                 }
                 return res.status(400).json(result);
             }
