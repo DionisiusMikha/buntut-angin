@@ -38,11 +38,10 @@ const LoginPage = () => {
     const submit = async data => {
         // cek dietisian
         const res = await DietisianService.loginUser(data.username, data.password);
-        console.log(res);
         
         if(res.status == 200){
             localStorage.setItem("token", res.data.token);
-            navigate("/dietisian");
+            navigate("/dietisian/home");
         } else {
             setError(res.data.message);
             reset();

@@ -29,67 +29,54 @@ module.exports = {
         return res.status(200).json(users);
     },
     registerUser: async function (req, res){
-
-        const {username, email, display_name, date_of_birth, password, confirm_password, gender, phone_number, address, weight, height} = req.body;
+        const {username, email, display_name, date_of_birth, password, gender, phone_number, address, weight, height} = req.body;
         console.log(req.body);
-        const hasil = await db.User.findOne({where: {username: username}});
-        console.log(hasil);
+        const hasil = await db.User.findOne({
+            where: {
+                username: username,
+                email: email
+            }
+        });
         
-        // const cariUsernameKembar = await db.User.findAndCountAll({
-        //     where: {
-        //         username: username
-        //     }
-        // })
-        // console.log(cariUsernameKembar)
-        // cariUser = await db.User.findAndCountAll({
-        //     where: {
-        //         username: username
-        //     }
-        // })
-        // if (cariUser.count > 0){
-        //     return res.status(400).json({msg: "User already registered"})
-        // }
-        // if (password != confirm_password){
-        //     const result = {
-        //         "message" : "Password and Confirm Password doesn\'t match"
-        //     }
-        //     return res.status(400).json(result);
-        // }
+
+        if (hasil){
+            return res.status(400).json({msg: "already_exist"})
+        }
         
-        // const today = new Date();
-        // const birthDate = new Date(date_of_birth);
-        // let umur = today.getFullYear() - birthDate.getFullYear();
+        const today = new Date();
+        const birthDate = new Date(date_of_birth);
+        let umur = today.getFullYear() - birthDate.getFullYear();
 
-        // const newUser = db.User.create({
-        //     display_name : display_name,
-        //     // email : email,
-        //     username : username,
-        //     password : password,
-        //     phone_number : phone_number,
-        //     birthdate : date_of_birth,
-        //     address: address,
-        //     balance : 0,
-        //     status: 1,
-        //     weight : weight,
-        //     height : height,
-        //     age : umur,
-        //     // profile_picture : `/assets/${username}.png`
-        // })
+        const newUser = db.User.create({
+            display_name : display_name,
+            email : email,
+            username : username,
+            password : password,
+            phone_number : phone_number,
+            birthdate : date_of_birth,
+            address: address,
+            balance : 0,
+            status: 1,
+            weight : weight,
+            height : height,
+            age : umur,
+        })
 
-        // const result = {
-        //     "message" : "Registration Success",
-        //     "username" : username,
-        //     // "email" : email,
-        //     "display_name" : display_name,
-        //     "phone_number" : phone_number,
-        //     "birthdate" : date_of_birth,
-        //     "address" : address,
-        //     "weight" : weight,
-        //     "height" : height,
-        //     "age" : umur,
-        //     // "profile_picture" : `/assets/${username}.png`
-        // }
-        // return res.status(201).json(result);
+        const result = {
+            "message" : "success",
+            "username" : username,
+            "email" : email,
+            "display_name" : display_name,
+            "phone_number" : phone_number,
+            "birthdate" : date_of_birth,
+            "address" : address,
+            "weight" : weight,
+            "height" : height,
+            "age" : umur,
+            // "profile_picture" : `/assets/${username}.png`
+        }
+
+        return res.status(201).json(result);
         // const uploadFile = upload.single("profile_picture")
         // uploadFile(req, res, async function(err){
         //     if (err instanceof multer.MulterError){
@@ -160,21 +147,22 @@ module.exports = {
     },
     loginUser: async function(req, res){
         const {username, password} = req.body;
+        
         const checkUser = await db.User.findOne({
             where: {
                 username: username
             }
         })
 
-        if (checkUser == null){
-            const result = {
-                "message" : "User not found"
-            }
-            return res.status(404).json(result);
+        if (!checkUser){
+            return res.status(404).json({
+                message: "not_found"
+            });
         }
         else {
             if (checkUser.dataValues.password == password){
                 const role = checkUser.dataValues.role;
+
                 const token = jwt.sign({
                     id: checkUser.id,
                     username: username,
@@ -190,7 +178,7 @@ module.exports = {
             }
             else {
                 const result = {
-                    "message" : "Wrong Password"
+                    "message" : "incorrect_password"
                 }
                 return res.status(400).json(result);
             }

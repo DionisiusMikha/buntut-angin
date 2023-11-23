@@ -3,24 +3,24 @@ import client from "./client";
 function getAllUsers(){
     return client.get("/");
 }
-function registerUser(username, email, displayName, birthdate, password, confirm_password, phone_number, address, gender, weight, height){
+function registerUser(data){
     return client.post("/register", {
-        username: username,
-        email: email,
-        display_name: displayName,
-        date_of_birth: birthdate,
-        password: password,
-        confirm_password: confirm_password,
-        phone_number: phone_number,
-        address: address,
-        gender : gender,
-        weight : weight,
-        height: height
+        username: data.username,
+        email: data.email,
+        display_name: data.displayName,
+        date_of_birth: data.birthdate,
+        password: data.password,
+        phone_number: data.phone_number,
+        address: data.address,
+        gender : data.gender,
+        weight : data.weight,
+        height: data.height
     })
     .then((response) => {
         return response;
     })
     .catch((error) => {
+        console.log(error);
         if (error.response) {
             return error={
                 data : error.response.data,
