@@ -46,6 +46,7 @@ module.exports = {
         const today = new Date();
         const birthDate = new Date(date_of_birth);
         let umur = today.getFullYear() - birthDate.getFullYear();
+        console.log(umur)
 
         const newUser = db.User.create({
             display_name : display_name,
@@ -59,6 +60,7 @@ module.exports = {
             status: 1,
             weight : weight,
             height : height,
+            jenis_kelamin : gender,
             age : umur,
         })
 
@@ -73,7 +75,7 @@ module.exports = {
             "weight" : weight,
             "height" : height,
             "age" : umur,
-            // "profile_picture" : `/assets/${username}.png`
+            "jenis_kelamin" : gender
         }
 
         return res.status(201).json(result);
