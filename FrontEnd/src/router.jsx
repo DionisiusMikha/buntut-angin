@@ -21,8 +21,18 @@ import RecipesKonsultan from './Pages/Konsultan/components/recipes';
 import PatientListKonsultan from './Pages/Konsultan/components/patientList';
 import SettingsKonsultan from './Pages/Konsultan/components/settings';
 
-// Konsultan
 // Admin
+import AdminHomepage from './Pages/Admin/Homepage';
+import DashboardAdmin from './Pages/Admin/Components/Home';
+import RecipesAdmin from './Pages/Admin/Components/recipes';
+import PatientListAdmin from './Pages/Admin/Components/patientList';
+import SettingsAdmin from './Pages/Admin/Components/settings';
+import Subscriptions from "./Pages/Admin/Components/Subscriptions";
+import ListRecipes from "./Pages/Admin/Components/ListRecipes";
+import DetailRecipes from "./Pages/Admin/Components/DetailRecipes";
+import DataHandler from "./Pages/Admin/Components/DataHandler";
+const { loadRecipes, getRecipe } = DataHandler;
+
 
 const Router = createBrowserRouter([
   {
@@ -94,13 +104,60 @@ const Router = createBrowserRouter([
     ]
   },
   {
+    path: "/admin",
+    element: <AdminHomepage />,
+    children: [
+      {
+        path: "home",
+        element: <DashboardAdmin/>
+      },
+      {
+        path: "recipes",
+        element: <RecipesAdmin/>,
+        
+        children: [
+          {
+            path: "",
+            element: <ListRecipes/>,
+            loader: loadRecipes,
+          },
+          {
+            path: ":id",
+            element: <DetailRecipes/>,
+            loader: getRecipe,
+          },
+          {
+            path: "add",
+            element: <RecipesAdmin/>
+          },
+          {
+            path: "edit",
+            element: <RecipesAdmin/>
+          }
+        ]
+      },
+      {
+        path: "patient-list",
+        element: <PatientListAdmin/>
+      },
+      {
+        path: "settings",
+        element: <SettingsAdmin/>
+      },
+      {
+        path: "subscriptions",
+        element: <Subscriptions/>
+      },
+    ]
+  },
+  {
     path : "/dietisian/profile",
     element : <ProfileDietisian/>,
   },
-  {
-    path: "/try",
-    element: <Try />,
-  }
+  // {
+  //   path: "/try",
+  //   element: <Try />,
+  // }
 ]);
 
 export default Router;

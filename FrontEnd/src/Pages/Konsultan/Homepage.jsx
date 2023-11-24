@@ -6,7 +6,7 @@ function Homepage () {
         <div className="w-full h-screen flex flex-row justify-between overflow-y-auto bg-gray-200 ">
             {/* side navbar */}
             <div className="w-2/12 fixed">
-              <SideNavbar hovered="home"></SideNavbar>
+              <SideNavbar></SideNavbar>
             </div>
             <div className="w-2/12"></div>
             {/* chart */}

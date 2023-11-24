@@ -4,11 +4,10 @@ import navbar1 from '/icon/navbar1.png'
 import navbar2 from '/icon/navbar2.png'
 import navbar3 from '/icon/navbar3.png'
 import navbar4 from '/icon/navbar4.png'
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-function SideNavbar({hovered}){
+function SideNavbar(){
     const bg = "url('/icon/hover.png')";
-    const navigate = useNavigate();
 
     const [tanggal, setTanggal] = useState();
     const [bulan, setBulan] = useState();

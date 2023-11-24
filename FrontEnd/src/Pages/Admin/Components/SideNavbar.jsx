@@ -5,11 +5,10 @@ import navbar2 from '/icon/navbar2.png'
 import navbar3 from '/icon/navbar3.png'
 import navbar4 from '/icon/navbar6.png'
 import navbar5 from '/icon/navbar5.png'
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-function SideNavbar({hovered}){
+function SideNavbar(){
     const bg = "url('/icon/hover.png')";
-    const navigate = useNavigate();
 
     const [tanggal, setTanggal] = useState();
     const [bulan, setBulan] = useState();
@@ -46,7 +45,7 @@ function SideNavbar({hovered}){
                     <img src={logo} width="90%" className='h-full' />
                 </div>
                 <div className='w-3/5 h-9'>
-                    <NavLink className='w-full h-full flex justify-start items-center' to={`/admin`} style={(state) => {
+                    <NavLink className='w-full h-full flex justify-start items-center' to={`/admin/home`} style={(state) => {
                         return state.isActive ? style : {backgroundColor:"transparent"}
                     }}>    
                         <img src={navbar1} alt="" className='w-7'/>
@@ -62,7 +61,7 @@ function SideNavbar({hovered}){
                     </NavLink>
                 </div>
                 <div className='w-3/5 h-9'>
-                    <NavLink className='w-full h-full flex justify-start items-center' to={`/admin/patientList`} style={(state) => {
+                    <NavLink className='w-full h-full flex justify-start items-center' to={`/admin/patient-list`} style={(state) => {
                         return state.isActive ? style : {backgroundColor:"transparent"}
                     }}>
                         <img src={navbar3} alt="" className='w-7'/>
@@ -78,7 +77,7 @@ function SideNavbar({hovered}){
                     </NavLink>
                 </div>
                 <div className='w-3/5 h-9'>
-                    <NavLink className='w-full h-full flex justify-start items-center' to={`/admin/subscription`} style={(state) => {
+                    <NavLink className='w-full h-full flex justify-start items-center' to={`/admin/subscriptions`} style={(state) => {
                         return state.isActive ? style : {backgroundColor:"transparent"}
                     }}>
                         <img src={navbar5} alt="" className='w-7'/>

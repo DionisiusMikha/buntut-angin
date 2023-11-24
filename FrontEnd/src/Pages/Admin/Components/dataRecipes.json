@@ -1,0 +1,223 @@
+[
+    {
+        "id": 1,
+        "name": "Makanan 1",
+        "description": "American garden salad typically made with chopped salad greens, tomato, crispy bacon, hard-boiled eggs, avocado, chives, blue cheese, and red-wine vinaigrette",
+        "image" : "/img/fresh-salad-with-turkey-eggs-vegetables-removebg-preview.png",
+        "nutrion" : {
+            "calories" : "100",
+            "carbo" : "100",
+            "protein" : "100",
+            "fat" : "120"
+        },
+        "ingredients" : [
+            {
+                "name" : "Bawang",
+                "qty" : "30",
+                "unit" : "gram"
+            },
+            {
+                "name" : "Ayam",
+                "qty" : "100",
+                "unit" : "gram"
+            },
+            {
+                "name" : "Nasi",
+                "qty" : "200",
+                "unit" : "gram"
+            }, 
+            {
+                "name" : "Kecap",
+                "qty" : "10",
+                "unit" : "ml"
+            }
+        ], 
+        "steps" : [
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
+        ],
+        "comment" : [
+            {
+                "username" : "Jees",
+                "comment" : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+                "rating" : 5
+            },
+            {
+                "username" : "asd",
+                "comment" : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+                "rating" : 4
+            } 
+
+        ],
+        "like" : 30,
+        "status": 1
+    }, 
+    {
+        "id": 2,
+        "name": "Makanan 2",
+        "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, labore!",
+        "image" : "/img/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table-top-view-flat-lay-removebg-preview.png",
+        "nutrion" : {
+            "calories" : "100",
+            "carbo" : "100",
+            "protein" : "100",
+            "fat" : "100"
+        },
+        "ingredients" : [
+            {
+                "name" : "Bawang",
+                "qty" : "30",
+                "unit" : "gram"
+            },
+            {
+                "name" : "Ayam",
+                "qty" : "100",
+                "unit" : "gram"
+            },
+            {
+                "name" : "Nasi",
+                "qty" : "200",
+                "unit" : "gram"
+            }, 
+            {
+                "name" : "Kecap",
+                "qty" : "10",
+                "unit" : "ml"
+            }
+        ], 
+        "steps" : [
+            "1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "4. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
+        ],
+        "comment" : [
+            {
+                "username" : "Jees",
+                "comment" : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+                "rating" : 5
+            },
+            {
+                "username" : "asd",
+                "comment" : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+                "rating" : 4.5
+            } 
+
+        ],
+        "like" : 30,
+        "status": 1
+    },
+    {
+        "id": 3,
+        "name": "Makanan 3",
+        "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, labore!",
+        "image" : "/img/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table-top-view-flat-lay-removebg-preview.png",
+        "nutrion" : {
+            "calories" : "100",
+            "carbo" : "100",
+            "protein" : "100",
+            "fat" : "100"
+        },
+        "ingredients" : [
+            {
+                "name" : "Bawang",
+                "qty" : "30",
+                "unit" : "gram"
+            },
+            {
+                "name" : "Ayam",
+                "qty" : "100",
+                "unit" : "gram"
+            },
+            {
+                "name" : "Nasi",
+                "qty" : "200",
+                "unit" : "gram"
+            }, 
+            {
+                "name" : "Kecap",
+                "qty" : "10",
+                "unit" : "ml"
+            }
+        ], 
+        "steps" : [
+            "1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "4. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
+        ],
+        "comment" : [
+            {
+                "username" : "Jees",
+                "comment" : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+                "rating" : 5
+            },
+            {
+                "username" : "asd",
+                "comment" : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+                "rating" : 4.5
+            } 
+
+        ],
+        "like" : 30,
+        "status": 1
+    },
+    {
+        "id": 4,
+        "name": "Makanan 4",
+        "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, labore!",
+        "image" : "/img/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table-top-view-flat-lay-removebg-preview.png",
+        "nutrion" : {
+            "calories" : "100",
+            "carbo" : "100",
+            "protein" : "100",
+            "fat" : "100"
+        },
+        "ingredients" : [
+            {
+                "name" : "Bawang",
+                "qty" : "30",
+                "unit" : "gram"
+            },
+            {
+                "name" : "Ayam",
+                "qty" : "100",
+                "unit" : "gram"
+            },
+            {
+                "name" : "Nasi",
+                "qty" : "200",
+                "unit" : "gram"
+            }, 
+            {
+                "name" : "Kecap",
+                "qty" : "10",
+                "unit" : "ml"
+            }
+        ], 
+        "steps" : [
+            "1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "4. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
+        ],
+        "comment" : [
+            {
+                "username" : "Jees",
+                "comment" : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+                "rating" : 5
+            },
+            {
+                "username" : "asd",
+                "comment" : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+                "rating" : 4.5
+            } 
+
+        ],
+        "like" : 30,
+        "status": 1
+    }
+    
+]
