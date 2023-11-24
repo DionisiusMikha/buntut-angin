@@ -88,7 +88,7 @@ const LoginPage = () => {
                     <form onSubmit={handleSubmit(submit)} className='mt-24 w-10/12'> {/* login */}
                         <div className='font-bold text-4xl'>Welcome Back</div>
                         <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-20 items-center'>
-                            <input type="text" placeholder={`${errors.username ? errors?.username?.message : "Enter Your Username" }`}  className={`input w-full max-w-s items-center bg-transparent border-none outline-none ${errors.username ? 'placeholder-red-500' : ''}`} {...register("username")}/>
+                            <input type="text" placeholder={`${errors.username ? errors?.username?.message : "Enter Your Username" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.username ? 'placeholder-red-500' : ''}`} {...register("username")}/>
                             <div onClick={()=>{
                                 resetText()
                             }}>
@@ -96,7 +96,7 @@ const LoginPage = () => {
                             </div>
                         </div>
                         <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
-                            <input type={see} placeholder={`${errors.password ? errors?.password?.message : "Enter Your Password" }`}  className={`input w-full max-w-s items-center bg-transparent border-none outline-none ${errors.password ? 'placeholder-red-500' : ''}`} {...register("password")}/>
+                            <input type={see} placeholder={`${errors.password ? errors?.password?.message : "Enter Your Password" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.password ? 'placeholder-red-500' : ''}`} {...register("password")}/>
                             <div onClick={
                                 ()=>{
                                     if(see == "password"){

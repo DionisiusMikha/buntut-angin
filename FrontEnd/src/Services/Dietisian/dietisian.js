@@ -10,11 +10,7 @@ function registerUser(data){
         display_name: data.displayName,
         date_of_birth: data.birthdate,
         password: data.password,
-        phone_number: data.phone_number,
-        address: data.address,
         gender : data.gender,
-        weight : data.weight,
-        height: data.height
     })
     .then((response) => {
         return response;

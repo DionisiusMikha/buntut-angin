@@ -1,18 +1,25 @@
 import { createBrowserRouter } from "react-router-dom";
+import Loader from "./Component/Loader";
+
+// Dashboard
+import LandingPage from "./Pages/Landing Page/LandingPages";
 import Login from "./Pages/Login Page/LoginPage";
 import Register from "./Pages/Register Page/RegisterPage";
-import DietisianHomepage from "./Pages/Dietisian/Homepage"
-import Try from "./Pages/Try/try";
-import LandingPage from "./Pages/Landing Page/LandingPages";
-import Loader from "./Component/Loader";
-import ProfileDietisian from "./Pages/Dietisian/Profile";
-import KonsultanHomepage from "./Pages/Konsultan/Homepage";
 
 // Dietisian
-import Home from './Pages/Dietisian/components/home';
-import Recipes from './Pages/Dietisian/components/recipes';
-import Report from './Pages/Dietisian/components/report';
-import Chat from './Pages/Dietisian/components/chat';
+import DietisianHomepage from "./Pages/Dietisian/Homepage"
+import DashboardDietisian from './Pages/Dietisian/components/home';
+import RecipesDietisian from './Pages/Dietisian/components/recipes';
+import ReportDietisian from './Pages/Dietisian/components/report';
+import ChatDietisian from './Pages/Dietisian/components/chat';
+import ProfileDietisian from "./Pages/Dietisian/Profile";
+
+// Konsultan
+import KonsultanHomepage from './Pages/Konsultan/Homepage';
+import DashboardKonsultan from './Pages/Konsultan/components/home';
+import RecipesKonsultan from './Pages/Konsultan/components/recipes';
+import PatientListKonsultan from './Pages/Konsultan/components/patientList';
+import SettingsKonsultan from './Pages/Konsultan/components/settings';
 
 // Konsultan
 // Admin
@@ -44,20 +51,24 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "home",
-        element: <Home/>
+        element: <DashboardDietisian/>
       },
       {
         path: "recipes",
-        element: <Recipes/>
+        element: <RecipesDietisian/>
       },
       {
         path: "report",
-        element: <Report/>
+        element: <ReportDietisian/>
       },
       {
         path: "chat",
-        element: <Chat/>
-      }
+        element: <ChatDietisian/>
+      },
+      {
+        path : "profile",
+        element : <ProfileDietisian/>,
+      },
     ]
   },
   {
@@ -66,19 +77,19 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "home",
-        element: <Home/>
+        element: <DashboardKonsultan/>
       },
       {
         path: "recipes",
-        element: <Recipes/>
+        element: <RecipesKonsultan/>
       },
       {
-        path: "report",
-        element: <Report/>
+        path: "patient-list",
+        element: <PatientListKonsultan/>
       },
       {
-        path: "chat",
-        element: <Chat/>
+        path: "settings",
+        element: <SettingsKonsultan/>
       }
     ]
   },
