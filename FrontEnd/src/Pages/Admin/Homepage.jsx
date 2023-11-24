@@ -1,4 +1,4 @@
-import SideNavbar from "../../Component/SideNavbar";
+import SideNavbar from "./Component/SideNavbar";
 import { Outlet, useNavigate } from "react-router-dom";
 
 function Homepage () {
