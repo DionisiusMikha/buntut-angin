@@ -9,6 +9,7 @@ import iconFacebook from '/icon/facebook icon.png'
 import iconApple from '/icon/apple icon.png'
 
 import DietisianService from '../../Services/Dietisian/dietisian';
+import DoctorService from '../../Services/Konsultan/doctor';
 
 import { useForm } from 'react-hook-form'
 import Joi from 'joi'
@@ -43,8 +44,18 @@ const LoginPage = () => {
             localStorage.setItem("token", res.data.token);
             navigate("/dietisian/home");
         } else {
-            setError(res.data.message);
-            reset();
+            if (res.data.message == "user not found"){
+                const res2 = await DoctorService.getAllDoctor();
+                console.log(res2)
+                if (res.status == 200){
+                    localStorage.setItem("tokenDoctor", res.data.token);
+                    navigate("/konsultan/home");
+                }
+
+            } else {
+                setError(res.data.message);
+                reset();
+            }
         }
     }
 

@@ -46,6 +46,7 @@ module.exports = {
         const today = new Date();
         const birthDate = new Date(date_of_birth);
         let umur = today.getFullYear() - birthDate.getFullYear();
+        console.log(umur)
 
         const newUser = db.User.create({
             display_name : display_name,
@@ -55,6 +56,9 @@ module.exports = {
             birthdate : date_of_birth,
             balance : 0,
             status: 1,
+            weight : weight,
+            height : height,
+            jenis_kelamin : gender,
             age : umur,
         })
 
@@ -65,7 +69,7 @@ module.exports = {
             "display_name" : display_name,
             "birthdate" : date_of_birth,
             "age" : umur,
-            // "profile_picture" : `/assets/${username}.png`
+            "jenis_kelamin" : gender
         }
 
         return res.status(201).json(result);
@@ -148,7 +152,7 @@ module.exports = {
 
         if (!checkUser){
             return res.status(404).json({
-                message: "not_found"
+                message: "user not found"
             });
         }
         else {
@@ -170,7 +174,7 @@ module.exports = {
             }
             else {
                 const result = {
-                    "message" : "incorrect_password"
+                    "message" : "incorrect password"
                 }
                 return res.status(400).json(result);
             }

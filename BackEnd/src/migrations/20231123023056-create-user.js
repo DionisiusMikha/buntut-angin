@@ -45,15 +45,14 @@ module.exports = {
       height: {
         type: Sequelize.INTEGER
       },
+      jenis_kelamin: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      deletedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }

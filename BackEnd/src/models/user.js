@@ -25,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.STRING,
     age: DataTypes.INTEGER,
     weight: DataTypes.INTEGER,
-    height: DataTypes.INTEGER
+    height: DataTypes.INTEGER,
+    jenis_kelamin: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
-    timestamps: true
   });
   return User;
 };

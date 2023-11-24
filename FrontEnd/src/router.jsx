@@ -21,6 +21,9 @@ import RecipesKonsultan from './Pages/Konsultan/components/recipes';
 import PatientListKonsultan from './Pages/Konsultan/components/patientList';
 import SettingsKonsultan from './Pages/Konsultan/components/settings';
 
+// Konsultan
+// Admin
+
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -89,6 +92,14 @@ const Router = createBrowserRouter([
         element: <SettingsKonsultan/>
       }
     ]
+  },
+  {
+    path : "/dietisian/profile",
+    element : <ProfileDietisian/>,
+  },
+  {
+    path: "/try",
+    element: <Try />,
   }
 ]);
 
