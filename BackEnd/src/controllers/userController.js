@@ -29,8 +29,8 @@ module.exports = {
         return res.status(200).json(users);
     },
     registerUser: async function (req, res){
-        const {username, email, display_name, date_of_birth, password, gender, phone_number, address, weight, height} = req.body;
-        console.log(req.body);
+        const {username, email, display_name, date_of_birth, password, gender} = req.body;
+        
         const hasil = await db.User.findOne({
             where: {
                 username: username,
@@ -52,13 +52,9 @@ module.exports = {
             email : email,
             username : username,
             password : password,
-            phone_number : phone_number,
             birthdate : date_of_birth,
-            address: address,
             balance : 0,
             status: 1,
-            weight : weight,
-            height : height,
             age : umur,
         })
 
@@ -67,11 +63,7 @@ module.exports = {
             "username" : username,
             "email" : email,
             "display_name" : display_name,
-            "phone_number" : phone_number,
             "birthdate" : date_of_birth,
-            "address" : address,
-            "weight" : weight,
-            "height" : height,
             "age" : umur,
             // "profile_picture" : `/assets/${username}.png`
         }

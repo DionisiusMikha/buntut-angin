@@ -1,4 +1,4 @@
-import SideNavbar from "../../Component/SideNavbar";
+import SideNavbar from "./components/SideNavbar";
 
 function Profile(){
     return(
