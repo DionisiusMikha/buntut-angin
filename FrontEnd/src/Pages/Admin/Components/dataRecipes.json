@@ -4,11 +4,11 @@
         "name": "Makanan 1",
         "description": "American garden salad typically made with chopped salad greens, tomato, crispy bacon, hard-boiled eggs, avocado, chives, blue cheese, and red-wine vinaigrette",
         "image" : "/img/fresh-salad-with-turkey-eggs-vegetables-removebg-preview.png",
-        "nutrion" : {
-            "calories" : "100",
-            "carbo" : "100",
-            "protein" : "100",
-            "fat" : "120"
+        "nutrition" : {
+            "calories" : 100,
+            "carbo" : 100,
+            "protein" : 100,
+            "fat" : 100
         },
         "ingredients" : [
             {
@@ -59,11 +59,11 @@
         "name": "Makanan 2",
         "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, labore!",
         "image" : "/img/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table-top-view-flat-lay-removebg-preview.png",
-        "nutrion" : {
-            "calories" : "100",
-            "carbo" : "100",
-            "protein" : "100",
-            "fat" : "100"
+        "nutrition" : {
+            "calories" : 100,
+            "carbo" : 100,
+            "protein" : 100,
+            "fat" : 100
         },
         "ingredients" : [
             {
@@ -88,10 +88,10 @@
             }
         ], 
         "steps" : [
-            "1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-            "2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-            "3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-            "4. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
         ],
         "comment" : [
             {
@@ -114,11 +114,11 @@
         "name": "Makanan 3",
         "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, labore!",
         "image" : "/img/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table-top-view-flat-lay-removebg-preview.png",
-        "nutrion" : {
-            "calories" : "100",
-            "carbo" : "100",
-            "protein" : "100",
-            "fat" : "100"
+        "nutrition" : {
+            "calories" : 100,
+            "carbo" : 100,
+            "protein" : 100,
+            "fat" : 100
         },
         "ingredients" : [
             {
@@ -143,10 +143,10 @@
             }
         ], 
         "steps" : [
-            "1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-            "2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-            "3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-            "4. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
         ],
         "comment" : [
             {
@@ -169,11 +169,11 @@
         "name": "Makanan 4",
         "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, labore!",
         "image" : "/img/salad-from-tomatoes-cucumber-red-onions-lettuce-leaves-healthy-summer-vitamin-menu-vegan-vegetable-food-vegetarian-dinner-table-top-view-flat-lay-removebg-preview.png",
-        "nutrion" : {
-            "calories" : "100",
-            "carbo" : "100",
-            "protein" : "100",
-            "fat" : "100"
+        "nutrition" : {
+            "calories" : 100,
+            "carbo" : 100,
+            "protein" : 100,
+            "fat" : 100
         },
         "ingredients" : [
             {
@@ -198,10 +198,10 @@
             }
         ], 
         "steps" : [
-            "1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-            "2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-            "3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-            "4. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
         ],
         "comment" : [
             {
