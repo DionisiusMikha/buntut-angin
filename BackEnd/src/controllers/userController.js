@@ -5,7 +5,7 @@ const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 const upload = multer({
-    dest : "./uploads",
+    dest : "../../Uploads/User",
 })
 
 const { Op } = db.Sequelize
@@ -29,7 +29,7 @@ module.exports = {
         return res.status(200).json(users);
     },
     registerUser: async function (req, res){
-        const {username, email, display_name, date_of_birth, password, gender} = req.body;
+        const {display_name, email, username, password, birthdate, balance, phone_number, profile_picture, address, weight, height} = req.body;
         
         const hasil = await db.User.findOne({
             where: {
@@ -44,7 +44,7 @@ module.exports = {
         }
         
         const today = new Date();
-        const birthDate = new Date(date_of_birth);
+        const birthDate = new Date(birthdate);
         let umur = today.getFullYear() - birthDate.getFullYear();
         console.log(umur)
 
@@ -53,13 +53,14 @@ module.exports = {
             email : email,
             username : username,
             password : password,
-            birthdate : date_of_birth,
+            birthdate : birthdate,
             balance : 0,
-            status: 1,
             weight : weight,
             height : height,
             jenis_kelamin : gender,
             age : umur,
+            address: address,
+            phone_number: phone_number,
         })
 
         const result = {
@@ -67,7 +68,7 @@ module.exports = {
             "username" : username,
             "email" : email,
             "display_name" : display_name,
-            "birthdate" : date_of_birth,
+            "birthdate" : birthdate,
             "age" : umur,
             "jenis_kelamin" : gender
         }
@@ -208,66 +209,95 @@ module.exports = {
         }
     },
     editUser: async function(req, res){
-        const uploadFile = upload.single("profile_picture");
-        uploadFile(req, res, async function (err){
-            if (err instanceof multer.MulterError){
-                return res.status(400).send({msg: "File too large"});
-            }
-            else if (err){
-                return res.status(400).send({msg: "File not supported"});
-            }
-            const idUser = req.params.id_user;
-            const {username, email, phone_number, date_of_birth, display_name} = req.body;
+        const idUser = req.params.id_user;
+        const { username, email, phone_number, birthdate, display_name, address, weight, height } = req.body;
 
-            const checkUser = await db.User.findByPk(idUser)
-            if (!checkUser){
+        const checkUser = await db.User.findByPk(idUser)
+        if (!checkUser){
+            const result = {
+                "message" : "User not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            if (checkUser.dataValues.username == username){
                 const result = {
-                    "message" : "User not found"
+                    "message" : "User already exists"
                 }
-                res.status(404).json(result);
+                res.status(400).json(result)
             }
             else {
-                if (checkUser.dataValues.username == username){
-                    const result = {
-                        "message" : "User already exists"
-                    }
-                    res.status(400).json(result);
+                try {
+                    const updateUser = db.User.update({
+                        username: username,
+                        email: email,
+                    })
                 }
-                else {
-                    try{
-                        const updateUser = await db.User.update({
-                            username: username,
-                            email: email,
-                            phone_number: phone_number,
-                            birthdate: date_of_birth,
-                            display_name: display_name,
-                            profile_picture : `/assets/${checkUser.dataValues.username}.png`
-                        }, {
-                            where: {
-                                id: idUser
-                            }
-                        })
-                        fs.renameSync(
-                            `./uploads/${req.file.filename}`,
-                            `./assets/${checkUser.dataValues.username}.png`
-                        );
-                        const result = {
-                            "message" : "Data updated",
-                            "username" : username,
-                            "email" : email,
-                            "phone_number" : phone_number,
-                            "birthdate" : date_of_birth,
-                            "display_name" : display_name,
-                            "profile_picture" : `/assets/${checkUser.dataValues.username}.png`
-                        }
-                        res.status(200).json(result);
-                    }
-                    catch(err){
-                        return res.status(400).json({message: "Error updating data", error: err.message});
-                    }
+                catch(err){
+                    return res.status(400).json({message: "Error updating data", error: err.message});
                 }
             }
-        })
+        }
+        // const uploadFile = upload.single("profile_picture");
+        // uploadFile(req, res, async function (err){
+        //     if (err instanceof multer.MulterError){
+        //         return res.status(400).send({msg: "File too large"});
+        //     }
+        //     else if (err){
+        //         return res.status(400).send({msg: "File not supported"});
+        //     }
+        //     const idUser = req.params.id_user;
+        //     const {username, email, phone_number, birthdate, display_name, address, weight, heigth} = req.body;
+
+        //     const checkUser = await db.User.findByPk(idUser)
+        //     if (!checkUser){
+        //         const result = {
+        //             "message" : "User not found"
+        //         }
+        //         res.status(404).json(result);
+        //     }
+        //     else {
+        //         if (checkUser.dataValues.username == username){
+        //             const result = {
+        //                 "message" : "User already exists"
+        //             }
+        //             res.status(400).json(result);
+        //         }
+        //         else {
+        //             try{
+        //                 const updateUser = await db.User.update({
+        //                     username: username,
+        //                     email: email,
+        //                     phone_number: phone_number,
+        //                     birthdate: date_of_birth,
+        //                     display_name: display_name,
+        //                     profile_picture : `/assets/${checkUser.dataValues.username}.png`
+        //                 }, {
+        //                     where: {
+        //                         id: idUser
+        //                     }
+        //                 })
+        //                 fs.renameSync(
+        //                     `../../Uploads/User/${req.file.filename}`,
+        //                     `./assets/${checkUser.dataValues.username}.png`
+        //                 );
+        //                 const result = {
+        //                     "message" : "Data updated",
+        //                     "username" : username,
+        //                     "email" : email,
+        //                     "phone_number" : phone_number,
+        //                     "birthdate" : date_of_birth,
+        //                     "display_name" : display_name,
+        //                     "profile_picture" : `/assets/${checkUser.dataValues.username}.png`
+        //                 }
+        //                 res.status(200).json(result);
+        //             }
+        //             catch(err){
+        //                 return res.status(400).json({message: "Error updating data", error: err.message});
+        //             }
+        //         }
+        //     }
+        // })
     },
     cekProfilKonsultan: async function(req, res){
         // const idKonsultan = req.params.id_konsultan;
@@ -318,7 +348,7 @@ module.exports = {
         }
     },
     getAllResep: async function(req, res){
-        const nama = req.body.nama;
+        // const nama = req.body.nama;
 
         const getResep = await db.Recipes.findAll();
 
