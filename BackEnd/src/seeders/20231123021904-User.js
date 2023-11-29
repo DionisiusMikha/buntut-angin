@@ -26,8 +26,23 @@ module.exports = {
       age : 20,
       weight : 50,
       height : 160,
-      jenis_kelamin : "Female",
-    }
+      genders : "Female",
+    }, 
+    {
+      display_name : "Calvin Harsono",
+      email : "calvin.harsono@gmail.com",
+      username : "kelpin",
+      password : "123",
+      birthdate : "2003-01-23",
+      balance : 100000,
+      phone_number : "08123456789",
+      profile_picture : null,
+      address : "jalan rumah",
+      age : 20,
+      weight : 62,
+      height : 169,
+      genders : "Male",
+    },
   ]);
   },
 
