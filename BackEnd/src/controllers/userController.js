@@ -29,7 +29,7 @@ module.exports = {
         return res.status(200).json(users);
     },
     registerUser: async function (req, res){
-        const {display_name, email, username, password, birthdate, balance, phone_number, profile_picture, address, weight, height} = req.body;
+        const {display_name, email, username, password, birthdate, phone_number, address, weight, height, gender} = req.body;
         
         const hasil = await db.User.findOne({
             where: {
@@ -74,73 +74,6 @@ module.exports = {
         }
 
         return res.status(201).json(result);
-        // const uploadFile = upload.single("profile_picture")
-        // uploadFile(req, res, async function(err){
-        //     if (err instanceof multer.MulterError){
-        //         return res.status(400).json({msg: "File too large"})
-        //     }
-        //     else if (err){  
-        //         return res.status(400).json({msg: "File not supported"});
-        //     }
-
-        //     const {username, email, display_name, date_of_birth, password, confirm_password, gender, phone_number, address, weight, height} = req.body;
-            
-        //     cariUser = await db.User.findAndCountAll({
-        //         where: {
-        //             username: username
-        //         }
-        //     })
-        //     if (cariUser.count > 0){
-        //         return res.status(400).json({msg: "User already registered"})
-        //     }
-
-        //     if (password != confirm_password){
-        //         const result = {
-        //             "message" : "Password and Confirm Password doesn\'t match"
-        //         }
-        //         return res.status(400).json(result);
-        //     }
-
-        //     fs.renameSync(
-        //         `./uploads/${req.file.filename}`,
-        //         `./assets/${username}.png`
-        //     );
-            
-        //     const today = new Date();
-        //     const birthDate = new Date(date_of_birth);
-        //     let umur = today.getFullYear() - birthDate.getFullYear();
-
-        //     const newUser = db.User.create({
-        //         display_name : display_name,
-        //         email : email,
-        //         username : username,
-        //         password : password,
-        //         phone_number : phone_number,
-        //         birthdate : date_of_birth,
-        //         address: address,
-        //         balance : 0,
-        //         status: 1,
-        //         weight : weight,
-        //         height : height,
-        //         age : umur,
-        //         profile_picture : `/assets/${username}.png`
-        //     })
-
-        //     const result = {
-        //         "message" : "Registration Success",
-        //         "username" : username,
-        //         "email" : email,
-        //         "display_name" : display_name,
-        //         "phone_number" : phone_number,
-        //         "birthdate" : date_of_birth,
-        //         "address" : address,
-        //         "weight" : weight,
-        //         "height" : height,
-        //         "age" : umur,
-        //         "profile_picture" : `/assets/${username}.png`
-        //     }
-        //     return res.status(201).json(result);
-        // })
     },
     loginUser: async function(req, res){
         const {username, password} = req.body;
@@ -210,7 +143,7 @@ module.exports = {
     },
     editUser: async function(req, res){
         const idUser = req.params.id_user;
-        const { username, email, phone_number, birthdate, display_name, address, weight, height } = req.body;
+        const { username, email, phone_number, birthdate, display_name, address, weight, height, profile_picture, gender } = req.body;
 
         const checkUser = await db.User.findByPk(idUser)
         if (!checkUser){
@@ -231,7 +164,34 @@ module.exports = {
                     const updateUser = db.User.update({
                         username: username,
                         email: email,
+                        phone_number: phone_number,
+                        birthdate: birthdate,
+                        display_name: display_name,
+                        address: address,
+                        weight: weight,
+                        height: height,
+                        jenis_kelamin: gender,
+                        profile_picture: profile_picture
+                    }, {
+                        where: {
+                            id: idUser
+                        }
                     })
+
+                    const result = {
+                        "message" : "Data updated",
+                        "username" : username,
+                        "email" : email,
+                        "phone_number" : phone_number,
+                        "birthdate" : birthdate,
+                        "display_name" : display_name,
+                        "height" : height,
+                        "address" : address,
+                        "weight" : weight,
+                        "gender" : gender,
+                        "profile_picture" : profile_picture
+                    }
+                    res.status(200).json(result);
                 }
                 catch(err){
                     return res.status(400).json({message: "Error updating data", error: err.message});
