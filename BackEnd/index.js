@@ -27,5 +27,5 @@ app.listen(port, function(){
 //npx sequelize-cli model:generate --name Doctor --attributes display_name:string,email:string,username:string,password:string,phone_number:string,birthdate:date,address:string,profile_picture:string
 
 //npx sequelize-cli seed:generate --name User
-//npx sequelize-cli db:create
-//npx sequelize-cli db:migrate
+// npx sequelize-cli db:create
+// npx sequelize-cli db:migrate

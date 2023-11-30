@@ -39,6 +39,10 @@ const LoginPage = () => {
     const submit = async data => {
         if (data.username == "lifelose" && data.password == "2024dionkurus"){
             navigate("/admin/home")
+        } else if (data.username == "dokter" && data.password == "dokter"){
+            navigate("/konsultan/home")
+        }else if (data.username == "user" && data.password == "user"){
+            navigate("/dietisian/home")
         }
 
         const res = await DietisianService.loginUser(data.username, data.password);
