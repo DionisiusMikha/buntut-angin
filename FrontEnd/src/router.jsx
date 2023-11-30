@@ -17,7 +17,7 @@ import ProfileDietisian from "./Pages/Dietisian/Profile";
 // Konsultan
 import KonsultanHomepage from './Pages/Konsultan/Homepage';
 import DashboardKonsultan from './Pages/Konsultan/components/home';
-import RecipesKonsultan from './Pages/Konsultan/components/recipes-add-1';
+import RecipesKonsultan from './Pages/Konsultan/components/recipes';
 import PatientListKonsultan from './Pages/Konsultan/components/patientList';
 import SettingsKonsultan from './Pages/Konsultan/components/settings';
 
