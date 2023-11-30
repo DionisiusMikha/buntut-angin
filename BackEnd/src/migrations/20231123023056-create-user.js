@@ -45,7 +45,7 @@ module.exports = {
       height: {
         type: Sequelize.INTEGER
       },
-      jenis_kelamin: {
+      genders: {
         type: Sequelize.STRING
       },
       createdAt: {

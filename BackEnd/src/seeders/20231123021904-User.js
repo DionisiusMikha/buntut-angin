@@ -26,7 +26,7 @@ module.exports = {
       age : 20,
       weight : 50,
       height : 160,
-      jenis_kelamin : "Female",
+      genders : "Female",
     }, 
     {
       display_name : "Calvin Harsono",
@@ -41,7 +41,7 @@ module.exports = {
       age : 20,
       weight : 62,
       height : 169,
-      jenis_kelamin : "Male",
+      genders : "Male",
     },
   ]);
   },
