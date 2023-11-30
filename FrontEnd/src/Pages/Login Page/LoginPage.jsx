@@ -44,19 +44,17 @@ const LoginPage = () => {
         // }else if (data.username == "user" && data.password == "user"){
         //     navigate("/dietisian/home")
         }
-        console.log(data)
 
         const res = await DietisianService.loginUser(data.username, data.password);
         
         if(res.status == 200){
             localStorage.setItem("token", res.data.token);
-            console.log(res.data)
             navigate("/dietisian/home");
         } else {
             if (res.data.message == "user not found"){
-                const res2 = await DoctorService.getAllDoctor();
+                const res2 = await DoctorService.loginUser(data.username, data.password);
                 console.log(res2)
-                if (res.status == 200){
+                if (res2.status == 200){
                     localStorage.setItem("tokenDoctor", res.data.token);
                     navigate("/konsultan/home");
                 }
