@@ -1,10 +1,12 @@
 import menu from "/icon/menu.png";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import iconUser from "/icon/user.png";
 import DietisianService from "../../../Services/Dietisian/dietisian";
 
 function Home() {
     const [user, setUser] = useState ({});
+    const navigate = useNavigate();
 
     const cariUser = async() => {
         const token = localStorage.getItem("token");
