@@ -1,11 +1,21 @@
 import {useState, useEffect} from 'react';
+import dietisianService from "../../../Services/Dietisian/dietisian";
+import doctorService from '../../../Services/Konsultan/doctor';
 
 function PatientList() {
     const [limit, setLimit] = useState(10);
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState({});
     const [search, setSearch] = useState('');
 
+    const getAllUser = async () => {
+        const responseUser = await dietisianService.getAllUsers();
+        console.log(responseUser);
+        const responseDoctor = await doctorService.getAllDoctor();
+        console.log(responseDoctor);
+    }
+
     useEffect(() => {
+        getAllUser();
         // console.log(limit);
         // console.log(user);
         // console.log(search);
@@ -56,6 +66,7 @@ function PatientList() {
                             <tr>
                                 <th>a</th>
                                 <th>Name</th>
+                                <th>Role</th>
                                 <th>b</th>
                             </tr>
                         </thead>
