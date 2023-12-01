@@ -8,29 +8,8 @@ import { addRecipe } from "../../../Redux/recipesSlice";
 
 function AddRecipe1(props){
     const dispatch = useDispatch();
-    const schema = Joi.object({
-        name: Joi.string().required().messages({
-            "string.empty":"food name tidak boleh kosong"
-        }),
-        desc: Joi.string().required().messages({
-            "string.empty":"description tidak boleh kosong"
-        }),
-        calories: Joi.number().required().messages({
-            "number.empty":"calories tidak boleh kosong"
-        }),
-        carbo: Joi.number().required().messages({
-            "number.empty":"carbo tidak boleh kosong"
-        }),
-        protein: Joi.number().required().messages({
-            "number.empty":"protein tidak boleh kosong"
-        }),
-        fat: Joi.number().required().messages({
-            "number.empty":"fat tidak boleh kosong"
-        }),
-    })
-    const {register, handleSubmit, reset, formState: { errors }  } = useForm({
-        // resolver: joiResolver(schema)
-    });
+    const hasil = useSelector((state) => state.recipes.recipe);
+    const {register, handleSubmit, reset, formState: { errors }  } = useForm();
 
     const change = async data => {
         // console.log(data);
@@ -42,6 +21,7 @@ function AddRecipe1(props){
         }
     }
 
+
     const resetName = () =>{
         reset({ name: "" })
     }
@@ -49,10 +29,7 @@ function AddRecipe1(props){
         reset({ desc: "" })
     }
     return (
-        <form className="flex flex-row justify-between"
-         onSubmit={handleSubmit(change)}
-        //  onChange={handleSubmit(change)}
-         >
+        <form className="flex flex-row justify-between" onSubmit={handleSubmit(change)}>
             <div className="w-2/5">
                 {/* Food Name */}
                 <div>
@@ -158,17 +135,7 @@ function AddRecipe1(props){
                     </div>
                 </div>
                 <div className="flex flex-row justify-end w-full mt-40">
-                    <button type="submit" className="bg-blue-300 px-6 py-3 rounded-xl font-semibold text-xl w-72" 
-                    // onClick={()=>{
-                    //     try{
-                    //         dispatch(addRecipe(data))
-                    //         props.setActive(2);
-                    //     }catch(e){
-                    //       alert(e.message)
-                    //     }
-                        
-                    // }}
-                    >
+                    <button type="submit" className="bg-blue-300 px-6 py-3 rounded-xl font-semibold text-xl w-72">
                         Next                
                     </button>
                 </div>

@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Loader from "./Component/Loader";
+// import Try from "./Pages/Try/try";
 
 // Dashboard
 import LandingPage from "./Pages/Landing Page/LandingPages";
@@ -25,7 +26,7 @@ import SettingsKonsultan from './Pages/Konsultan/components/settings';
 import AdminHomepage from './Pages/Admin/Homepage';
 import DashboardAdmin from './Pages/Admin/Components/Home';
 import RecipesAdmin from './Pages/Admin/Components/recipes';
-import PatientListAdmin from './Pages/Admin/Components/patientList';
+import PatientListAdmin from './Pages/Admin/Components/PatientList';
 import SettingsAdmin from './Pages/Admin/Components/settings';
 import Subscriptions from "./Pages/Admin/Components/Subscriptions";
 import ListRecipes from "./Pages/Admin/Components/ListRecipes";

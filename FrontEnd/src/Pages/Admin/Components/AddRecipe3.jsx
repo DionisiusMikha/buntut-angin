@@ -1,37 +1,35 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { addIngredients } from "../../../Redux/recipesSlice";
-import AddIngredients from "./AddIngredients";
+import { addSteps } from "../../../Redux/recipesSlice";
+import AddStep from "./AddStep";
 
-function AddRecipe2(props){
-    const hasil = useSelector((state) => state.recipes.ingredients);
+function AddRecipe3(props){
+    const hasil = useSelector((state) => state.recipes.steps);
     const dispatch = useDispatch();
-    const [bahan, setbahan] = (hasil != "" ? useState(hasil): useState([{
-        name : "",
-        qty: 0,
-        unit: ""
-    }]));
+    if (hasil.length > 0){
+        console.log(hasil)
+    }
+    const  [steps, setsteps] = useState(["asd", "asdasdadsds"]);
+
     function deleteHandler(idx){
-        const x = bahan.filter((b, i)=> {
+        const x = steps.filter((s, i)=> {
             if(i != idx){
-                return b
+                return s
             }
         })
-        setbahan(x);
+        setsteps(x);
     }
 
-    function saveAll(id, name, unit, qty){
-        console.log(id, name, unit, qty)
-        const newBahan = [...bahan]
-        newBahan[id].name = name
-        newBahan[id].qty = qty
-        newBahan[id].unit = unit
-        setbahan(newBahan)   
+    function saveAll(id,step){
+        const newStep = [...steps]
+        newStep[id] = step
+        setsteps(newStep)   
+        console.log(steps)
     }
 
     function save(){
         try{
-            dispatch(addIngredients(bahan))
+            dispatch(addSteps(steps))
         } catch(err){
             console.log(err)
             alert(err.message)
@@ -43,21 +41,18 @@ function AddRecipe2(props){
             <div className="w-full">
                 <div className="min-h-[calc(100vh-21rem)]">
                     <div className="flex justify-between ">
-                        <div className="text-2xl font-semibold py-1"> Ingredients </div>
+                        <div className="text-2xl font-semibold py-1"> Steps </div>
                         <button className="bg-indigo-200 px-4 py-2 rounded-xl text-lg font-semibold" onClick={()=>{
-                            setbahan([...bahan, {
-                                name : "",
-                                qty: 0,
-                                unit: ""
-                            }])
+                            setsteps([...steps, ""])
                         }}>
-                            Add Ingredients
+                            Add Steps
                         </button>
                     </div>
                     <div className="overflow-auto">
-                        {bahan.map((item, index)=>{
+                        {steps.map((item, index)=>{
                             const x = Math.random();
-                            return <AddIngredients key={x} id={index} bahan={item} deleteHandler={deleteHandler} saveAll={saveAll}/>
+                            // console.log(index)
+                            return <AddStep key={x} id={index} steps={item} deleteHandler={deleteHandler} saveAll={saveAll}/>
                         })}
                     </div>
                 </div>
@@ -65,15 +60,15 @@ function AddRecipe2(props){
                 <div className="flex flex-row justify-between">
                     <button type="submit" className="bg-blue-300 px-6 py-3 rounded-xl font-semibold text-xl w-72" onClick={()=>{
                         save()
-                        props.setActive(1);
+                        props.setActive(2);
                     }}>
                         Previous                
                     </button>
                     <button type="submit" className="bg-blue-300 px-6 py-3 rounded-xl font-semibold text-xl w-72" onClick={()=>{
                         save()
-                        props.setActive(3);
+                        // props.setActive(3);
                     }}>
-                        Next                
+                        Finish                
                     </button>
                 </div>
             </div>
@@ -81,4 +76,4 @@ function AddRecipe2(props){
     )
 }
 
-export default AddRecipe2;
+export default AddRecipe3;

@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit"
 
 const initialState = {
-    recipes : [],
+    recipe : [],
     ingredients : [],
     steps : [],
 }
@@ -11,15 +11,23 @@ export const recipeSlice = createSlice({
     initialState,
     reducers:{
         addIngredients : (state, action) => {
-            // state.recipes.push(action.payload)
-            console.log(action.payload)
+            state.ingredients = [];
+            for (let i = 0; i < action.payload.length; i++) {
+                state.ingredients.push(action.payload[i])
+            }
+        },
+        addSteps : (state, action) => {
+            state.steps = [];
+            for (let i = 0; i < action.payload.length; i++) {
+                state.steps.push(action.payload[i])
+            }
         },
         addRecipe : (state, action) => {
-            console.log(action.payload)
-            state.recipes.push({
-                id : Math.random().toString(36).substr(2, 9),
+            state.recipe = [];
+            state.recipe.push({
                 name: action.payload.name,
                 ingredients: action.payload.ingredients,
+                images: action.payload.images,
                 calories : action.payload.calories,
                 carbo : action.payload.carbo,
                 protein : action.payload.protein,
@@ -29,6 +37,6 @@ export const recipeSlice = createSlice({
     }
 })
 
-export const { addIngredients, addRecipe } = recipeSlice.actions
+export const { addIngredients, addRecipe, addSteps } = recipeSlice.actions
 
 export default recipeSlice.reducer
