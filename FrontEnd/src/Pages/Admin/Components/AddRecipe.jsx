@@ -25,17 +25,23 @@ function AddRecipe(){
                 {/* STEPS */}
                 <div className="flex flex-row justify-center items-center mb-4">
 
-                    <div className={` px-4 py-2 rounded-full text-xl ${active == 1 ? "bg-blue-200 font-bold" : "bg-gray-100"}`} onClick={()=>{
-                        setActive(1);
-                    }}>1</div>
+                    <div className={` px-4 py-2 rounded-full text-xl ${active == 1 ? "bg-blue-200 font-bold" : "bg-gray-100"}`} 
+                    // onClick={()=>{
+                    //     setActive(1);
+                    // }}
+                    >1</div>
                     <hr className="w-32 border-4"/>
-                    <div className={` px-4 py-2 rounded-full text-xl ${active == 2 ? "bg-blue-200 font-bold" : "bg-gray-100"}`} onClick={()=>{
-                        setActive(2);
-                    }}>2</div>
+                    <div className={` px-4 py-2 rounded-full text-xl ${active == 2 ? "bg-blue-200 font-bold" : "bg-gray-100"}`} 
+                    // onClick={()=>{
+                    //     setActive(2);
+                    // }}
+                    >2</div>
                     <hr className="w-32 border-4"/>
-                    <div className={` px-4 py-2 rounded-full text-xl ${active == 3 ? "bg-blue-200 font-bold" : "bg-gray-100"}`} onClick={()=>{
-                        setActive(3);
-                    }}>3</div>
+                    <div className={` px-4 py-2 rounded-full text-xl ${active == 3 ? "bg-blue-200 font-bold" : "bg-gray-100"}`} 
+                    // onClick={()=>{
+                    //     setActive(3);
+                    // }}
+                    >3</div>
                 </div>
 
                 {active == 1  && <AddRecipe1 setActive={setActive}/>}

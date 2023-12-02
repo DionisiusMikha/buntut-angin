@@ -1,25 +1,23 @@
 import {useState, useEffect} from 'react';
-import dietisianService from "../../../Services/Dietisian/dietisian";
-import doctorService from '../../../Services/Konsultan/doctor';
+import adminService from '../../../Services/Admin/admin';
+import acc from '/icon/acc.png';
+import menu from "/icon/menu.png";
 
 function PatientList() {
     const [limit, setLimit] = useState(10);
-    const [user, setUser] = useState({});
+    const [filter, setFilter] = useState("");
     const [search, setSearch] = useState('');
+    const [users, setUsers] = useState([]);
 
     const getAllUser = async () => {
-        const responseUser = await dietisianService.getAllUsers();
-        console.log(responseUser);
-        const responseDoctor = await doctorService.getAllDoctor();
-        console.log(responseDoctor);
+        const allUser = await adminService.getAllUsers(limit, filter, search);
+        console.log(allUser.data);
+        setUsers(allUser.data);
     }
 
     useEffect(() => {
         getAllUser();
-        // console.log(limit);
-        // console.log(user);
-        // console.log(search);
-    }, [limit, user, search])
+    }, [limit, filter, search])
 
     return (
         <>
@@ -28,7 +26,7 @@ function PatientList() {
                     <div className="text-4xl font-semibold mb-6">All User</div>
                     <button className="bg-blue-300 rounded-xl px-4 mb-4 text-xl font-semibold">Add New User</button>
                 </div>
-                <div  className="flex flex-row justify-between items-center">
+                <div className="flex flex-row justify-between items-center">
                     <div className="rounded-lg py-2 px-4 mb-4 text-xl font-semibold flex items-center justify-center">
                         <span className="me-3">Show</span>
                             <select className="bg-gray-200" onChange={(e)=>{
@@ -45,11 +43,11 @@ function PatientList() {
                     <div className="rounded-lg py-2 px-4 mb-4 text-xl font-semibold flex items-center justify-center">
                         <span className="me-3">User</span>
                         <select className="bg-gray-200" onChange={(e)=>{
-                            setUser(e.target.value)
+                            setFilter(e.target.value)
                         }}>
                             <option value="">all</option>
                             <option value="dietisian">dietisian</option>
-                            <option value="konsultan">konsultan</option>
+                            <option value="doctor">konsultan</option>
                         </select>        
                     </div>
                     <div className="text-xl font-semibold">
@@ -60,18 +58,47 @@ function PatientList() {
                     </div>
                 </div>
                 <div className="bg-white min-h-[calc(100vh-13rem)] sm:rounded-3xl drop-shadow-lg">
-                    {/* header */}
-                    <table className='w-full rounded-lg table-fixed'>
-                        <thead className='bg-gray-300 h-14'>
-                            <tr>
-                                <th>a</th>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>b</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                    <div className="overflow-y-auto w-full h-5/6 flex flex-col bg-white rounded-t-xl">
+                        <div id='thead' className='w-full h-12 bg-gray-300 flex justify-around items-center px-6'>
+                            <label className='w-1/12 flex items-center'>
+                                <input type="checkbox" className="checkbox border-black" />
+                            </label>
+                            <div className='w-6/12 flex items-center gap-x-3'>
+                                <img src={acc} className="w-5 h-5" />
+                                <p className='text-xl'>Name</p>
+                            </div>
+                            <div className='w-2/12 flex items-center gap-x-3'>
+                                <img src={acc} className="w-5 h-5" />
+                                <p className='text-xl'>Role</p>
+                            </div>
+                            <div className='w-2/12 flex items-center gap-x-3'>
+                                <img src={acc} className="w-5 h-5" />
+                                <p className='text-xl'>Status</p>
+                            </div>
+                            <div className='w-1/12 flex items-center gap-x-3'>
+                                <img src={menu} className="w-5 h-5" />
+                            </div>
+                        </div>
+                        {users.map((user, index) => {
+                            return <div id='tbody' className='w-full h-12 bg-white flex justify-around items-center px-6' key={index}>
+                                <label className='w-1/12 flex items-center'>
+                                    <input type="checkbox" className="checkbox border-black" />
+                                </label>
+                                <div className='w-6/12 flex items-center gap-x-3'>
+                                    <p className='text-xl'>{user.name}</p>
+                                </div>
+                                <div className='w-2/12 flex items-center gap-x-3'>
+                                    <p className='text-xl'>{user.role}</p>
+                                </div>
+                                <div className='w-2/12 flex items-center gap-x-3'>
+                                    <p className='text-xl'>{user.status}</p>
+                                </div>
+                                <div className='w-1/12 flex items-center gap-x-3'>
+                                    <img src={menu} className="w-5 h-5" />
+                                </div>
+                            </div>
+                        })}
+                    </div>
                 </div>
            </div>
         </>

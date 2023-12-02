@@ -9,15 +9,12 @@ function AddRecipe3(props){
     if (hasil.length > 0){
         console.log(hasil)
     }
-    const  [steps, setsteps] = useState(["asd", "asdasdadsds"]);
+    const  [steps, setsteps] = useState([""]);
 
     function deleteHandler(idx){
-        const x = steps.filter((s, i)=> {
-            if(i != idx){
-                return s
-            }
-        })
-        setsteps(x);
+        const newStep = [...steps]
+        newStep.splice(idx, 1)
+        setsteps(newStep)
     }
 
     function saveAll(id,step){
@@ -34,6 +31,9 @@ function AddRecipe3(props){
             console.log(err)
             alert(err.message)
         }
+
+        // save to db
+        // const response = await 
     }
 
     return (
