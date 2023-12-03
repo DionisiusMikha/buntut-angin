@@ -6,11 +6,12 @@ import api from '../../../Services/api'
 import { useDispatch, useSelector } from "react-redux"
 import { addRecipe } from "../../../Redux/recipesSlice";
 import { useState } from "react";
+import { Axios } from "axios";
 
 function AddRecipe1(props){
     const dispatch = useDispatch();
     const hasil = useSelector((state) => state.recipes.recipe);
-    console.log(hasil)
+    // console.log(hasil)
     const {register, handleSubmit, reset, formState: { errors }  } = useForm({
         values: {
             name: hasil[0]?.name,
@@ -29,40 +30,51 @@ function AddRecipe1(props){
       });
 
     const change = async data => {
+        // console.log(data.image)
         let gbr = data.image[0]
-        if(gbr){
-            const reader = new FileReader();
-            reader.readAsDataURL(gbr);
-            reader.onload = () => {
-                setImageData({
-                  base64textString: reader.result,
-                  imageName: gbr.name,
-                  showImage: true,
-                });
-              };
-      
-            reader.onerror = (error) => {
-                console.log('Error: ', error);
-            };
-        }
-        // console.log(image)
+        
 
-        const recipe = {
-            name: data.name,
-            desc: data.desc,
-            calories: data.calories,
-            carbo: data.carbo,
-            protein: data.protein,
-            fat: data.fat,
-            image: imageData,
-        }
-        // console.log(recipe)
-        try{
-            dispatch(addRecipe(recipe))
-            props.setActive(2);
-        }catch(e){
-          alert(e.message)
-        }
+        const formData = new FormData();
+        formData.append("image", data.image[0], "fotoMakanan.jpg");
+        // form.append("file", gbr);
+
+        // console.log(gbr)
+        console.log(formData)
+
+        // const res = await api.upload(gbr)
+        // console.log(res)
+
+        // if(gbr){
+        //     const reader = new FileReader();
+        //     reader.readAsDataURL(gbr);
+        //     reader.onload = () => {
+        //         setImageData({
+        //           base64textString: reader.result,
+        //           imageName: gbr.name,
+        //           showImage: true,
+        //         });
+        //       };
+      
+        //     reader.onerror = (error) => {
+        //         console.log('Error: ', error);
+        //     };
+        // }
+
+        // const recipe = {
+        //     name: data.name,
+        //     desc: data.desc,
+        //     calories: data.calories,
+        //     carbo: data.carbo,
+        //     protein: data.protein,
+        //     fat: data.fat,
+        //     image: imageData,
+        // }
+        // try{
+        //     dispatch(addRecipe(recipe))
+        //     props.setActive(2);
+        // }catch(e){
+        //   alert(e.message)
+        // }
     }
 
 

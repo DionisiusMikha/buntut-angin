@@ -133,5 +133,52 @@ module.exports = {
         }
 
         res.status(200).send(result)
-    }
+    },
+    addRecipe: async function(req, res){
+        const doctorId = -1; //-1 kalo admin
+        const name = req.body.name;
+        const desc = req.body.description;
+        const ingredients = req.body.ingredients;
+        const steps = req.body.steps;
+
+        const noResep = await db.Recipes.findAll();
+ 
+        let noUrut = noResep.length + 1;
+        let newId = "REC" + noUrut.toString().padStart(3, '0');
+        let resep = await db.Recipes.create({
+            id: newId,
+            name: name,
+            description: desc,
+            doctor_id: doctorId
+        })
+
+        const getResep = await db.Recipes.findAll();
+        for (let i = 0 ; i < ingredients.length; i++){
+            let bahan = await db.Ingredients.create({
+                name: ingredients[i].name,
+                qty: ingredients[i].qty,
+                uom: ingredients[i].uom,
+                recipe_id: newId
+            })
+        }
+
+        for (let i = 0; i < steps.length; i++){
+            let langkah = await db.Steps.create({
+                desc: steps[i],
+                recipe_id: newId
+            })
+        }
+
+        const result = {
+            "recipe_id" : newId,
+            "doctor_id" : doctorId,
+            "name" : name,
+            "description" : desc,
+            "by" : cekDokter.dataValues.display_name,
+            "total_ingredients" : ingredients.length,
+            "total_steps" : steps.length
+        }
+        res.status(201).json(result);
+        
+    },
 }

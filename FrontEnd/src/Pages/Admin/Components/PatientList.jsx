@@ -11,7 +11,6 @@ function PatientList() {
 
     const getAllUser = async () => {
         const allUser = await adminService.getAllUsers(limit, filter, search);
-        console.log(allUser.data);
         setUsers(allUser.data);
     }
 
@@ -60,10 +59,7 @@ function PatientList() {
                 <div className="bg-white min-h-[calc(100vh-13rem)] sm:rounded-3xl drop-shadow-lg">
                     <div className="overflow-y-auto w-full h-5/6 flex flex-col bg-white rounded-t-xl">
                         <div id='thead' className='w-full h-12 bg-gray-300 flex justify-around items-center px-6'>
-                            <label className='w-1/12 flex items-center'>
-                                <input type="checkbox" className="checkbox border-black" />
-                            </label>
-                            <div className='w-6/12 flex items-center gap-x-3'>
+                            <div className='w-8/12 flex items-center gap-x-3'>
                                 <img src={acc} className="w-5 h-5" />
                                 <p className='text-xl'>Name</p>
                             </div>
@@ -71,27 +67,17 @@ function PatientList() {
                                 <img src={acc} className="w-5 h-5" />
                                 <p className='text-xl'>Role</p>
                             </div>
-                            <div className='w-2/12 flex items-center gap-x-3'>
-                                <img src={acc} className="w-5 h-5" />
-                                <p className='text-xl'>Status</p>
-                            </div>
                             <div className='w-1/12 flex items-center gap-x-3'>
                                 <img src={menu} className="w-5 h-5" />
                             </div>
                         </div>
                         {users.map((user, index) => {
                             return <div id='tbody' className='w-full h-12 bg-white flex justify-around items-center px-6' key={index}>
-                                <label className='w-1/12 flex items-center'>
-                                    <input type="checkbox" className="checkbox border-black" />
-                                </label>
-                                <div className='w-6/12 flex items-center gap-x-3'>
+                                <div className='w-8/12 flex items-center gap-x-3'>
                                     <p className='text-xl'>{user.name}</p>
                                 </div>
                                 <div className='w-2/12 flex items-center gap-x-3'>
-                                    <p className='text-xl'>{user.role}</p>
-                                </div>
-                                <div className='w-2/12 flex items-center gap-x-3'>
-                                    <p className='text-xl'>{user.status}</p>
+                                    <p className={`text-xl w-1/2 rounded-full py-1 text-center ${user.role == "Dietisian" ? "bg-green-200" : "bg-blue-200"}`}>{user.role}</p>
                                 </div>
                                 <div className='w-1/12 flex items-center gap-x-3'>
                                     <img src={menu} className="w-5 h-5" />

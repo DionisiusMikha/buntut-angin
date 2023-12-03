@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Loader from "./Component/Loader";
-// import Try from "./Pages/Try/try";
+import Try from "./Pages/Try/try";
 
 // Dashboard
 import LandingPage from "./Pages/Landing Page/LandingPages";
@@ -156,10 +156,10 @@ const Router = createBrowserRouter([
     path : "/dietisian/profile",
     element : <ProfileDietisian/>,
   },
-  // {
-  //   path: "/try",
-  //   element: <Try />,
-  // }
+  {
+    path: "/try",
+    element: <Try />,
+  }
 ]);
 
 export default Router;
