@@ -145,7 +145,7 @@ const Router = createBrowserRouter([
         element: <PatientListAdmin/>
       },
       {
-        path: "patient-list/:role/:id",
+        path: "patient-list/detail",
         element: <ProfileAdmin/>
       },
       {

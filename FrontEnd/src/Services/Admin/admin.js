@@ -29,11 +29,7 @@ function addNewRecipe(name, desc, image, ingredients, steps){
 }
 
 function getUserById(id, role){
-    return client.get(`/users/${id}`, {
-        params : {
-            role : role
-        }
-    })
+    return client.get(`/users/${role}/${id}`)
 }
 
 export default {

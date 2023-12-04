@@ -981,6 +981,11 @@ html {
   border-radius: 0px;
 }
 
+.link {
+  cursor: pointer;
+  text-decoration-line: underline;
+}
+
 .menu {
   display: flex;
   flex-direction: column;
@@ -1416,6 +1421,16 @@ html {
   .input[disabled]::placeholder {
   color: hsl(var(--bc) / var(--tw-placeholder-opacity));
   --tw-placeholder-opacity: 0.2;
+}
+
+.link:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 .loading {
@@ -2974,6 +2989,10 @@ html {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-scroll {
+  overflow: scroll;
 }
 
 .overflow-y-auto {

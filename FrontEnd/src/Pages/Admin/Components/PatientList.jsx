@@ -84,7 +84,9 @@ function PatientList() {
                                 </div>
                                 <div className='w-1/12 flex items-center gap-x-3'>
                                     <img src={menu} className="w-5 h-5" onClick={()=>{
-                                        navigate(`/admin/patient-list/${user.role}/${user.id}`)
+                                        localStorage.setItem("userRole", user.role);
+                                        localStorage.setItem("userId", user.id);
+                                        navigate(`/admin/patient-list/detail`)
                                     }}/>
                                 </div>
                             </div>
