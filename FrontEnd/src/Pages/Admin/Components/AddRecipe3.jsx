@@ -2,14 +2,15 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { addSteps } from "../../../Redux/recipesSlice";
 import AddStep from "./AddStep";
+import admin from "../../../Services/Admin/admin";
 
 function AddRecipe3(props){
     const hasil = useSelector((state) => state.recipes.steps);
+    const dataStep = useSelector((state) => state.recipes.steps);
+    const dataIngredients = useSelector((state) => state.recipes.ingredients);
+    const dataR = useSelector((state) => state.recipes.recipe);
     const dispatch = useDispatch();
-    if (hasil.length > 0){
-        console.log(hasil)
-    }
-    const  [steps, setsteps] = useState([""]);
+    const  [steps, setsteps] = (hasil.length == 0 ? useState([""]) : useState(hasil))
 
     function deleteHandler(idx){
         const newStep = [...steps]
@@ -21,10 +22,9 @@ function AddRecipe3(props){
         const newStep = [...steps]
         newStep[id] = step
         setsteps(newStep)   
-        console.log(steps)
     }
 
-    function save(){
+    async function save(){
         try{
             dispatch(addSteps(steps))
         } catch(err){
@@ -33,7 +33,13 @@ function AddRecipe3(props){
         }
 
         // save to db
-        // const response = await 
+        const res = await admin.addNewRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, dataIngredients, dataStep)
+        console.log(res)
+
+        // console.log(data)
+        // console.log(dataStep)
+        console.log(dataIngredients)
+
     }
 
     return (

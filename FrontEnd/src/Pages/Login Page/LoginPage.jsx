@@ -39,29 +39,25 @@ const LoginPage = () => {
     const submit = async data => {
         if (data.username == "lifelose" && data.password == "2024dionkurus"){
             navigate("/admin/home")
-        // } else if (data.username == "dokter" && data.password == "dokter"){
-        //     navigate("/konsultan/home")
-        // }else if (data.username == "user" && data.password == "user"){
-        //     navigate("/dietisian/home")
-        }
-
-        const res = await DietisianService.loginUser(data.username, data.password);
-        
-        if(res.status == 200){
-            localStorage.setItem("token", res.data.token);
-            navigate("/dietisian/home");
         } else {
-            if (res.data.message == "user not found"){
-                const res2 = await DoctorService.loginUser(data.username, data.password);
-                console.log(res2)
-                if (res2.status == 200){
-                    localStorage.setItem("tokenDoctor", res.data.token);
-                    navigate("/konsultan/home");
-                }
 
+            const res = await DietisianService.loginUser(data.username, data.password);
+            
+            if(res.status == 200){
+                localStorage.setItem("token", res.data.token);
+                navigate("/dietisian/home");
             } else {
-                setError(res.data.message);
-                reset();
+                if (res.data.message == "user not found"){
+                    const res2 = await DoctorService.loginUser(data.username, data.password);
+                    console.log(res2)
+                    if (res2.status == 200){
+                        localStorage.setItem("tokenDoctor", res.data.token);
+                        navigate("/konsultan/home");
+                    }
+                } else {
+                    setError(res.data.message);
+                    reset();
+                }
             }
         }
     }

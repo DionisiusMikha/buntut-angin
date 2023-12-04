@@ -2706,10 +2706,6 @@ html {
   width: 83.333333%;
 }
 
-.w-6\/12 {
-  width: 50%;
-}
-
 .w-7 {
   width: 1.75rem;
 }
@@ -3206,11 +3202,6 @@ html {
 .bg-yellow-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 249 195 / var(--tw-bg-opacity));
-}
-
-.bg-green-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(134 239 172 / var(--tw-bg-opacity));
 }
 
 .bg-\[url\(\'\/img\/bg-buah\.png\'\)\] {

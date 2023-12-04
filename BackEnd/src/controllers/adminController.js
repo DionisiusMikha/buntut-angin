@@ -4,10 +4,26 @@ const multer = require("multer");
 const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
-const upload = multer({
-    dest : "../../Uploads/User",
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "../Uploads/Recipes")
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + "." + file.mimetype.split("/")[1]
+        cb(null, file.fieldname + '-' + uniqueSuffix)
+    }, 
+    fileFilter : function(req, file, cb){
+        if(file.mimetype != "image/png" || file.mimetype != "image/jpeg"){
+          return cb(new Error("Wrong file type"), null)
+        }
+        cb(null, true)
+      },
 })
-
+    
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 3000000 },
+})
 const { Op } = db.Sequelize
 
 //==========================================
@@ -41,12 +57,17 @@ module.exports = {
             }
 
             resep.push({
-                nama: getResep[i].dataValues.name,
+                recipe_id: getResep[i].dataValues.id,
+                name: getResep[i].dataValues.name,
+                image  :getResep[i].dataValues.image_url,
                 description: getResep[i].dataValues.description,
+                like : getResep[i].dataValues.suka,
                 ingredients,
                 steps
             })
+
         }
+        res.status(200).json(resep);
     },
     getAllUsers: async function(req, res){
         const {limit, filter, search} = req.query;        
@@ -56,6 +77,7 @@ module.exports = {
             const getDietisian = await db.User.findAll()
             for (let i = 0 ; i < getDietisian.length; i++){
                 result.push({
+                    id  :getDietisian[i].dataValues.id,
                     name: getDietisian[i].dataValues.display_name,
                     email: getDietisian[i].dataValues.email,
                     username: getDietisian[i].dataValues.username,
@@ -70,6 +92,7 @@ module.exports = {
             const getDoctor = await db.Doctor.findAll()
             for (let i = 0 ; i < getDoctor.length; i++){
                 result.push({
+                    id  :getDoctor[i].dataValues.id,
                     name: getDoctor[i].dataValues.display_name,
                     email: getDoctor[i].dataValues.email,
                     username: getDoctor[i].dataValues.username,
@@ -85,6 +108,7 @@ module.exports = {
             const getDoctor = await db.Doctor.findAll()
             for (let i = 0 ; i < getDietisian.length; i++){
                 result.push({
+                    id  :getDietisian[i].dataValues.id,
                     name: getDietisian[i].dataValues.display_name,
                     email: getDietisian[i].dataValues.email,
                     username: getDietisian[i].dataValues.username,
@@ -97,6 +121,7 @@ module.exports = {
             }
             for (let i = 0 ; i < getDoctor.length; i++){
                 result.push({
+                    id  :getDoctor[i].dataValues.id,
                     name: getDoctor[i].dataValues.display_name,
                     email: getDoctor[i].dataValues.email,
                     username: getDoctor[i].dataValues.username,
@@ -104,7 +129,7 @@ module.exports = {
                     birthdate: getDoctor[i].dataValues.birthdate,
                     address: getDoctor[i].dataValues.address,
                     profile_picture: getDoctor[i].dataValues.profile_picture,
-                    role: "Doctor"
+                    role: "Konsultan"
                 })
             }
         }
@@ -132,7 +157,7 @@ module.exports = {
             })
         }
 
-        res.status(200).send(result)
+        return res.status(200).send(result)
     },
     addRecipe: async function(req, res){
         const doctorId = -1; //-1 kalo admin
@@ -140,19 +165,27 @@ module.exports = {
         const desc = req.body.description;
         const ingredients = req.body.ingredients;
         const steps = req.body.steps;
+        const path = req.body.image_url;
 
         const noResep = await db.Recipes.findAll();
- 
+
         let noUrut = noResep.length + 1;
         let newId = "REC" + noUrut.toString().padStart(3, '0');
+        
         let resep = await db.Recipes.create({
             id: newId,
             name: name,
             description: desc,
-            doctor_id: doctorId
+            doctor_id: doctorId,
+            suka : 0,
+            rating : 0,
+            image_url : path,
         })
 
+        console.log(req.body)
+
         const getResep = await db.Recipes.findAll();
+
         for (let i = 0 ; i < ingredients.length; i++){
             let bahan = await db.Ingredients.create({
                 name: ingredients[i].name,
@@ -174,11 +207,35 @@ module.exports = {
             "doctor_id" : doctorId,
             "name" : name,
             "description" : desc,
-            "by" : cekDokter.dataValues.display_name,
+            "by" : "admin",
             "total_ingredients" : ingredients.length,
-            "total_steps" : steps.length
+            "total_steps" : steps.length,
+            "image_url" : path,
+            "suka" : 0,
+            "rating" : 0,
         }
         res.status(201).json(result);
-        
     },
+    uploadImage: async function(req, res){
+        const uploadFile = upload.single("file")
+        uploadFile(req, res, async function (err) {
+            if (err instanceof multer.MulterError) {
+                return res.status(400).send({ msg: "File too large" });
+            } else if (err) {
+                return res.status(400).send({ msg: "File not supported" });
+            }
+            res.status(200).json(req.file);
+        })
+    },
+    getUserById: async function(req, res){
+        const {role} = req.query;
+        const {uid} = req.params;
+        if (role == "Dietisian"){
+            const getUser = await db.User.findByPk(uid)
+            return res.status(200).send(getUser)
+        } else if (role == "Doctor"){
+            const getDoctor = await db.Doctor.findByPk(uid)
+            return res.status(200).send(getDoctor)
+        }
+    }
 }

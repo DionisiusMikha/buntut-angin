@@ -33,6 +33,8 @@ import ListRecipes from "./Pages/Admin/Components/ListRecipes";
 import DetailRecipes from "./Pages/Admin/Components/DetailRecipes";
 import AddRecipe from "./Pages/Admin/Components/AddRecipe";
 import DataHandler from "./Pages/Admin/Components/DataHandler";
+// import profile from "./Pages/Admin/Components/Profile";
+import ProfileAdmin from "./Pages/Admin/Components/Profile";
 const { loadRecipes, getRecipe } = DataHandler;
 
 
@@ -141,6 +143,10 @@ const Router = createBrowserRouter([
       {
         path: "patient-list",
         element: <PatientListAdmin/>
+      },
+      {
+        path: "patient-list/:role/:id",
+        element: <ProfileAdmin/>
       },
       {
         path: "settings",

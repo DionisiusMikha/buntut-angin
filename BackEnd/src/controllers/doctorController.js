@@ -34,7 +34,7 @@ const checkUsername = async(username) => {
         where: {
             username: username
         }
-    })
+    })  
     if (cariUser.count > 0){
         throw new Error("Username already exists")
     }
