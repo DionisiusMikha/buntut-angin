@@ -33,6 +33,9 @@ module.exports = {
       comments : {
         type: Sequelize.STRING
       },
+      nutritions : {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

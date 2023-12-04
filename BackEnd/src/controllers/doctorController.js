@@ -244,6 +244,7 @@ module.exports = {
         const doctorId = req.body.doctor_id;
         const name = req.body.name;
         const desc = req.body.description;
+        const nutrition = req.body.nutrition;
         const ingredients = req.body.ingredients;
         const steps = req.body.steps;
 
@@ -263,6 +264,7 @@ module.exports = {
                 id: newId,
                 name: name,
                 description: desc,
+                nutritions: nutrition,
                 doctor_id: doctorId
             })
 
@@ -288,6 +290,7 @@ module.exports = {
                 "doctor_id" : doctorId,
                 "name" : name,
                 "description" : desc,
+                "nutritions" : nutrition,
                 "by" : cekDokter.dataValues.display_name,
                 "total_ingredients" : ingredients.length,
                 "total_steps" : steps.length
