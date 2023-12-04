@@ -10,6 +10,36 @@ function getAllUsers(limit, filter, search){
     });
 }
 
+function uploadImage(image, name){
+    return client.post(`/image/${name}`, image);
+}
+
+function getAllRecipe(){
+    return client.get("/resep")
+}
+
+function addNewRecipe(name, desc, image, ingredients, steps){
+    return client.post("/resep", {
+        name : name,
+        description : desc,
+        image_url : image,
+        ingredients : ingredients,
+        steps : steps,
+    })
+}
+
+function getUserById(id, role){
+    return client.get(`/users/${id}`, {
+        params : {
+            role : role
+        }
+    })
+}
+
 export default {
     getAllUsers,
+    uploadImage,
+    getAllRecipe,
+    addNewRecipe,
+    getUserById,
 }

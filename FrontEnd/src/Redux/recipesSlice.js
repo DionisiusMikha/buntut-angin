@@ -27,7 +27,7 @@ export const recipeSlice = createSlice({
             state.recipe.push({
                 name: action.payload.name,
                 desc: action.payload.desc,
-                images: action.payload.image,
+                image: action.payload.image,
                 calories : action.payload.calories,
                 carbo : action.payload.carbo,
                 protein : action.payload.protein,

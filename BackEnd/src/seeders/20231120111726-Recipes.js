@@ -12,12 +12,11 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await queryInterface.bulkInsert('Recipes', [
-    {
-      name : "Nasi Goreng",
-      description : "Nasi goreng, literally meaning 'fried rice' in both the Indonesian and Malay languages, is an Indonesian rice dish with pieces of meat and vegetables added.",
-    }
-   ]);
+  //  await queryInterface.bulkInsert('Recipes', [
+  //   {
+      
+  //   }
+  //  ]);
   },
 
   async down (queryInterface, Sequelize) {

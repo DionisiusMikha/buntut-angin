@@ -84,6 +84,8 @@
 
 
 import React, {useState} from 'react';
+import api from '../../Services/api';
+import admin from '../../Services/Admin/admin';
 
 function Try(){
 	const [selectedFile, setSelectedFile] = useState();
@@ -95,34 +97,36 @@ function Try(){
 		setIsFilePicked(true);
 	};
 
-	const handleSubmission = () => {
+	const handleSubmission = async() => {
 		const formData = new FormData();
 
-		formData.append('File', selectedFile);
+		formData.append('file', selectedFile);
+
+    // console.log(formData);
+    const res = await admin.uploadImage(formData);
+    console.log(res.data)
+
+    // const res = await api.upload(formData)
+    // console.log(res)
 
     // const a = URL.createObjectURL(selectedFile);
     // setHasil(a)
     // console.log("a", hasil)
 
-		fetch(
-			'https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5',
-			{
-				method: 'POST',
-				body: formData,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-          'Access-Control-Allow-Headers': 'Content-Type',
-        }
-			}
-		)
-			.then((response) => response.json())
-			.then((result) => {
-				console.log('Success:', result);
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
+		// fetch(
+		// 	'https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5',
+		// 	{
+		// 		method: 'POST',
+		// 		body: formData,
+		// 	}
+		// )
+		// 	.then((response) => response.json())
+		// 	.then((result) => {
+		// 		console.log('Success:', result);
+		// 	})
+		// 	.catch((error) => {
+		// 		console.error('Error:', error);
+		// 	});
 	};
   
 	return(

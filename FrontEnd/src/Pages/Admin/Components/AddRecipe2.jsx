@@ -9,7 +9,7 @@ function AddRecipe2(props){
     const [bahan, setbahan] = (hasil != "" ? useState(hasil): useState([{
         name : "",
         qty: 0,
-        unit: ""
+        uom: ""
     }]));
     function deleteHandler(idx){
         const x = bahan.filter((b, i)=> {
@@ -20,12 +20,12 @@ function AddRecipe2(props){
         setbahan(x);
     }
 
-    function saveAll(id, name, unit, qty){
-        console.log(id, name, unit, qty)
+    function saveAll(id, name, uom, qty){
+        console.log(id, name, uom, qty)
         const newBahan = [...bahan]
         newBahan[id].name = name
         newBahan[id].qty = qty
-        newBahan[id].unit = unit
+        newBahan[id].uom = uom
         setbahan(newBahan)   
     }
 
@@ -48,7 +48,7 @@ function AddRecipe2(props){
                             setbahan([...bahan, {
                                 name : "",
                                 qty: 0,
-                                unit: ""
+                                uom: ""
                             }])
                         }}>
                             Add Ingredients

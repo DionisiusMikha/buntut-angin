@@ -2,8 +2,10 @@ import {useState, useEffect} from 'react';
 import adminService from '../../../Services/Admin/admin';
 import acc from '/icon/acc.png';
 import menu from "/icon/menu.png";
+import {useNavigate} from "react-router-dom";
 
 function PatientList() {
+    const navigate = useNavigate();
     const [limit, setLimit] = useState(10);
     const [filter, setFilter] = useState("");
     const [search, setSearch] = useState('');
@@ -12,6 +14,7 @@ function PatientList() {
     const getAllUser = async () => {
         const allUser = await adminService.getAllUsers(limit, filter, search);
         setUsers(allUser.data);
+        console.log(allUser.data);
     }
 
     useEffect(() => {
@@ -68,7 +71,7 @@ function PatientList() {
                                 <p className='text-xl'>Role</p>
                             </div>
                             <div className='w-1/12 flex items-center gap-x-3'>
-                                <img src={menu} className="w-5 h-5" />
+                                {/* <img src={menu} className="w-5 h-5" /> */}
                             </div>
                         </div>
                         {users.map((user, index) => {
@@ -77,10 +80,12 @@ function PatientList() {
                                     <p className='text-xl'>{user.name}</p>
                                 </div>
                                 <div className='w-2/12 flex items-center gap-x-3'>
-                                    <p className={`text-xl w-1/2 rounded-full py-1 text-center ${user.role == "Dietisian" ? "bg-green-200" : "bg-blue-200"}`}>{user.role}</p>
+                                    <p className={`text-xl w-2/3 rounded-full py-1 text-center ${user.role == "Dietisian" ? "bg-green-200" : "bg-blue-200"}`}>{user.role}</p>
                                 </div>
                                 <div className='w-1/12 flex items-center gap-x-3'>
-                                    <img src={menu} className="w-5 h-5" />
+                                    <img src={menu} className="w-5 h-5" onClick={()=>{
+                                        navigate(`/admin/patient-list/${user.role}/${user.id}`)
+                                    }}/>
                                 </div>
                             </div>
                         })}

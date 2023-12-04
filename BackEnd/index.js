@@ -7,16 +7,14 @@ const router = require("./src/routes/index");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(
-    cors({
-      origin: ["http://localhost:5173", "https://freeimage.host"],
-      optionsSuccessStatus: 200,
-      allowedHeaders: ["Content-Type", "Authorization"],
-    }),
-);
-app.use(  
-    cors()
-);
+const corsOptions = {
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    credentials: true,
+    optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+
 
 app.use("/assets", express.static("assets"));
 app.use("/api", router);
