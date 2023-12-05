@@ -28,7 +28,7 @@ function addNewRecipe(name, desc, image, ingredients, steps){
     })
 }
 
-function getUserById(id, role){
+function getUserById(role, id){
     return client.get(`/users/${role}/${id}`)
 }
 

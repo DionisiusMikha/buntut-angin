@@ -228,13 +228,13 @@ module.exports = {
         })
     },
     getUserById: async function(req, res){
-        const {role} = req.query;
-        const {uid} = req.params;
+        const {role, id} = req.params;
+
         if (role == "Dietisian"){
-            const getUser = await db.User.findByPk(uid)
+            const getUser = await db.User.findByPk(id)
             return res.status(200).send(getUser)
-        } else if (role == "Doctor"){
-            const getDoctor = await db.Doctor.findByPk(uid)
+        } else if (role == "Konsultan"){
+            const getDoctor = await db.Doctor.findByPk(id)
             return res.status(200).send(getDoctor)
         }
     }

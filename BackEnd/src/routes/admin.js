@@ -5,7 +5,7 @@ const router = Router();
 router.get("/resep", adminController.getAllResep);
 router.post("/resep", adminController.addRecipe);
 router.get("/users", adminController.getAllUsers);
-router.get("/users/:id", adminController.getUserById);
+router.get("/users/:role/:id", adminController.getUserById);
 router.post("/image/:name", adminController.uploadImage);
 
 module.exports = router;

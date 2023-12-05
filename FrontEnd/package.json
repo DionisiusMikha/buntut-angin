@@ -11,7 +11,7 @@
     "build:css": "postcss src/index.css -o src/css/index.css"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.8.1",
+    "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
@@ -23,7 +23,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.0",
-    "framer-motion": "^10.16.4",
+    "framer-motion": "^10.16.12",
     "joi": "^17.11.0",
     "lottie-react": "^2.4.0",
     "postcss-cli": "^10.1.0",
