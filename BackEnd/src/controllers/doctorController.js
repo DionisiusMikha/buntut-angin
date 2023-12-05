@@ -244,7 +244,10 @@ module.exports = {
         const doctorId = req.body.doctor_id;
         const name = req.body.name;
         const desc = req.body.description;
-        const nutrition = req.body.nutrition;
+        const calories = req.body.calories;
+        const carbo = req.body.carbo;
+        const protein = req.body.protein;
+        const fat = req.body.fat;
         const ingredients = req.body.ingredients;
         const steps = req.body.steps;
 
@@ -264,7 +267,10 @@ module.exports = {
                 id: newId,
                 name: name,
                 description: desc,
-                nutritions: nutrition,
+                calories: calories,
+                carbo: carbo,
+                protein: protein,
+                fat: fat,
                 doctor_id: doctorId
             })
 
@@ -290,7 +296,10 @@ module.exports = {
                 "doctor_id" : doctorId,
                 "name" : name,
                 "description" : desc,
-                "nutritions" : nutrition,
+                "calories" : calories,
+                "carbo" : carbo,
+                "protein" : protein,
+                "fat" : fat,
                 "by" : cekDokter.dataValues.display_name,
                 "total_ingredients" : ingredients.length,
                 "total_steps" : steps.length
@@ -382,6 +391,8 @@ module.exports = {
         const getAllDoctor = await db.Doctor.findAll()
 
         return res.status(200).send(getAllDoctor)
+    },
+    aturJadwal: async function (req, res){
+        
     }
-    
 }
