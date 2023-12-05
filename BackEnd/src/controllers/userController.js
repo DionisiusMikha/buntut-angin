@@ -12,6 +12,19 @@ const { Op } = db.Sequelize
 
 //==========================================
 
+const moment = require('moment');
+
+function convertTime(jam){
+    const format = 'HH:mm';
+    const time = moment(jam, format);
+
+    return jam;
+}
+
+function dateToString(tanggal){
+    return (tanggal.toISOString().slice(0, 10).replace('T', ' '))
+}
+
 const checkUsername = async(username) => {
     cariUser = await db.User.findAndCountAll({
         where: {
@@ -347,5 +360,29 @@ module.exports = {
             resep
         } 
         res.status(200).json(result)
+    },
+    getSchedule: async function(req, res){
+        const allSched = await db.Doctor_Schedule.findAll();
+
+        let jadwal = []
+        for (let i = 0; i < allSched.length; i++){
+            const namaDokter = await db.Doctor.findAll({
+                where: {
+                    id: allSched[i].dataValues.doctor_id
+                }
+            })
+
+            jadwal.push({
+                "Nama dokter" : namaDokter[0].dataValues.display_name,
+                "Tanggal" : dateToString(allSched[i].dataValues.tanggal),
+                "Jam mulai" : convertTime(allSched[i].dataValues.start),
+                "Jam selesai" : convertTime(allSched[i].dataValues.end)
+            })
+        }
+
+        const result = {
+            jadwal
+        }
+        res.status(200).json(result);
     }
 }

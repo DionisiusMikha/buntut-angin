@@ -9,5 +9,6 @@ router.get("/getLoginUser", userController.getLoginUser);
 router.put("/edit/:id_user", userController.editUser);
 router.get("/cekProfil", userController.cekProfilKonsultan);
 router.get("/resep", userController.getAllResep);
+router.get("/jadwal", userController.getSchedule)
 
 module.exports = router;

@@ -13,5 +13,6 @@ router.post("/recipes", doctorController.addRecipe);
 router.post("/viewUser", doctorController.viewUser);
 router.post("/rekomendasiMenu", doctorController.rekomendasiMenu);
 router.get("/", doctorController.getAllDoctor);    
+router.post("/schedule", doctorController.aturJadwal);
 
 module.exports = router;

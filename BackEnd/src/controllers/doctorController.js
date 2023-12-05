@@ -9,6 +9,26 @@ const upload = multer({
 })
 const { Op } = db.Sequelize; 
 
+//=============================================================
+function convertDate(tanggal) {
+    const [day, month, year] = tanggal.split('/');
+
+    const dateTime = new Date(`${year}-${month}-${day}T11:00:00`);
+    return dateTime;
+}
+
+const moment = require('moment');
+
+function convertTime(jam){
+    const format = 'HH:mm';
+    const time = moment(jam, format);
+
+    return jam;
+}
+
+function dateToString(tanggal){
+    return (tanggal.toISOString().slice(0, 10).replace('T', ' '))
+}
 
 // Get User
 const getUserByID = async(req, res) => {
@@ -393,6 +413,92 @@ module.exports = {
         return res.status(200).send(getAllDoctor)
     },
     aturJadwal: async function (req, res){
+        const username = req.body.username
+        const tanggal = req.body.tanggal;
+        const start = req.body.start;
+        const end = req.body.end;
+
+        const cariDokter = await db.Doctor.findAll({
+            where: {
+                username: username
+            }
+        })
+
+        if (!tanggal || !start || !end || !username){
+            const result = {
+                "message" : "Invalid input!"
+            }
+            res.status(400).json(result);
+        }
+        else {
+            if (cariDokter.length == 0){
+                const result = {
+                    "message" : "Doctor not found"
+                }
+                res.status(404).json(result);
+            }
+            else {
+                if (start >= end){
+                    const result = {
+                        "message" : "Start time must be less than end time"
+                    }
+                    res.status(400).json(result);
+                }
+                else {
+                   // Mengonversi input waktu menjadi objek Date
+                    const startTime = convertTime(start);
+                    const endTime = convertTime(end);
+    
+                    // Mendapatkan jadwal dokter untuk tanggal yang sama
+                    const existingSchedules = await db.Doctor_Schedule.findAll({
+                        where: {
+                            doctor_id: cariDokter[0].dataValues.id,
+                            tanggal: convertDate(tanggal)
+                        }
+                    });
+    
+                    // Memeriksa apakah jadwal baru bertabrakan dengan jadwal yang sudah ada
+                    const isConflict = existingSchedules.some(schedule => {
+                        const scheduleStart = moment(schedule.start, 'HH:mm');
+                        const scheduleEnd = moment(schedule.end, 'HH:mm');
+                        return (
+                            (startTime >= scheduleStart && startTime < scheduleEnd) ||
+                            (endTime > scheduleStart && endTime <= scheduleEnd) ||
+                            (startTime <= scheduleStart && endTime >= scheduleEnd)
+                        );
+                    });
+    
+                    if (isConflict) {
+                        const result = {
+                            "message": "Jadwal bertabrakan dengan jadwal yang sudah ada."
+                        }
+                        res.status(400).json(result);
+                    } 
+                    else {
+                        try{
+                            let newSched = await db.Doctor_Schedule.create({
+                                doctor_id: cariDokter[0].dataValues.id,
+                                tanggal: convertDate(tanggal),
+                                start: convertTime(start),
+                                end: convertTime(end)
+                            })
         
+                            const result = {
+                                "doctor_id": cariDokter[0].dataValues.id,
+                                "tanggal": dateToString(newSched.tanggal),
+                                "start": convertTime(start),
+                                "end": convertTime(end)
+                            }
+                            res.status(201).json(result);
+                        }
+                        catch(err){
+                            console.error('Error executing SQL statement:', err);
+                            // Handle the error or rethrow it
+                            throw err;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
