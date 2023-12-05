@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { addSteps } from "../../../Redux/recipesSlice";
 import AddStep from "./AddStep";
 import admin from "../../../Services/Admin/admin";
+import {useNavigate} from "react-router-dom"
 
 function AddRecipe3(props){
+    const navigate = useNavigate()
     const hasil = useSelector((state) => state.recipes.steps);
     const dataStep = useSelector((state) => state.recipes.steps);
     const dataIngredients = useSelector((state) => state.recipes.ingredients);
@@ -32,14 +34,20 @@ function AddRecipe3(props){
             alert(err.message)
         }
 
+        const x = {
+            calories : dataR[0].calories,
+            carbo : dataR[0].carbo,
+            protein : dataR[0].protein,
+            fat : dataR[0].fat
+        }
+
+        let nutrisi = JSON.stringify(x)
+
         // save to db
-        const res = await admin.addNewRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, dataIngredients, dataStep)
-        console.log(res)
-
-        // console.log(data)
-        // console.log(dataStep)
-        console.log(dataIngredients)
-
+        const res = await admin.addNewRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, dataIngredients, dataStep, nutrisi)
+        if (res.status == 200){
+            navigate("/admin/recipes")
+        }
     }
 
     return (

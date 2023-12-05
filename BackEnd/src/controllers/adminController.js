@@ -6,7 +6,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "../Uploads/Recipes")
+        cb(null, "./uploads")
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + "." + file.mimetype.split("/")[1]
@@ -19,10 +19,11 @@ const storage = multer.diskStorage({
         cb(null, true)
       },
 })
+
     
 const upload = multer({ 
     storage: storage,
-    limits: { fileSize: 3000000 },
+    // limits: { fileSize: 3000000 },
 })
 const { Op } = db.Sequelize
 
@@ -30,6 +31,7 @@ const { Op } = db.Sequelize
 
 module.exports = {
     getAllResep: async function(req, res){
+        const {limit, search} = req.query;  
         const getResep = await db.Recipes.findAll();
 
         let resep = []
@@ -65,9 +67,30 @@ module.exports = {
                 ingredients,
                 steps
             })
-
         }
-        res.status(200).json(resep);
+        // sort by name
+        resep.sort((a, b) => {
+            if (a.name < b.name){
+                return -1
+            }
+            if (a.name > b.name){
+                return 1
+            }
+            return 0
+        })
+
+        // limit
+        if (limit !== undefined && limit !== ""){
+            resep = resep.slice(0, limit)
+        }
+        
+        // search by name
+        if (search !== undefined && search !== ""){
+            resep = resep.filter(item => {
+                return item.name.toLowerCase().includes(search.toLowerCase())
+            })
+        }
+        return res.status(200).json(resep);
     },
     getAllUsers: async function(req, res){
         const {limit, filter, search} = req.query;        
@@ -166,6 +189,7 @@ module.exports = {
         const ingredients = req.body.ingredients;
         const steps = req.body.steps;
         const path = req.body.image_url;
+        const nutrition = req.body.nutrition;
 
         const noResep = await db.Recipes.findAll();
 
@@ -180,6 +204,7 @@ module.exports = {
             suka : 0,
             rating : 0,
             image_url : path,
+            nutritions : nutrition
         })
 
         console.log(req.body)
@@ -237,5 +262,47 @@ module.exports = {
             const getDoctor = await db.Doctor.findByPk(id)
             return res.status(200).send(getDoctor)
         }
-    }
+    },
+    getRecipeById: async function(req, res){
+        const id = req.params.id;
+        let resep = [];
+        const getRecipe = await db.Recipes.findOne({
+            where: {
+                id: id
+            }
+        })
+
+        const getIngredients = await db.Ingredients.findAll({
+            where: {
+                recipe_id: id
+            }, 
+            attributes : ['name', 'qty', 'uom']
+        })
+
+        const getSteps = await db.Steps.findAll({
+            where: {
+                recipe_id: id
+            },
+            attributes: ['desc']
+        })
+
+        let step = [];
+
+        for(let i = 0 ; i < getSteps.length; i++){
+            step.push(getSteps[i].dataValues.desc )
+        }
+
+        resep.push({
+            recipe_id: getRecipe.id,
+            name: getRecipe.name,
+            image :getRecipe.image_url,
+            description: getRecipe.description,
+            like : getRecipe.suka,
+            ingredients : getIngredients,
+            steps : step
+        })
+
+        return res.status(200).send(resep)
+        // return res.status(200).send(getIngredients)
+    },
 }

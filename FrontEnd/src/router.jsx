@@ -123,12 +123,12 @@ const Router = createBrowserRouter([
           {
             path: "",
             element: <ListRecipes/>,
-            loader: loadRecipes,
+            // loader: loadRecipes,
           },
           {
             path: ":id",
             element: <DetailRecipes/>,
-            loader: getRecipe,
+            // loader: getRecipe,
           },
           {
             path: "add",

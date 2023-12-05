@@ -1,12 +1,24 @@
 import {useState, useEffect} from 'react';
 import Card from "./Card";
 import { useLoaderData, useNavigate } from "react-router-dom"
+import adminService from '../../../Services/Admin/admin';
 
 function ListRecipes (){
     const [limit, setLimit] = useState(10);
     const [search, setSearch] = useState('');
+    const [recipes, setRecipes] = useState([]);
     const data = useLoaderData();
     const navigate = useNavigate();
+
+    const getAllRecipes = async () =>{
+        const allRecipes = await adminService.getAllRecipes(limit, search);
+        console.log(allRecipes);
+        setRecipes(allRecipes.data)
+    }
+
+    useEffect(()=>{
+        getAllRecipes()
+    }, [limit, search])
     return(
         <>
             <div className="text-4xl font-semibold mb-6">All Recipes</div>
@@ -33,7 +45,7 @@ function ListRecipes (){
             </div>
             <div className="bg-white rounded-xl px-10 py-10 min-h-[calc(100vh-9rem)] drop-shadow-lg">
                 <div className="grid grid-cols-3 gap-10">
-                    {data.map((item, index) => {
+                    {recipes.map((item, index) => {
                         return (
                             <Card key={index} item={item} />
                         )

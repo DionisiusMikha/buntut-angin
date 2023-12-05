@@ -8,9 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const corsOptions = {
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    credentials: true,
+    origin: "http://localhost:5173",
     optionSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
