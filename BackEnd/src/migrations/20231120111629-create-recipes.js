@@ -33,8 +33,17 @@ module.exports = {
       comments : {
         type: Sequelize.STRING
       },
-      nutritions : {
-        type: Sequelize.INTEGER
+      calories: {
+        type: Sequelize.INTEGER,
+      },
+      carbo: {
+        type: Sequelize.FLOAT,
+      },
+      protein: {
+        type: Sequelize.FLOAT
+      },
+      fat: {
+        type: Sequelize.FLOAT
       },
       createdAt: {
         allowNull: false,
