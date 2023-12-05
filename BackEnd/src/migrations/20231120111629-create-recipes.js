@@ -33,7 +33,6 @@ module.exports = {
       comments : {
         type: Sequelize.STRING
       },
-<<<<<<< Updated upstream
       calories: {
         type: Sequelize.INTEGER,
       },
@@ -45,10 +44,6 @@ module.exports = {
       },
       fat: {
         type: Sequelize.FLOAT
-=======
-      nutritions : {
-        type: Sequelize.STRING
->>>>>>> Stashed changes
       },
       createdAt: {
         allowNull: false,

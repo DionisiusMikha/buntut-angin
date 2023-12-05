@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     rating: DataTypes.FLOAT,
     comments: DataTypes.STRING,
     image_url: DataTypes.STRING,
-    nutritions: DataTypes.STRING
+    calories: DataTypes.INTEGER,
+    carbo: DataTypes.FLOAT,
+    protein: DataTypes.FLOAT,
+    fat: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'Recipes',
