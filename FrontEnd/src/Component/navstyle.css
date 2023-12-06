@@ -2618,6 +2618,10 @@ html {
   height: 100vh;
 }
 
+.h-24 {
+  height: 6rem;
+}
+
 .min-h-\[calc\(100vh-13rem\)\] {
   min-height: calc(100vh - 13rem);
 }
@@ -2843,6 +2847,14 @@ html {
   width: 100%;
 }
 
+.w-24 {
+  width: 6rem;
+}
+
+.w-36 {
+  width: 9rem;
+}
+
 .max-w-lg {
   max-width: 32rem;
 }
@@ -2986,6 +2998,10 @@ html {
 
 .gap-y-8 {
   row-gap: 2rem;
+}
+
+.gap-y-2 {
+  row-gap: 0.5rem;
 }
 
 .overflow-auto {
@@ -3553,6 +3569,10 @@ html {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-center {

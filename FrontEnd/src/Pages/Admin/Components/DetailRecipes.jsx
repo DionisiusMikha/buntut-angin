@@ -16,8 +16,8 @@ function DetailRecipes() {
     const [steps , setSteps] = useState([]);
     const [recipe, setRecipe] = useState({});
 
+    const id = window.location.pathname.split("/")[3];
     const cariData = async () => {
-        const id = window.location.pathname.split("/")[3];
         const res = await adminService.getRecipeById(id)
         
         setRecipe(res.data[0]);
@@ -46,7 +46,7 @@ function DetailRecipes() {
                 <div className="text-4xl font-semibold">Detail Recipes</div>
                 <div>
                     <button className="bg-blue-300 px-6 py-2 rounded-xl font-semibold text-xl me-5" onClick={()=>{
-                        navigate(`/admin/recipes/${data.id}/edit`);
+                        navigate(`/admin/recipes/${id}/edit`);
                     }}>edit</button>
                     <button className="bg-red-300 px-6 py-2 rounded-xl font-semibold text-xl me-5" onClick={()=>{
                         navigate(-1);

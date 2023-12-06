@@ -32,10 +32,8 @@ import ListRecipes from "./Pages/Admin/Components/ListRecipes";
 import DetailRecipes from "./Pages/Admin/Components/DetailRecipes";
 import AddRecipe from "./Pages/Admin/Components/AddRecipe";
 import DataHandler from "./Pages/Admin/Components/DataHandler";
-// import profile from "./Pages/Admin/Components/Profile";
 import ProfileAdmin from "./Pages/Admin/Components/Profile";
-const { loadRecipes, getRecipe } = DataHandler;
-
+import EditRecipe from "./Pages/Admin/Components/EditRecipe";
 
 const Router = createBrowserRouter([
   {
@@ -122,12 +120,10 @@ const Router = createBrowserRouter([
           {
             path: "",
             element: <ListRecipes/>,
-            // loader: loadRecipes,
           },
           {
             path: ":id",
             element: <DetailRecipes/>,
-            // loader: getRecipe,
           },
           {
             path: "add",
@@ -135,7 +131,7 @@ const Router = createBrowserRouter([
           },
           {
             path: ":id/edit",
-            element: <RecipesAdmin/>
+            element: <EditRecipe/>,
           }
         ]
       },
