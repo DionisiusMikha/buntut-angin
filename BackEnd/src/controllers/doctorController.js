@@ -23,7 +23,7 @@ function convertTime(jam){
     const format = 'HH:mm';
     const time = moment(jam, format);
 
-    return jam;
+    return time.format(format);
 }
 
 function dateToString(tanggal){
@@ -63,100 +63,52 @@ const checkUsername = async(username) => {
 module.exports = {
     getUserByID,
     registerDoctor: async function (req, res){
-        const uploadFile = upload.single("profile_picture")
-        uploadFile(req, res, async function(err){
-            if (err instanceof multer.MulterError){
-                return res.status(400).json({msg: "File too large"});
+        const {username, email, display_name, date_of_birth, password, phone_number, address} = req.body;
+        
+        const hasil = await db.Doctor.findOne({
+            where: {
+                username: username,
+                email: email
             }
-            else if (err){
-                return res.status(400).json({msg: "File not supported"});
-            }
+        });
+        
 
-            const {username, email, display_name, date_of_birth, password, confirm_password, phone_number, address} = req.body;
+        if (hasil){
+            return res.status(400).json({msg: "already_exist"})
+        }
+        
+        const today = new Date();
+        const birthDate = new Date(date_of_birth);
+        let umur = today.getFullYear() - birthDate.getFullYear();
+        console.log(umur)
 
-            const schema = joi.object({
-                username : joi.string().required().external(checkUsername).messages({
-                    'string.empty' : "Invalid data field username",
-                    'any.required' : "Invalid data field username",
-                    'any.external' : "Username already exists"
-                }),
-                email : joi.string().email().required().messages({
-                    'string.empty' : "Invalid data field email",
-                    'any.required' : "Invalid data field email",
-                    'string.email' : "Invalid email address"
-                }),
-                display_name : joi.string().required().messages({
-                    'string.empty' : "Invalid data field name",
-                    'any.required' : "Invalid data field name"
-                }),
-                phone_number: joi.string().required().regex(/^[0-9]{11}$/).messages({
-                    'string.empty' : "Invalid data field phone number",
-                    'any.required' : "Invalid data field phone number",
-                    'string.pattern.base' : "Invalid phone number format"
-                }),
-                date_of_birth : joi.date().format('YYYY-MM-DD').required().messages({
-                    'string.empty' : "Invalid data field date",
-                    'any.required' : "Invalid data field date",
-                    'date.format' : "Invalid date format"
-                }),
-                password : joi.string().required().messages({
-                    'string.empty' : "Invalid data field password",
-                    'any.required' : "Invalid data field password"
-                }),
-                confirm_password : joi.string().required().messages({
-                    'string.empty' : "Invalid data field confirm password",
-                    'any.required' : "Invalid data field confirm password"
-                }),
-                address: joi.string().required().messages({
-                    'string.empty' : 'Invalid data field address',
-                    'any.required' : 'Invalid data field adrress'
-                })
-            })
-
-            try{
-                await schema.validateAsync(req.body);
-            }
-            catch(err){
-                return res.status(400).json({
-                    "message" : err.message
-                })
-            }
-
-            if (password != confirm_password){
-                const result = {
-                    "message" : "Password and Confirm Password doesn\'t match"
-                }
-                res.status(400).json(result);
-            }
-
-            // fs.renameSync(
-            //     `./uploads/${req.file.filename}`,
-            //     `./assets/${username}.png`
-            // );
-
-            const newUser = db.Doctor.create({
-                display_name : display_name,
-                email : email,
-                username : username,
-                password : password,
-                phone_number : phone_number,
-                birthdate : date_of_birth,
-                address: address,
-                status: 1,
-                profile_picture : `/assets/${username}.png`
-            })
-
-            const result = {
-                "message" : "Registration Success",
-                "username" : username,
-                "email" : email,
-                "display_name" : display_name,
-                "phone_number" : phone_number,
-                "address" : address,
-                "profile_picture" : `/assets/${username}.png`
-            }
-            res.status(201).json(result);
+        const newUser = db.Doctor.create({
+            display_name : display_name,
+            email : email,
+            username : username,
+            password : password,
+            birthdate : date_of_birth,
+            balance : 0,
+            weight : weight,
+            height : height,
+            jenis_kelamin : gender,
+            age : umur,
+            address: address,
+            phone_number: phone_number,
         })
+
+        const result = {
+            "message" : "success",
+            "username" : username,
+            "email" : email,
+            "display_name" : display_name,
+            "birthdate" : date_of_birth,
+            "age" : umur,
+            "jenis_kelamin" : gender
+        }
+
+        return res.status(201).json(result);
+
     },
     loginDoctor: async function(req, res){
         const {username, password} = req.body;
@@ -413,7 +365,7 @@ module.exports = {
         return res.status(200).send(getAllDoctor)
     },
     aturJadwal: async function (req, res){
-        const username = req.body.username
+        const username = req.params.username
         const tanggal = req.body.tanggal;
         const start = req.body.start;
         const end = req.body.end;
@@ -445,11 +397,9 @@ module.exports = {
                     res.status(400).json(result);
                 }
                 else {
-                   // Mengonversi input waktu menjadi objek Date
                     const startTime = convertTime(start);
                     const endTime = convertTime(end);
     
-                    // Mendapatkan jadwal dokter untuk tanggal yang sama
                     const existingSchedules = await db.Doctor_Schedule.findAll({
                         where: {
                             doctor_id: cariDokter[0].dataValues.id,
@@ -457,7 +407,6 @@ module.exports = {
                         }
                     });
     
-                    // Memeriksa apakah jadwal baru bertabrakan dengan jadwal yang sudah ada
                     const isConflict = existingSchedules.some(schedule => {
                         const scheduleStart = moment(schedule.start, 'HH:mm');
                         const scheduleEnd = moment(schedule.end, 'HH:mm');
