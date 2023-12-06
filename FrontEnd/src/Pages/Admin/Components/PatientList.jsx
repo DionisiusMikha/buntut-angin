@@ -14,7 +14,7 @@ function PatientList() {
     const getAllUser = async () => {
         const allUser = await adminService.getAllUsers(limit, filter, search);
         setUsers(allUser.data);
-        console.log(allUser.data);
+        // console.log(allUser.data);
     }
 
     useEffect(() => {
@@ -26,7 +26,9 @@ function PatientList() {
            <div className="mx-10 my-10">
                 <div className="flex flex-row justify-between">
                     <div className="text-4xl font-semibold mb-6">All User</div>
-                    <button className="bg-blue-300 rounded-xl px-4 mb-4 text-xl font-semibold">Add New User</button>
+                    <button className="bg-blue-300 rounded-xl px-4 mb-4 text-xl font-semibold" onClick={()=>{
+                        navigate(`/admin/patient-list/add`);
+                    }}>Add New User</button>
                 </div>
                 <div className="flex flex-row justify-between items-center">
                     <div className="rounded-lg py-2 px-4 mb-4 text-xl font-semibold flex items-center justify-center">

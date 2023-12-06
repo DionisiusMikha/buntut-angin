@@ -7,8 +7,6 @@ import AddRecipe3 from "./AddRecipe3";
 function AddRecipe(){
     const navigate = useNavigate();
     const [active, setActive] = useState(1);
-    // const [active, setActive] = useState(2);
-    // const [active, setActive] = useState(3);
     return(
         <>
             {/* semi navbar */}

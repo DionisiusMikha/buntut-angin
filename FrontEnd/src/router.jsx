@@ -26,13 +26,14 @@ import SettingsKonsultan from './Pages/Konsultan/components/settings';
 import AdminHomepage from './Pages/Admin/Homepage';
 import DashboardAdmin from './Pages/Admin/Components/Home';
 import RecipesAdmin from './Pages/Admin/Components/recipes';
-import PatientListAdmin from './Pages/Admin/Components/PatientList';
-import Subscriptions from "./Pages/Admin/Components/Subscriptions";
 import ListRecipes from "./Pages/Admin/Components/ListRecipes";
 import DetailRecipes from "./Pages/Admin/Components/DetailRecipes";
 import AddRecipe from "./Pages/Admin/Components/AddRecipe";
-import ProfileAdmin from "./Pages/Admin/Components/Profile";
 import EditRecipe from "./Pages/Admin/Components/EditRecipe";
+import PatientListAdmin from './Pages/Admin/Components/PatientList';
+import ProfileAdmin from "./Pages/Admin/Components/Profile";
+import Subscriptions from "./Pages/Admin/Components/Subscriptions";
+import AddNewUser from "./Pages/Admin/Components/AddNewUser";
 
 const Router = createBrowserRouter([
   {
@@ -114,7 +115,6 @@ const Router = createBrowserRouter([
       {
         path: "recipes",
         element: <RecipesAdmin/>,
-        
         children: [
           {
             path: "",
@@ -137,6 +137,10 @@ const Router = createBrowserRouter([
       {
         path: "patient-list",
         element: <PatientListAdmin/>
+      },
+      {
+        path: "patient-list/add",
+        element: <AddNewUser />
       },
       {
         path: "patient-list/detail",

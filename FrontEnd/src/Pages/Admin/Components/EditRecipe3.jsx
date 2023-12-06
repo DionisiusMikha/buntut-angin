@@ -37,7 +37,7 @@ function EditRecipe3(props){
 
         // save to db
         const res = await admin.updateRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, dataIngredients, steps, dataR[0].calories,dataR[0].carbo,dataR[0].protein,dataR[0].fat, id)
-        console.log(res)
+        // console.log(res)
         if (res.status == 201){
             navigate("/admin/recipes")
         }

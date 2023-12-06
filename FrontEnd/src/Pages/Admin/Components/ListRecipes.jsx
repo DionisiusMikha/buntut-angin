@@ -12,7 +12,7 @@ function ListRecipes (){
 
     const getAllRecipes = async () =>{
         const allRecipes = await adminService.getAllRecipes(limit, search);
-        console.log(allRecipes);
+        // console.log(allRecipes);
         setRecipes(allRecipes.data)
     }
 

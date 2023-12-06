@@ -183,7 +183,6 @@ module.exports = {
         return res.status(200).send(result)
     },
     updateRecipe: async function(req, res){
-        console.log("update recipe")
         const recipe_id = req.params.id;
         const name = req.body.name;
         const desc = req.body.description;
@@ -380,4 +379,7 @@ module.exports = {
         return res.status(200).send(resep)
         // return res.status(200).send(getIngredients)
     },
+    addUser : async function(req, res){
+        const {role} = req.params;
+    }
 }
