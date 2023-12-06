@@ -2287,6 +2287,18 @@ html {
   margin-top: 85px;
 }
 
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mt-14 {
+  margin-top: 3.5rem;
+}
+
 .flex {
   display: flex;
 }
@@ -2377,6 +2389,10 @@ html {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-40 {
+  height: 10rem;
 }
 
 .min-h-\[calc\(100vh-13rem\)\] {
@@ -2611,6 +2627,10 @@ html {
 
 .gap-8 {
   gap: 2rem;
+}
+
+.gap-12 {
+  gap: 3rem;
 }
 
 .gap-x-3 {
@@ -2851,6 +2871,11 @@ html {
 .bg-yellow-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 249 195 / var(--tw-bg-opacity));
+}
+
+.bg-green-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(134 239 172 / var(--tw-bg-opacity));
 }
 
 .bg-\[url\(\'\/img\/bg-buah\.png\'\)\] {
@@ -3442,6 +3467,32 @@ button:focus-visible {
 
 .hover\:animate-spin:hover {
   animation: spin 1s linear infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.hover\:animate-bounce:hover {
+  animation: bounce 1s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.hover\:animate-pulse:hover {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .hover\:bg-green-600:hover {
