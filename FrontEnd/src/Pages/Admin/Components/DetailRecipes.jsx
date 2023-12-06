@@ -11,19 +11,18 @@ import adminService from "../../../Services/Admin/admin"
 function DetailRecipes() {
     // const data = useLoaderData();
     const [rating, setRating] = useState(0);
-    const [comments, setComments] = useState(0);
-    const [nutrisi, setNutrisi] = useState({});
+    const [comments, setComments] = useState([]);
+    const [bahan , setBahan] = useState([]);
+    const [steps , setSteps] = useState([]);
     const [recipe, setRecipe] = useState({});
 
     const cariData = async () => {
         const id = window.location.pathname.split("/")[3];
         const res = await adminService.getRecipeById(id)
-        console.log(res.data);
-        setRecipe(res.data);
         
-        let nutrisi = JSON.parse(res.data.nutritions);
-        // console.log(nutrisi);
-        setNutrisi(nutrisi);
+        setRecipe(res.data[0]);
+        setBahan(res.data[0].ingredients);
+        setSteps(res.data[0].steps);
 
         if (res.data.comments == null){
             setComments([]);
@@ -31,17 +30,13 @@ function DetailRecipes() {
             let com = JSON.parse(res.data.comments)
             setComments(com);
         }
-
-        // let total = 0;
-        // data.comment.map(comment => {
-        //     total += comment.rating;
-        // })
-        // setRating(total / data.comment.length);
     }
 
     useEffect(() => {
         cariData();
     }, [])
+
+    const url = "http://localhost:3000" + recipe.image;
 
     const navigate = useNavigate();
     return (
@@ -66,11 +61,11 @@ function DetailRecipes() {
                     <div className="bg-white p-3 rounded-xl flex flex-row items-center w-1/3 justify-center mt-10">
                         <div className="flex flex-row items-center">
                             <img src={like} alt="" width={"30px"} />
-                            <span className="text-2xl font-semibold px-2">{recipe.suka}</span>
+                            <span className="text-2xl font-semibold px-2">{recipe.like}</span>
                         </div>
                         <div className="flex flex-row items-center mx-7">
                             <img src={rate} alt="" width={"30px"} />
-                            <span className="text-2xl font-semibold px-2">{rating}</span>
+                            <span className="text-2xl font-semibold px-2">{recipe.rating}</span>
                         </div>
                         <div className="flex flex-row items-center">
                             <img src={comment} alt="" width={"30px"} />
@@ -79,7 +74,10 @@ function DetailRecipes() {
                     </div>
                 </div>
                 <div className="-me-48">
-                    <img src={recipe.image} alt="" width={"300px"} />
+                    <img src={url} alt="" width={"300px"} style={{
+                        height: "300px",
+                        borderRadius: "50%",
+                    }}/>
                 </div>
             </div>
             {/* Nutrition */}
@@ -87,22 +85,22 @@ function DetailRecipes() {
                 <div className="text-5xl font-semibold">Nutrition Facts</div>
                 <div className="grid gap-16 grid-cols-6 mt-5">
                     <div className="bg-yellow-100 flex flex-col rounded-full items-center justify-center px-5 drop-shadow-xl">
-                        <div className="text-2xl font-semibold bg-white rounded-full p-5">{nutrisi.calories}</div>
+                        <div className="text-2xl font-semibold bg-white rounded-full p-5">{recipe.calories}</div>
                         <div className="text-2xl font-semibold mt-4">Calories</div>
                         <div className="text-xl text-gray-500">Kcal</div>
                     </div>
                     <div className="bg-yellow-100 flex flex-col rounded-full items-center justify-center px-5 drop-shadow-xl">
-                        <div className="text-2xl font-semibold bg-white rounded-full p-5">{nutrisi.carbo}</div>
+                        <div className="text-2xl font-semibold bg-white rounded-full p-5">{recipe.carbo}</div>
                         <div className="text-2xl font-semibold mt-4">Carbo</div>
                         <div className="text-xl text-gray-500">g</div>
                     </div>
                     <div className="bg-yellow-100 flex flex-col rounded-full items-center justify-center px-5 drop-shadow-xl">
-                        <div className="text-2xl font-semibold bg-white rounded-full p-5">{nutrisi.protein}</div>
+                        <div className="text-2xl font-semibold bg-white rounded-full p-5">{recipe.protein}</div>
                         <div className="text-2xl font-semibold mt-4">Protein</div>
                         <div className="text-xl text-gray-500">g</div>
                     </div>
                     <div className="bg-yellow-100 flex flex-col rounded-full items-center justify-center px-5 drop-shadow-xl">
-                        <div className="text-2xl font-semibold bg-white rounded-full p-5">{nutrisi.fat}</div>
+                        <div className="text-2xl font-semibold bg-white rounded-full p-5">{recipe.fat}</div>
                         <div className="text-2xl font-semibold mt-4">Fat</div>
                         <div className="text-xl text-gray-500">g</div>
                     </div>
@@ -110,13 +108,13 @@ function DetailRecipes() {
                         <img src={kuraSenam} alt=""  />
                     </div>
                 </div>
-                {/* <div className="flex flex-row mt-20">
+                <div className="flex flex-row mt-20">
                     <div className="w-2/5">
                         <div className="text-5xl font-semibold">Ingredients</div>
                         <ul className="mt-5 ms-7 list-disc">
-                            {recipe.ingredients.map((i)=>{
+                            {bahan.map((i)=>{
                                 return <li className="text-2xl py-2 font-semibold ">
-                                    {i.name} {i.qty} {i.unit}
+                                    {i.name} {i.qty} {i.uom}
                                 </li>
                             })}
                         </ul>
@@ -124,7 +122,7 @@ function DetailRecipes() {
                     <div className="w-1/2">
                         <div className="text-5xl font-semibold">Steps</div>
                         <ul className="mt-5 ms-7 list-decimal">
-                            {recipe.steps.map((i)=>{
+                            {steps.map((i)=>{
                                 return <li className="text-2xl py-2 font-semibold ">
                                     {i}
                                 </li>
@@ -134,13 +132,14 @@ function DetailRecipes() {
                     <div className="-me-48">
                         <img src={kuro} alt="" width={"350px"}/>
                     </div>
-                </div> */}
+                </div>
             </div>
             {/* Comment */}
-            {/* <div className="bg-white w-11/12 drop-shadow-xl mb-5 p-10 rounded-xl">
+            <div className="bg-white w-11/12 drop-shadow-xl mb-5 p-10 rounded-xl">
                 <div className="text-5xl font-semibold">Comments</div>
                 <div>
-                    {data.comment.map((c)=>{
+                    {comments.length == 0 && <div className="text-2xl font-semibold text-center py-10">THERE IS NO COMMENT ABOUT THIS FOOD</div>}
+                    {comments.map((c)=>{
                         return (
                             <>
                                 <div className="py-3 flex flex-row">
@@ -156,7 +155,7 @@ function DetailRecipes() {
                         )
                     })}
                 </div>
-            </div> */}
+            </div>
         </>
     )
 }

@@ -9,7 +9,7 @@ function AddRecipe2(props){
     const [bahan, setbahan] = (hasil != "" ? useState(hasil): useState([{
         name : "",
         qty: 0,
-        uom: ""
+        uom: "gram"
     }]));
     function deleteHandler(idx){
         const x = bahan.filter((b, i)=> {
@@ -48,7 +48,7 @@ function AddRecipe2(props){
                             setbahan([...bahan, {
                                 name : "",
                                 qty: 0,
-                                uom: ""
+                                uom: "gram"
                             }])
                         }}>
                             Add Ingredients

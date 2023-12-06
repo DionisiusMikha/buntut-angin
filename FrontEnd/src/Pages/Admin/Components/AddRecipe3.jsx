@@ -34,18 +34,10 @@ function AddRecipe3(props){
             alert(err.message)
         }
 
-        const x = {
-            calories : dataR[0].calories,
-            carbo : dataR[0].carbo,
-            protein : dataR[0].protein,
-            fat : dataR[0].fat
-        }
-
-        let nutrisi = JSON.stringify(x)
-
         // save to db
-        const res = await admin.addNewRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, dataIngredients, dataStep, nutrisi)
-        if (res.status == 200){
+        const res = await admin.addNewRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, dataIngredients, dataStep, dataR[0].calories,dataR[0].carbo,dataR[0].protein,dataR[0].fat)
+        console.log(res)
+        if (res.status == 201){
             navigate("/admin/recipes")
         }
     }

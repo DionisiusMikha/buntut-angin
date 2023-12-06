@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
     
 const upload = multer({ 
     storage: storage,
-    // limits: { fileSize: 3000000 },
+    limits: { fileSize: 3000000 },
 })
 const { Op } = db.Sequelize
 
@@ -189,7 +189,10 @@ module.exports = {
         const ingredients = req.body.ingredients;
         const steps = req.body.steps;
         const path = req.body.image_url;
-        const nutrition = req.body.nutrition;
+        const calories = req.body.calories;
+        const carbo = req.body.carbo;
+        const protein = req.body.protein;
+        const fat = req.body.fat;
 
         const noResep = await db.Recipes.findAll();
 
@@ -204,10 +207,13 @@ module.exports = {
             suka : 0,
             rating : 0,
             image_url : path,
-            nutritions : nutrition
+            calories : calories,
+            carbo : carbo,
+            protein : protein,
+            fat : fat
         })
 
-        console.log(req.body)
+        // console.log(req.body)
 
         const getResep = await db.Recipes.findAll();
 
@@ -249,6 +255,7 @@ module.exports = {
             } else if (err) {
                 return res.status(400).send({ msg: "File not supported" });
             }
+            fs.renameSync(req.file.path, req.file.path.replace("uploads", "assets"))
             res.status(200).json(req.file);
         })
     },
@@ -298,6 +305,11 @@ module.exports = {
             image :getRecipe.image_url,
             description: getRecipe.description,
             like : getRecipe.suka,
+            rating : getRecipe.rating,
+            calories : getRecipe.calories,
+            carbo : getRecipe.carbo,
+            protein : getRecipe.protein,
+            fat : getRecipe.fat,
             ingredients : getIngredients,
             steps : step
         })

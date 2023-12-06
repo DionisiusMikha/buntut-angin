@@ -23,14 +23,17 @@ function getAllRecipes(limit, search){
     })
 }
 
-function addNewRecipe(name, desc, image, ingredients, steps, nutrisi){
+function addNewRecipe(name, desc, image, ingredients, steps, calories, carbo, protein, fat){
     return client.post("/resep", {
         name : name,
         description : desc,
         image_url : image,
         ingredients : ingredients,
         steps : steps,
-        nutrition : nutrisi
+        calories : calories,
+        carbo : carbo,
+        protein : protein,
+        fat : fat
     })
 }
 
