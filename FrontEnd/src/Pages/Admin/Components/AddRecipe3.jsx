@@ -35,7 +35,7 @@ function AddRecipe3(props){
         }
 
         // save to db
-        const res = await admin.addNewRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, dataIngredients, dataStep, dataR[0].calories,dataR[0].carbo,dataR[0].protein,dataR[0].fat)
+        const res = await admin.addNewRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, dataIngredients, steps, dataR[0].calories,dataR[0].carbo,dataR[0].protein,dataR[0].fat)
         console.log(res)
         if (res.status == 201){
             navigate("/admin/recipes")

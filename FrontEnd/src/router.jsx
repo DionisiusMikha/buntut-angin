@@ -27,7 +27,6 @@ import AdminHomepage from './Pages/Admin/Homepage';
 import DashboardAdmin from './Pages/Admin/Components/Home';
 import RecipesAdmin from './Pages/Admin/Components/recipes';
 import PatientListAdmin from './Pages/Admin/Components/PatientList';
-import SettingsAdmin from './Pages/Admin/Components/settings';
 import Subscriptions from "./Pages/Admin/Components/Subscriptions";
 import ListRecipes from "./Pages/Admin/Components/ListRecipes";
 import DetailRecipes from "./Pages/Admin/Components/DetailRecipes";
@@ -147,10 +146,6 @@ const Router = createBrowserRouter([
       {
         path: "patient-list/detail",
         element: <ProfileAdmin/>
-      },
-      {
-        path: "settings",
-        element: <SettingsAdmin/>
       },
       {
         path: "subscriptions",

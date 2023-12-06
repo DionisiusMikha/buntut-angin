@@ -69,14 +69,6 @@ function SideNavbar(){
                     </NavLink>
                 </div>
                 <div className='w-3/5 h-9'>
-                    <NavLink className='w-full h-full flex justify-start items-center' to={`/admin/settings`} style={(state) => {
-                        return state.isActive ? style : {backgroundColor:"transparent"}
-                    }}>
-                        <img src={navbar4} alt="" className='w-7'/>
-                        <p className='text-2xl text-black font-semibold ms-2'>Settings</p>
-                    </NavLink>
-                </div>
-                <div className='w-3/5 h-9'>
                     <NavLink className='w-full h-full flex justify-start items-center' to={`/admin/subscriptions`} style={(state) => {
                         return state.isActive ? style : {backgroundColor:"transparent"}
                     }}>

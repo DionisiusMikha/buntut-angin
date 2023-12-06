@@ -11,10 +11,11 @@ function Card({item}) {
                 navigate(`/admin/recipes/${item.recipe_id}`);
             }}>
                 <div className="rounded-full">
-                    <img src={url} alt="" width={"200px"} style={{
-                        borderRadius: "50%",
-                        height: "200px",
-                    }}/>
+                    {item.image ? (
+                        <img src={url} alt="" width={"200px"} style={{borderRadius: "50%", height: "200px"}}/>
+                    ) : (
+                        <p className="w-36 h-36 bg-gray-200 flex justify-center items-center rounded-full text-gray-400">No Image</p>
+                    )}
                 </div>
                 <div className="w-full h-1/2 flex flex-col justify-start items-center gap-y-2 pt-6">
                     <p className="font-semibold text-2xl">{item.name}</p>
