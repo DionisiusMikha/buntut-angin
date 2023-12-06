@@ -7,14 +7,15 @@ import rate from "/icon/rate.png";
 import like from "/icon/like.png";
 import comment from "/icon/comment.png";
 import adminService from "../../../Services/Admin/admin"
+import { useDispatch, useSelector } from "react-redux"
+import { addRecipe, addIngredients,addSteps } from "../../../Redux/recipesSlice";
 
 function DetailRecipes() {
-    // const data = useLoaderData();
-    const [rating, setRating] = useState(0);
     const [comments, setComments] = useState([]);
     const [bahan , setBahan] = useState([]);
     const [steps , setSteps] = useState([]);
     const [recipe, setRecipe] = useState({});
+    const dispatch = useDispatch();
 
     const id = window.location.pathname.split("/")[3];
     const cariData = async () => {
@@ -47,6 +48,13 @@ function DetailRecipes() {
                 <div>
                     <button className="bg-blue-300 px-6 py-2 rounded-xl font-semibold text-xl me-5" onClick={()=>{
                         navigate(`/admin/recipes/${id}/edit`);
+                        try{
+                            dispatch(addRecipe(recipe))
+                            dispatch(addIngredients(bahan))
+                            dispatch(addSteps(steps))
+                        } catch(e) {
+                            alert(e.message);
+                        }
                     }}>edit</button>
                     <button className="bg-red-300 px-6 py-2 rounded-xl font-semibold text-xl me-5" onClick={()=>{
                         navigate(-1);
@@ -57,7 +65,7 @@ function DetailRecipes() {
             <div className="bg-orange-100 rounded-xl px-10 py-10 flex flex-row justify-between w-11/12">
                 <div className="w-5/6 flex flex-col justify-center">
                     <div className="text-5xl font-semibold">{recipe.name}</div>
-                    <div className="text-3xl py-8 leading-relaxed">{recipe.description}</div>
+                    <div className="text-3xl py-8 leading-relaxed">{recipe.desc}</div>
                     <div className="bg-white p-3 rounded-xl flex flex-row items-center w-1/3 justify-center mt-10">
                         <div className="flex flex-row items-center">
                             <img src={like} alt="" width={"30px"} />

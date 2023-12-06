@@ -1,12 +1,7 @@
 import { useForm } from "react-hook-form";
 import no from '/icon/no.png'
-import Joi from 'joi'
-import { joiResolver } from "@hookform/resolvers/joi"
-import api from '../../../Services/api'
 import { useDispatch, useSelector } from "react-redux"
 import { addRecipe } from "../../../Redux/recipesSlice";
-import { useState } from "react";
-import { Axios } from "axios";
 import adminService from "../../../Services/Admin/admin";
 
 function AddRecipe1(props){

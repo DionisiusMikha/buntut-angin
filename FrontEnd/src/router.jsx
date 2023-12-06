@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Loader from "./Component/Loader";
-import Try from "./Pages/Try/try";
+// import Try from "./Pagesx/Try/try";
 
 // Dashboard
 import LandingPage from "./Pages/Landing Page/LandingPages";
@@ -31,7 +31,6 @@ import Subscriptions from "./Pages/Admin/Components/Subscriptions";
 import ListRecipes from "./Pages/Admin/Components/ListRecipes";
 import DetailRecipes from "./Pages/Admin/Components/DetailRecipes";
 import AddRecipe from "./Pages/Admin/Components/AddRecipe";
-import DataHandler from "./Pages/Admin/Components/DataHandler";
 import ProfileAdmin from "./Pages/Admin/Components/Profile";
 import EditRecipe from "./Pages/Admin/Components/EditRecipe";
 
@@ -153,10 +152,10 @@ const Router = createBrowserRouter([
     path : "/dietisian/profile",
     element : <ProfileDietisian/>,
   },
-  {
-    path: "/try",
-    element: <Try />,
-  }
+  // {
+  //   path: "/try",
+  //   element: <Try />,
+  // }
 ]);
 
 export default Router;

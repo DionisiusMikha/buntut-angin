@@ -1,16 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import AddRecipe1 from "./EditRecipe1";
-import AddRecipe2 from "./AddRecipe2";
-import AddRecipe3 from "./AddRecipe3";
+import EditRecipe1 from "./EditRecipe1";
 import { useDispatch, useSelector } from "react-redux"
+import EditRecipe2 from "./EditRecipe2";
+import EditRecipe3 from "./EditRecipe3";
 
 
 function EditRecipe(){
     const navigate = useNavigate();
     const [active, setActive] = useState(1);
-
-    // ambil data dri db, masukin redux
     
     return(
         <>
@@ -34,9 +32,9 @@ function EditRecipe(){
                     <div className={` px-4 py-2 rounded-full text-xl ${active == 3 ? "bg-blue-200 font-bold" : "bg-gray-100"}`}>3</div>
                 </div>
 
-                {active == 1  && <AddRecipe1 setActive={setActive}/>}
-                {active == 2  && <AddRecipe2 setActive={setActive}/>}
-                {active == 3  && <AddRecipe3 setActive={setActive}/>}
+                {active == 1  && <EditRecipe1 setActive={setActive}/>}
+                {active == 2  && <EditRecipe2 setActive={setActive}/>}
+                {active == 3  && <EditRecipe3 setActive={setActive}/>}
             </div>
         </>
     )

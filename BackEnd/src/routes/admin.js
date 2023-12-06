@@ -4,6 +4,7 @@ const router = Router();
 
 router.get("/resep", adminController.getAllResep);
 router.post("/resep", adminController.addRecipe);
+router.put("/resep/:id", adminController.updateRecipe);
 router.get("/users", adminController.getAllUsers);
 router.get("/users/:role/:id", adminController.getUserById);
 router.get("/resep/:id", adminController.getRecipeById);

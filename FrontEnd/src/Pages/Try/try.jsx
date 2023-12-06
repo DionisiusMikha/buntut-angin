@@ -83,74 +83,74 @@
 // npx tailwindcss build ./src/index.css -o ./src/Component/navstyle.css
 
 
-import React, {useState} from 'react';
-import api from '../../Services/api';
-import admin from '../../Services/Admin/admin';
+// import React, {useState} from 'react';
+// import api from '../../Services/api';
+// import admin from '../../Services/Admin/admin';
 
-function Try(){
-	const [selectedFile, setSelectedFile] = useState();
-	const [isFilePicked, setIsFilePicked] = useState(false);
-  const [hasil, setHasil] = useState();
+// function Try(){
+// 	const [selectedFile, setSelectedFile] = useState();
+// 	const [isFilePicked, setIsFilePicked] = useState(false);
+//   const [hasil, setHasil] = useState();
 
-	const changeHandler = (event) => {
-		setSelectedFile(event.target.files[0]);
-		setIsFilePicked(true);
-	};
+// 	const changeHandler = (event) => {
+// 		setSelectedFile(event.target.files[0]);
+// 		setIsFilePicked(true);
+// 	};
 
-	const handleSubmission = async() => {
-		const formData = new FormData();
+// 	const handleSubmission = async() => {
+// 		const formData = new FormData();
 
-		formData.append('file', selectedFile);
+// 		formData.append('file', selectedFile);
 
-    // console.log(formData);
-    const res = await admin.uploadImage(formData);
-    console.log(res.data)
+//     // console.log(formData);
+//     const res = await admin.uploadImage(formData);
+//     console.log(res.data)
 
-    // const res = await api.upload(formData)
-    // console.log(res)
+//     // const res = await api.upload(formData)
+//     // console.log(res)
 
-    // const a = URL.createObjectURL(selectedFile);
-    // setHasil(a)
-    // console.log("a", hasil)
+//     // const a = URL.createObjectURL(selectedFile);
+//     // setHasil(a)
+//     // console.log("a", hasil)
 
-		// fetch(
-		// 	'https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5',
-		// 	{
-		// 		method: 'POST',
-		// 		body: formData,
-		// 	}
-		// )
-		// 	.then((response) => response.json())
-		// 	.then((result) => {
-		// 		console.log('Success:', result);
-		// 	})
-		// 	.catch((error) => {
-		// 		console.error('Error:', error);
-		// 	});
-	};
+// 		// fetch(
+// 		// 	'https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5',
+// 		// 	{
+// 		// 		method: 'POST',
+// 		// 		body: formData,
+// 		// 	}
+// 		// )
+// 		// 	.then((response) => response.json())
+// 		// 	.then((result) => {
+// 		// 		console.log('Success:', result);
+// 		// 	})
+// 		// 	.catch((error) => {
+// 		// 		console.error('Error:', error);
+// 		// 	});
+// 	};
   
-	return(
-    <div>
-			<input type="file" name="file" onChange={changeHandler} />
-			{isFilePicked ? (
-        <div>
-					<p>Filename: {selectedFile.name}</p>
-					<p>Filetype: {selectedFile.type}</p>
-					<p>Size in bytes: {selectedFile.size}</p>
-					<p>
-						lastModifiedDate:{' '}
-						{selectedFile.lastModifiedDate.toLocaleDateString()}
-					</p>
-				</div>
-			) : (
-        <p>Select a file to show details</p>
-        )}
-			<div>
-				<button onClick={handleSubmission}>Submit</button>
-			</div>
-      {/* <img src={hasil} alt="" /> */}
-		</div>
-	)
+// 	return(
+//     <div>
+// 			<input type="file" name="file" onChange={changeHandler} />
+// 			{isFilePicked ? (
+//         <div>
+// 					<p>Filename: {selectedFile.name}</p>
+// 					<p>Filetype: {selectedFile.type}</p>
+// 					<p>Size in bytes: {selectedFile.size}</p>
+// 					<p>
+// 						lastModifiedDate:{' '}
+// 						{selectedFile.lastModifiedDate.toLocaleDateString()}
+// 					</p>
+// 				</div>
+// 			) : (
+//         <p>Select a file to show details</p>
+//         )}
+// 			<div>
+// 				<button onClick={handleSubmission}>Submit</button>
+// 			</div>
+//       {/* <img src={hasil} alt="" /> */}
+// 		</div>
+// 	)
 
-};
-export default Try;
+// };
+// export default Try;
