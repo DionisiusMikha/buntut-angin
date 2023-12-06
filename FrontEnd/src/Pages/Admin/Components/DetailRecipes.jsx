@@ -73,11 +73,12 @@ function DetailRecipes() {
                         </div>
                     </div>
                 </div>
-                <div className="-me-48">
-                    <img src={url} alt="" width={"300px"} style={{
-                        height: "300px",
-                        borderRadius: "50%",
-                    }}/>
+                <div className="-me-40 flex justify-start items-center">
+                    {recipe.image ? (
+                        <img src={url} alt="" className="w-60 h-60 rounded-full"/>
+                    ) : (
+                        <div></div>
+                    )}
                 </div>
             </div>
             {/* Nutrition */}

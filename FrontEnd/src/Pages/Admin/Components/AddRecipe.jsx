@@ -21,7 +21,7 @@ function AddRecipe(){
                 </div>
             </div>
             {/* isi */}           
-            <div className="bg-white rounded-xl px-10 py-10 min-h-[calc(100vh-9rem)] drop-shadow-lg">
+            <div className="bg-white rounded-xl px-10 py-10 min-h-[calc(100vh-9rem)] drop-shadow-lg mb-4">
                 {/* STEPS */}
                 <div className="flex flex-row justify-center items-center mb-4">
 

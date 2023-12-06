@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AddRecipe1 from "./recipes1";
 import AddRecipe2 from "./recipes2";
+import AddRecipe3 from "./recipes3";
 
 function AddRecipe(){
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ function AddRecipe(){
 
                 {active == 1  && <AddRecipe1 setActive={setActive}/>}
                 {active == 2  && <AddRecipe2 setActive={setActive}/>}
-                {active == 3  && <AddRecipe1 setActive={setActive}/>}
+                {active == 3  && <AddRecipe3 setActive={setActive}/>}
             </div>
         </div>
         </>
