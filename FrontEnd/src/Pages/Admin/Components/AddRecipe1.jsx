@@ -30,7 +30,7 @@ function AddRecipe1(props){
         formData.append("file", data.image[0]);
         const res = await adminService.uploadImage(formData, data.name);
         
-        const path = "./Uploads/Recipes/" + res.data.filename;
+        const path = "/assets/" + res.data.filename;
         const recipe = {
             name : data.name,
             desc  : data.desc,
