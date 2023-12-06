@@ -7,7 +7,8 @@ function Homepage () {
             {/* side navbar */}
             <div className="w-2/12 fixed">
               <SideNavbar hovered="home"></SideNavbar>
-            </div>localStorage.setItem("token", res.data.token);
+            </div>
+            {/* localStorage.setItem("token", res.data.token); */}
             <div className="w-2/12"></div>
             <div className="w-10/12">
                 <Outlet/>

@@ -5,7 +5,7 @@ import { useState } from "react";
 function AddIngredients(props){
     const [name, setName] = (props.bahan.name != "" ? useState(props.bahan.name): useState(""));
     const [qty, setQty] = (props.bahan.qty != "" ? useState(props.bahan.qty): useState(0));
-    const [unit, setUnit] = (props.bahan.unit != "" ? useState(props.bahan.unit): useState("gram")); 
+    const [unit, setUnit] = (props.bahan.unit != "" ? useState(props.bahan.uom): useState("gram")); 
 
     return(
         <div className="container flex flex-row mt-5" onBlur={()=>{

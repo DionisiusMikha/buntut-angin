@@ -18,7 +18,8 @@ function SideNavbar({hovered}){
 
     const style = {
         backgroundImage: bg,
-        backgroundRepeat: "no-repeat"
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover"
     }
 
     const time = () => {

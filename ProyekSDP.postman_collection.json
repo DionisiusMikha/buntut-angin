@@ -1,0 +1,509 @@
+{
+	"info": {
+		"_postman_id": "e0441c09-edbc-4b21-8f1f-f87e47a6a6cb",
+		"name": "ProyekSDP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28911453"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profile_picture",
+									"type": "file",
+									"src": "/D:/WALLPAPER/Kim Minji (19).jpg"
+								},
+								{
+									"key": "email",
+									"value": "kelpinharsono@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "kelpinharr",
+									"type": "text"
+								},
+								{
+									"key": "display_name",
+									"value": "Kelpin Horison",
+									"type": "text"
+								},
+								{
+									"key": "date_of_birth",
+									"value": "2003-01-23",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "08123261006",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Mulyosari Prima Utara IV",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "20",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "height",
+									"value": "168",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "65",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "kelpinharr",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "calvinharsono07@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "08123261006",
+									"type": "text"
+								},
+								{
+									"key": "date_of_birth",
+									"value": "2003-01-23",
+									"type": "text"
+								},
+								{
+									"key": "display_name",
+									"value": "Kelpin Harsono",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/users/edit/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctor",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "display_name",
+									"value": "Calvin Harsono",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "calvinharsono07@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "calvinharsono23",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "08123261006",
+									"type": "text"
+								},
+								{
+									"key": "date_of_birth",
+									"value": "2003-01-23",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Hayo dimana",
+									"type": "text"
+								},
+								{
+									"key": "profile_picture",
+									"type": "file",
+									"src": "/D:/WALLPAPER/Kim Minji (7).jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/doctor/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"doctor",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "calvinharsono23",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/doctor/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"doctor",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resep",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"doctor_id\" : \"2\",\r\n    \"name\" : \"Gule Kambing\",\r\n    \"description\" : \"Kolestrol nomer 1 bos\",\r\n    \"ingredients\" : [\r\n        {\r\n            \"name\" : \"nasi putih\",\r\n            \"qty\" : \"2\",\r\n            \"uom\" : \"cups\"\r\n        },\r\n        {\r\n            \"name\" : \"daging kambing\",\r\n            \"qty\" : \"2\",\r\n            \"uom\" : \"kg\"\r\n        },\r\n        {\r\n            \"name\" : \"kemiri\",\r\n            \"qty\" : \"1\",\r\n            \"uom\" : \"kg\"\r\n        },\r\n        {\r\n            \"name\" : \"air putih\",\r\n            \"qty\" : \"1\",\r\n            \"uom\" : \"liter\"\r\n        },\r\n        {\r\n            \"name\" : \"kecap bango\",\r\n            \"qty\" : \"1\",\r\n            \"uom\" : \"botol\"\r\n        }\r\n    ],\r\n    \"steps\" : [\r\n        \"siapkan alat dan bahan\",\r\n        \"nyalain kompor\",\r\n        \"nyalain rice cooker\",\r\n        \"masukin semua bahan\",\r\n        \"sok kabehhh\",\r\n        \"tiriskan\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/doctor/recipes",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"doctor",
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "display_name",
+									"value": "o",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/doctor/viewUser",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"doctor",
+								"viewUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rekomendasi Menu",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nama_dokter",
+									"value": "Calvin Harsono",
+									"type": "text"
+								},
+								{
+									"key": "nama_resep",
+									"value": "Nasi Kolestrol",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/doctor/rekomendasiMenu",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"doctor",
+								"rekomendasiMenu"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "getAllUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/admin/users?user=&limit=20",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admin",
+								"users"
+							],
+							"query": [
+								{
+									"key": "user",
+									"value": ""
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddRecipes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"doctor_id\" : \"-1\",\r\n    \"name\" : \"Nasi Goreng deleted\",\r\n    \"description\" : \"Ini cara buat nasgor enak lo\",\r\n    \"image_url\" : \"..\\Uploads\\Recipes\\file-1701662645716-326311694.png\",\r\n    \"ingredients\" : [\r\n        {\r\n            \"name\" : \"nasi putih\",\r\n            \"qty\" : 2,\r\n            \"uom\" : \"cups\"\r\n        },\r\n        {\r\n            \"name\" : \"kecap\",\r\n            \"qty\" : 5,\r\n            \"uom\" : \"tablespoons\"\r\n        },\r\n        {\r\n            \"name\" : \"minyak\",\r\n            \"qty\" : 2,\r\n            \"uom\" : \"tablespoons\"\r\n        }\r\n    ],\r\n    \"steps\" : [\r\n        \"siapkan alat dan bahan\",\r\n        \"nyalain kompor\",\r\n        \"masukkan minyak dan bawang\",\r\n        \"masukkan nasi\",\r\n        \"kasi bumbu\", \r\n        \"nasi goreng anda sudah jadi\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/admin/resep",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admin",
+								"resep"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddRecipes Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"doctor_id\" : \"-1\",\r\n    \"name\" : \"Nasi Goreng deleted\",\r\n    \"description\" : \"Ini cara buat nasgor enak lo\",\r\n    \"image_url\" : \"..\\Uploads\\Recipes\\file-1701662645716-326311694.png\",\r\n    \"ingredients\" : [\r\n        {\r\n            \"name\" : \"nasi putih\",\r\n            \"qty\" : 2,\r\n            \"uom\" : \"cups\"\r\n        },\r\n        {\r\n            \"name\" : \"kecap\",\r\n            \"qty\" : 5,\r\n            \"uom\" : \"tablespoons\"\r\n        },\r\n        {\r\n            \"name\" : \"minyak\",\r\n            \"qty\" : 2,\r\n            \"uom\" : \"tablespoons\"\r\n        }\r\n    ],\r\n    \"steps\" : [\r\n        \"siapkan alat dan bahan\",\r\n        \"nyalain kompor\",\r\n        \"masukkan minyak dan bawang\",\r\n        \"masukkan nasi\",\r\n        \"kasi bumbu\", \r\n        \"nasi goreng anda sudah jadi\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/admin/resep",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admin",
+								"resep"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllRecipe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/admin/resep",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"admin",
+								"resep"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserById",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "getUserById Copy",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

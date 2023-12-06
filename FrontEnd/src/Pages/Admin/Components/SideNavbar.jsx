@@ -19,7 +19,7 @@ function SideNavbar(){
     const style = {
         backgroundImage: bg,
         backgroundRepeat: "no-repeat",
-        backgroundSize : "auto"
+        backgroundSize : "cover"
     }
 
     const time = () => {
@@ -65,15 +65,7 @@ function SideNavbar(){
                         return state.isActive ? style : {backgroundColor:"transparent"}
                     }}>
                         <img src={navbar3} alt="" className='w-7'/>
-                        <p className='text-2xl text-black font-semibold ms-2'>Patient List</p>
-                    </NavLink>
-                </div>
-                <div className='w-3/5 h-9'>
-                    <NavLink className='w-full h-full flex justify-start items-center' to={`/admin/settings`} style={(state) => {
-                        return state.isActive ? style : {backgroundColor:"transparent"}
-                    }}>
-                        <img src={navbar4} alt="" className='w-7'/>
-                        <p className='text-2xl text-black font-semibold ms-2'>Settings</p>
+                        <p className='text-2xl text-black font-semibold ms-2'>User List</p>
                     </NavLink>
                 </div>
                 <div className='w-3/5 h-9'>
