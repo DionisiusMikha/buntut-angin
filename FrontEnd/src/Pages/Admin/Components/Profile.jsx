@@ -44,8 +44,8 @@ function Profile(){
         {/* PROFILE */}
         <div className="overflow-scroll bg-white rounded-2xl w-full min-h-[calc(100vh-9rem)] drop-shadow-xl px-10 py-10">
           {/* photo profile */}
-          <div className="bg-white drop-shadow-lg rounded-lg py-5 px-10 flex flex-row">
-            {users.profile_picture ? <img src={users.profile_picture} alt="ADA" /> : <img src={iconUser} alt="KOSONG" width={"150px"}/>}
+          <div className="bg-white drop-shadow-lg rounded-lg py-5 px-10 flex flex-row items-center">
+            {users.profile_picture ? <img src={users.profile_picture} alt="ADA" className="w-24"/> : <img src={iconUser} alt="KOSONG" className="h-24"/>}
             {/* <div className="bg-white rounded-full p-4 drop-shadow-md h-16 w-16 -ms-10 mt-[85px]">
               <img src={change} alt="" className="m-auto p-auto"/>
             </div> */}
