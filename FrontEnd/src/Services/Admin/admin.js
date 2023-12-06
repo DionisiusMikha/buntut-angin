@@ -36,6 +36,19 @@ function addNewRecipe(name, desc, image, ingredients, steps, calories, carbo, pr
         fat : fat
     })
 }
+function updateRecipe(name, desc, image, ingredients, steps, calories, carbo, protein, fat, id){
+    return client.put(`/resep/${id}`, {
+        name : name,
+        description : desc,
+        image_url : image,
+        ingredients : ingredients,
+        steps : steps,
+        calories : calories,
+        carbo : carbo,
+        protein : protein,
+        fat : fat
+    })
+}
 
 function getUserById(role, id){
     return client.get(`/users/${role}/${id}`)
@@ -52,4 +65,5 @@ export default {
     addNewRecipe,
     getUserById,
     getRecipeById,
+    updateRecipe,
 }

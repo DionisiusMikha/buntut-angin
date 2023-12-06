@@ -11,6 +11,12 @@ const upload = multer({
 const { Op } = db.Sequelize
 
 //==========================================
+function convertDate(tanggal) {
+    const [day, month, year] = tanggal.split('/');
+
+    const dateTime = new Date(`${year}-${month}-${day}T11:00:00`);
+    return dateTime;
+}
 
 const moment = require('moment');
 
@@ -384,5 +390,83 @@ module.exports = {
             jadwal
         }
         res.status(200).json(result);
+    },
+    janjian: async function(req, res){
+        const username = req.params.username;
+        const { tanggal, jam, nama_dokter } = req.body;
+
+        const cariUser = await db.User.findAll({
+            where: {
+                username : username
+            }
+        })
+
+        const cariDokter = await db.Doctor.findAll({
+            where: {
+                display_name: nama_dokter
+            }
+        })
+
+        if (cariUser.length == 0){
+            const result = {
+                "message" : "User tidak ditemukan"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            if (cariDokter.length == 0){
+                const result = {
+                    "message" : "Dokter tidak ditemukan"
+                }
+                res.status(404).json(result);
+            }
+            else {
+                const cariJadwal = await db.Doctor_Schedule.findAll({
+                    where: {
+                        doctor_id: cariDokter[0].dataValues.id
+                    }
+                })
+    
+                if (cariJadwal.length == 0){
+                    const result = {
+                        "message" : "Jadwal dokter tidak ditemukan"
+                    }
+                    res.status(404).json(result);
+                }
+                else {
+                    console.log(convertDate(tanggal).toISOString());
+                    console.log(cariJadwal[0].dataValues.tanggal.toISOString());
+                    if (convertDate(tanggal).toISOString().slice(0, 10).replace('T', ' ') != cariJadwal[0].dataValues.tanggal.toISOString().slice(0, 10).replace('T', ' ')){
+                        const result = {
+                            "message" : "Dokter tidak memiliki jadwal di tanggal tersebut!"
+                        }
+                        res.status(400).json(result);
+                    }
+                    else {
+                        if ((convertTime(jam) > cariJadwal[0].dataValues.start || convertTime(jam) >= cariJadwal[0].dataValues.start) && (convertTime(jam) < cariJadwal[0].dataValues.end || convertTime(jam) <= cariJadwal[0].dataValues.end)){
+                            const newConsul = await db.Consultation.create({
+                                doctor_id: cariDokter[0].dataValues.id,
+                                user_id: cariUser[0].dataValues.id,
+                                tanggal: convertDate(tanggal),
+                                jam: convertTime(jam)
+                            })
+    
+                            const result = {
+                                "message" : "Noted!",
+                                "tanggal" : convertDate(tanggal).toISOString().slice(0, 10).replace('T', ' '),
+                                "jam" : convertTime(jam)
+                            }
+                            res.status(201).json(result);
+                        }
+                        else {
+                            const result = {
+                                "message" : "Diluar jam konsultasi!"
+                            }
+                            res.status(400).json(result);
+                        }                        
+                    }
+                }
+            }
+        }
     }
 }

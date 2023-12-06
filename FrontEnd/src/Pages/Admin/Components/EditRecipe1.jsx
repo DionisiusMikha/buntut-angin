@@ -1,10 +1,14 @@
 import { useForm } from "react-hook-form";
 import no from '/icon/no.png'
+import Joi from 'joi'
+import { joiResolver } from "@hookform/resolvers/joi"
 import { useDispatch, useSelector } from "react-redux"
 import { addRecipe } from "../../../Redux/recipesSlice";
 import adminService from "../../../Services/Admin/admin";
+import { useEffect } from "react";
 
-function AddRecipe1(props){
+function EditRecipe1(props){
+    
     const dispatch = useDispatch();
     const hasil = useSelector((state) => state.recipes.recipe);
     const {register, handleSubmit, reset, formState: { errors }  } = useForm({
@@ -20,12 +24,18 @@ function AddRecipe1(props){
     });
 
     const change = async data => {
-        // ambil path img nya
-        const formData = new FormData();
-        formData.append("file", data.image[0]);
-        const res = await adminService.uploadImage(formData, data.name);
+        // cek apakah data imagenya sudah dalam bentuk path
+        let path = ""
+        if (typeof data.image != "string"){
+            // ambil path img nya
+            const formData = new FormData();
+            formData.append("file", data.image[0]);
+            const res = await adminService.uploadImage(formData, data.name);    
+            path = "/assets/" + res.data.filename;
+        } else {
+            path = data.image
+        }
         
-        const path = "/assets/" + res.data.filename;
         const recipe = {
             name : data.name,
             desc  : data.desc,
@@ -91,25 +101,32 @@ function AddRecipe1(props){
             </div>
             <div className="w-2/5">
                 {/* Upload Image */}
-                <div className="h-36">
+                <div className="">
                     <div className="text-3xl font-semibold">
                         Upload Image
                     </div>  
                     <div className="flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center justify-center">
-                        <input type="file" accept="image/*" {...register("image", {
-                            required: "image required"
-                        })} className={`w-full h-12 max-w-s bg-transparent border-none outline-none px-4 py-auto`}/>
+                        <input type="file" accept="image/*" {...register("image")} className={`w-full h-12 max-w-s bg-transparent border-none outline-none px-4 py-auto`}/>
                     </div>
                     {errors.image && <span style={{ color:"red" }}>{errors.image.message}</span>}
+
+                    <div className="flex flex-row mt-3 items-center">
+                        <span className="me-7 text-xl font-semibold">Current Image : </span>
+                        <img src={`http://localhost:3000`+hasil[0].image} alt="" style={{
+                            "borderRadius":"50%",
+                            "height": "150px",
+                            "width": "150px",
+                        }}/>
+                    </div>
                 </div>
                 {/* Nutrition */}
-                <div className="my-10">
+                <div className="my-2">
                     <div className="text-3xl font-semibold">
                         Nutrition
                     </div>
-                    <div className="bg-gray-200 flex flex-col rounded-xl mt-4 py-3">
+                    <div className="bg-gray-200 flex flex-col rounded-xl mt-2 py-3">
                         <div className=" flex flex-row justify-between px-12">
-                            <div className="w-1/3 h-32">
+                            <div className="w-1/3 h-24">
                                 <div className="bg-gray-100 px-5 py-2 rounded-lg flex flex-row justify-between">
                                     <input type="number"  className="bg-transparent border-none outline-none text-xl font-semibold w-2/3" min={"0"} {...register("calories", {required: "calories required"})}/>
                                     <span className="text-xl font-semibold">Kcal</span>
@@ -117,7 +134,7 @@ function AddRecipe1(props){
                                 <div className="text-xl font-semibold text-center py-2">Calories</div>
                                 {errors.calories && <span style={{ color:"red" }}>{errors.calories.message}</span>}
                             </div>
-                            <div className="w-1/3 h-32">
+                            <div className="w-1/3 h-24">
                                 <div className="bg-gray-100 px-5 py-2 rounded-lg flex flex-row justify-between w-full">
                                     <input type="number"  className="bg-transparent border-none outline-none text-xl font-semibold w-2/3" min={"0"}  {...register("carbo", { required: "carbo required" })}/>
                                     <span className="text-xl font-semibold">g</span>
@@ -127,7 +144,7 @@ function AddRecipe1(props){
                             </div>
                         </div>
                         <div className=" flex flex-row justify-between px-12">
-                            <div className="w-1/3 h-32">
+                            <div className="w-1/3 h-24">
                                 <div className="bg-gray-100 px-5 py-2 rounded-lg flex flex-row justify-between">
                                     <input type="number"  className="bg-transparent border-none outline-none text-xl font-semibold w-2/3" min={"0"}  {...register("protein", {
                                     required: "protein required"
@@ -137,7 +154,7 @@ function AddRecipe1(props){
                                 <div className="text-xl font-semibold text-center py-2">Protein</div>
                                 {errors.protein && <span style={{ color:"red" }}>{errors.protein.message}</span>}
                             </div>
-                            <div className="w-1/3 h-32">
+                            <div className="w-1/3 h-24">
                                 <div className="bg-gray-100 px-5 py-2 rounded-lg flex flex-row justify-between w-full">
                                     <input type="number"  className="bg-transparent border-none outline-none text-xl font-semibold w-2/3" min={"0"} {...register("fat", {
                                     required: "fat required"
@@ -150,7 +167,7 @@ function AddRecipe1(props){
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-row justify-end w-full mt-40">
+                <div className="flex flex-row justify-end w-full mt-10">
                     <button type="submit" className="bg-blue-300 px-6 py-3 rounded-xl font-semibold text-xl w-72">
                         Next                
                     </button>
@@ -160,4 +177,4 @@ function AddRecipe1(props){
     )
 }
 
-export default AddRecipe1;
+export default EditRecipe1;

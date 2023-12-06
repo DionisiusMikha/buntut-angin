@@ -182,6 +182,68 @@ module.exports = {
 
         return res.status(200).send(result)
     },
+    updateRecipe: async function(req, res){
+        const recipe_id = req.params.id;
+        const name = req.body.name;
+        const desc = req.body.description;
+        const ingredients = req.body.ingredients;
+        const steps = req.body.steps;
+        const path = req.body.image_url;
+        const calories = req.body.calories;
+        const carbo = req.body.carbo;
+        const protein = req.body.protein;
+        const fat = req.body.fat;
+
+        let resepUpdate = await db.Recipes.update({
+            name: name,
+            description: desc,
+            image_url : path,
+            calories : calories,
+            carbo : carbo,
+            protein : protein,
+            fat : fat
+        }, 
+        {
+            where: {
+                id: recipe_id
+            }
+        })
+
+        for (let i = 0 ; i < ingredients.length; i++){
+            let bahan = await db.Ingredients.update({
+                name: ingredients[i].name,
+                qty: ingredients[i].qty,
+                uom: ingredients[i].uom,
+            }, {
+                where: {
+                    recipe_id: recipe_id
+                }
+            })
+        }
+
+        for (let i = 0; i < steps.length; i++){
+            let langkah = await db.Steps.update({
+                desc: steps[i]
+            }, {
+                where: {
+                    recipe_id: recipe_id
+                }
+            })
+        }
+
+        const result = {
+            "recipe_id" : recipe_id,
+            "name" : name,
+            "description" : desc,
+            "by" : "admin",
+            "total_ingredients" : ingredients.length,
+            "total_steps" : steps.length,
+            "image_url" : path,
+            "suka" : 0,
+            "rating" : 0,
+        }
+        res.status(201).json(result);
+    },
     addRecipe: async function(req, res){
         const doctorId = -1; //-1 kalo admin
         const name = req.body.name;
@@ -303,7 +365,7 @@ module.exports = {
             recipe_id: getRecipe.id,
             name: getRecipe.name,
             image :getRecipe.image_url,
-            description: getRecipe.description,
+            desc: getRecipe.description,
             like : getRecipe.suka,
             rating : getRecipe.rating,
             calories : getRecipe.calories,
@@ -317,4 +379,7 @@ module.exports = {
         return res.status(200).send(resep)
         // return res.status(200).send(getIngredients)
     },
+    addUser : async function(req, res){
+        const {role} = req.params;
+    }
 }

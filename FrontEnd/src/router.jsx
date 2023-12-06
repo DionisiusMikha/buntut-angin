@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Loader from "./Component/Loader";
-import Try from "./Pages/Try/try";
+// import Try from "./Pagesx/Try/try";
 
 // Dashboard
 import LandingPage from "./Pages/Landing Page/LandingPages";
@@ -26,16 +26,14 @@ import SettingsKonsultan from './Pages/Konsultan/components/settings';
 import AdminHomepage from './Pages/Admin/Homepage';
 import DashboardAdmin from './Pages/Admin/Components/Home';
 import RecipesAdmin from './Pages/Admin/Components/recipes';
-import PatientListAdmin from './Pages/Admin/Components/PatientList';
-import Subscriptions from "./Pages/Admin/Components/Subscriptions";
 import ListRecipes from "./Pages/Admin/Components/ListRecipes";
 import DetailRecipes from "./Pages/Admin/Components/DetailRecipes";
 import AddRecipe from "./Pages/Admin/Components/AddRecipe";
-import DataHandler from "./Pages/Admin/Components/DataHandler";
-// import profile from "./Pages/Admin/Components/Profile";
+import EditRecipe from "./Pages/Admin/Components/EditRecipe";
+import PatientListAdmin from './Pages/Admin/Components/PatientList';
 import ProfileAdmin from "./Pages/Admin/Components/Profile";
-const { loadRecipes, getRecipe } = DataHandler;
-
+import Subscriptions from "./Pages/Admin/Components/Subscriptions";
+import AddNewUser from "./Pages/Admin/Components/AddNewUser";
 
 const Router = createBrowserRouter([
   {
@@ -117,17 +115,14 @@ const Router = createBrowserRouter([
       {
         path: "recipes",
         element: <RecipesAdmin/>,
-        
         children: [
           {
             path: "",
             element: <ListRecipes/>,
-            // loader: loadRecipes,
           },
           {
             path: ":id",
             element: <DetailRecipes/>,
-            // loader: getRecipe,
           },
           {
             path: "add",
@@ -135,13 +130,17 @@ const Router = createBrowserRouter([
           },
           {
             path: ":id/edit",
-            element: <RecipesAdmin/>
+            element: <EditRecipe/>,
           }
         ]
       },
       {
         path: "patient-list",
         element: <PatientListAdmin/>
+      },
+      {
+        path: "patient-list/add",
+        element: <AddNewUser />
       },
       {
         path: "patient-list/detail",
@@ -157,10 +156,10 @@ const Router = createBrowserRouter([
     path : "/dietisian/profile",
     element : <ProfileDietisian/>,
   },
-  {
-    path: "/try",
-    element: <Try />,
-  }
+  // {
+  //   path: "/try",
+  //   element: <Try />,
+  // }
 ]);
 
 export default Router;

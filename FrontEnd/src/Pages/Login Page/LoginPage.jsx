@@ -53,6 +53,9 @@ const LoginPage = () => {
                     if (res2.status == 200){
                         localStorage.setItem("tokenDoctor", res.data.token);
                         navigate("/konsultan/home");
+                    } else {
+                        setError(res2.data.message);
+                        reset();
                     }
                 } else {
                     setError(res.data.message);
