@@ -1,6 +1,4 @@
 import {useNavigate} from "react-router-dom";
-// require("dotenv").config();
-import gbr from "../../../../../Uploads/Recipes/file-1701755223941-675916062.png";
 
 function Card({item}) {
     const navigate = useNavigate();

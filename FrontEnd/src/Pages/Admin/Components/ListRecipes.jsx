@@ -7,12 +7,10 @@ function ListRecipes (){
     const [limit, setLimit] = useState(10);
     const [search, setSearch] = useState('');
     const [recipes, setRecipes] = useState([]);
-    const data = useLoaderData();
     const navigate = useNavigate();
 
     const getAllRecipes = async () =>{
         const allRecipes = await adminService.getAllRecipes(limit, search);
-        // console.log(allRecipes);
         setRecipes(allRecipes.data)
     }
 

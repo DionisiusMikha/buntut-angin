@@ -71,6 +71,16 @@ function getUserLogin(token){
     })
 }
 
+function getAllRecipes(page, limit, search){
+    return client.get("/resep", {
+        params : {
+            limit : limit, 
+            search : search,
+            page : page
+        }
+    })
+}
+
 export default {
     getAllUsers,
     registerUser,
@@ -78,4 +88,5 @@ export default {
     editUser,
     cekProfilKonsultan,
     getUserLogin,
+    getAllRecipes,
 }

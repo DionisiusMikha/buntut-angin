@@ -15,8 +15,6 @@ function AddNewUser() {
     const {register, handleSubmit, reset, formState: { errors }  } = useForm();
     const navigate = useNavigate();
     const [role, setRole] = useState("");
-    // const [role, setRole] = useState("doctor");
-    // const [role, setRole] = useState("dietisian");
     const [show, setShow] = useState(false)
     const [show1, setShow1] = useState(false)
     const [error, setError] = useState("")
@@ -24,7 +22,6 @@ function AddNewUser() {
     const handleClick = () => setShow(!show)
     const handleClick1 = () => setShow1(!show)
     const submit = async (data) =>{
-      console.log(data)
       if (data.password == data.confirmPassword){
         setError("")
         if (role == "doctor"){

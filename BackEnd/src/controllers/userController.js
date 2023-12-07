@@ -327,7 +327,8 @@ module.exports = {
         }
     },
     getAllResep: async function(req, res){
-        // const nama = req.body.nama;
+        const {limit, search, page} = req.query; 
+        
         const getResep = await db.Recipes.findAll();
 
         let resep = []
@@ -355,17 +356,46 @@ module.exports = {
             }
 
             resep.push({
-                nama : getResep[i].dataValues.name,
-                description : getResep[i].dataValues.description,
+                recipe_id: getResep[i].dataValues.id,
+                name: getResep[i].dataValues.name,
+                image  :getResep[i].dataValues.image_url,
+                description: getResep[i].dataValues.description,
+                like : getResep[i].dataValues.suka,
                 ingredients,
                 steps
             })
         }
+
+        // sort by name
+        resep.sort((a, b) => {
+            if (a.name < b.name){
+                return -1
+            }
+            if (a.name > b.name){
+                return 1
+            }
+            return 0
+        })
         
-        const result = {
-            resep
-        } 
-        res.status(200).json(result)
+        // pagination
+        if (page !== undefined && page !== ""){
+            const offset = (page - 1) * limit;
+            resep = resep.slice(offset, offset + limit)
+        }
+
+        // limit
+        if (limit !== undefined && limit !== ""){
+            resep = resep.slice(0, limit)
+        }
+        
+        // search by name
+        if (search !== undefined && search !== ""){
+            resep = resep.filter(item => {
+                return item.name.toLowerCase().includes(search.toLowerCase())
+            })
+        }
+
+        return res.status(200).json(resep);
     },
     getSchedule: async function(req, res){
         const allSched = await db.Doctor_Schedule.findAll();
