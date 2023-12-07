@@ -76,7 +76,7 @@ const loadWebAnalytics = function() {
     if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined' && count) {
         count = false;
         const chart = new ApexCharts(document.getElementById("area-chart"), options);
-        chart.render();        
+        chart.render();
     }
 };
 
