@@ -364,6 +364,79 @@ module.exports = {
 
         return res.status(200).send(getAllDoctor)
     },
+    getLoginUser: async function(req, res){
+        const token = req.headers['x-auth-token'];
+        if (!token){
+            return res.status(401).json({
+                message: "Unauthorized!"
+            })
+        }
+        try{
+            const userLogin = jwt.verify(token, PRIVATE_KEY);
+            const user = await db.Doctor.findByPk(userLogin.id);
+            if (!user){
+                const result = {
+                    "message" : "User not found"
+                }
+                res.status(404).json(result);
+            }
+            else {
+                const result = {
+                    "message" : "User found",
+                    data : user
+                }
+                res.status(200).json(result);
+            }
+        } catch(err){
+            return res.status(400).send('Invalid JWT Key');
+        }
+    },
+    getAllUsers: async function(req, res){
+        const {limit, filter, search} = req.query;        
+        let result = [];
+
+        if (filter == "dietisian" ){
+            const getDietisian = await db.User.findAll()
+            for (let i = 0 ; i < getDietisian.length; i++){
+                result.push({
+                    id  :getDietisian[i].dataValues.id,
+                    name: getDietisian[i].dataValues.display_name,
+                    email: getDietisian[i].dataValues.email,
+                    username: getDietisian[i].dataValues.username,
+                    phone_number: getDietisian[i].dataValues.phone_number,
+                    birthdate: getDietisian[i].dataValues.birthdate,
+                    address: getDietisian[i].dataValues.address,
+                    profile_picture: getDietisian[i].dataValues.profile_picture,
+                    role: "Dietisian"
+                })
+            }
+        }
+
+        // sort by name
+        result.sort((a, b) => {
+            if (a.name < b.name){
+                return -1
+            }
+            if (a.name > b.name){
+                return 1
+            }
+            return 0
+        })
+
+        // limit
+        if (limit !== undefined && limit !== ""){
+            result = result.slice(0, limit)
+        }
+
+        // search by name
+        if (search !== undefined && search !== ""){
+            result = result.filter(item => {
+                return item.name.toLowerCase().includes(search.toLowerCase())
+            })
+        }
+
+        return res.status(200).send(result)
+    },
     aturJadwal: async function (req, res){
         const username = req.params.username
         const tanggal = req.body.tanggal;
@@ -448,6 +521,24 @@ module.exports = {
                     }
                 }
             }
+        }
+    },
+    viewJadwal: async function (req, res){
+        try {
+            const { id } = req.params;
+            const jadwal = await db.sequelize.query(
+                `SELECT c.*, u.display_name FROM Consultations c
+                 JOIN Users u ON c.user_id = u.id
+                 WHERE c.doctor_id = :id`,
+                {
+                  replacements: { id },
+                  type: db.sequelize.QueryTypes.SELECT
+                }
+            );
+
+            return res.status(200).send(jadwal);
+        } catch (error) {
+            return res.status(400).send(error);
         }
     }
 }

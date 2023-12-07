@@ -65,7 +65,7 @@ function SideNavbar({hovered}){
                         return state.isActive ? style : {backgroundColor:"transparent"}
                     }}>
                         <img src={navbar3} alt="" className='w-7'/>
-                        <p className='text-xl text-black font-semibold ms-2'>Patient List</p>
+                        <p className='text-xl text-black font-semibold ms-2'>Dietisian</p>
                     </NavLink>
                 </div>
                 <div className='w-1/2 h-8'>
