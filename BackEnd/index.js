@@ -23,9 +23,9 @@ app.listen(port, function(){
     console.log(`Listening to Port ${port}`);
 });
 
-//npx sequelize-cli model:generate --name User --attributes display_name:string,email:string,username:string,password:string,birthdate:date,saldo:integer,api_hit:integer,profile_picture:string
-//npx sequelize-cli model:generate --name Doctor --attributes display_name:string,email:string,username:string,password:string,phone_number:string,birthdate:date,address:string,profile_picture:string
+// npx sequelize-cli model:generate --name User --attributes display_name:string,email:string,username:string,password:string,birthdate:date,saldo:integer,api_hit:integer,profile_picture:string
+// npx sequelize-cli model:generate --name Doctor --attributes display_name:string,email:string,username:string,password:string,phone_number:string,birthdate:date,address:string,profile_picture:string
 
-//npx sequelize-cli seed:generate --name User
+// npx sequelize-cli seed:generate --name User
 // npx sequelize-cli db:create
 // npx sequelize-cli db:migrate
