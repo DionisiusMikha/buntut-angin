@@ -18,7 +18,6 @@ export const recipeSlice = createSlice({
             }
         },
         addSteps : (state, action) => {
-            console.log(action.payload)
             state.steps = [];
             for (let i = 0; i < action.payload.length; i++) {
                 state.steps.push(action.payload[i])

@@ -23,12 +23,14 @@ function getAllRecipes(limit, search){
     })
 }
 
-function addNewRecipe(name, desc, image, ingredients, steps, calories, carbo, protein, fat){
+function addNewRecipe(name, desc, image, ingredientsName, ingredientsQty, ingredientsUom, steps, calories, carbo, protein, fat){
     return client.post("/resep", {
         name : name,
         description : desc,
         image_url : image,
-        ingredients : ingredients,
+        ingredientsName : ingredientsName,
+        ingredientsQty : ingredientsQty,
+        ingredientsUom : ingredientsUom,
         steps : steps,
         calories : calories,
         carbo : carbo,
@@ -37,12 +39,14 @@ function addNewRecipe(name, desc, image, ingredients, steps, calories, carbo, pr
     })
 }
 
-function updateRecipe(name, desc, image, ingredients, steps, calories, carbo, protein, fat, id){
+function updateRecipe(name, desc, image, ingredientsName, ingredientsQty, ingredientsUom, steps, calories, carbo, protein, fat, id){
     return client.put(`/resep/${id}`, {
         name : name,
         description : desc,
         image_url : image,
-        ingredients : ingredients,
+        ingredientsName : ingredientsName,
+        ingredientsQty : ingredientsQty,
+        ingredientsUom : ingredientsUom,
         steps : steps,
         calories : calories,
         carbo : carbo,

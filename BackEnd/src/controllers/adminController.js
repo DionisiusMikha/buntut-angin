@@ -186,14 +186,18 @@ module.exports = {
         const recipe_id = req.params.id;
         const name = req.body.name;
         const desc = req.body.description;
-        const ingredients = req.body.ingredients;
+        const ingredientsName = req.body.ingredientsName;
+        const ingredientsQty = req.body.ingredientsQty;
+        const ingredientsUom = req.body.ingredientsUom;
         const steps = req.body.steps;
         const path = req.body.image_url;
         const calories = req.body.calories;
         const carbo = req.body.carbo;
         const protein = req.body.protein;
         const fat = req.body.fat;
-
+    
+        console.log(recipe_id)
+        console.log(steps)
         let resepUpdate = await db.Recipes.update({
             name: name,
             description: desc,
@@ -209,35 +213,36 @@ module.exports = {
             }
         })
 
-        for (let i = 0 ; i < ingredients.length; i++){
-            let bahan = await db.Ingredients.update({
-                name: ingredients[i].name,
-                qty: ingredients[i].qty,
-                uom: ingredients[i].uom,
-            }, {
-                where: {
-                    recipe_id: recipe_id
-                }
-            })
-        }
+        let bahan = await db.Ingredients.update({
+            name: ingredientsName,
+            qty: ingredientsQty,
+            uom: ingredientsUom,
+        }, 
+        {
+            where: {
+                recipe_id: recipe_id
+            }
+        })
 
-        for (let i = 0; i < steps.length; i++){
-            let langkah = await db.Steps.update({
-                desc: steps[i]
-            }, {
-                where: {
-                    recipe_id: recipe_id
-                }
-            })
-        }
+        let panjangBahan = JSON.parse(ingredientsName).length;
+        let panjangLangkah = JSON.parse(steps).length;
+
+        let langkah = await db.Steps.update({
+            desc: steps,
+        }, 
+        {
+            where: {
+                recipe_id: recipe_id
+            }
+        })
 
         const result = {
             "recipe_id" : recipe_id,
             "name" : name,
             "description" : desc,
             "by" : "admin",
-            "total_ingredients" : ingredients.length,
-            "total_steps" : steps.length,
+            "total_ingredients" : panjangBahan,
+            "total_steps" : panjangLangkah,
             "image_url" : path,
             "suka" : 0,
             "rating" : 0,
@@ -248,7 +253,9 @@ module.exports = {
         const doctorId = -1; //-1 kalo admin
         const name = req.body.name;
         const desc = req.body.description;
-        const ingredients = req.body.ingredients;
+        const ingredientsName = req.body.ingredientsName;
+        const ingredientsQty = req.body.ingredientsQty;
+        const ingredientsUom = req.body.ingredientsUom;
         const steps = req.body.steps;
         const path = req.body.image_url;
         const calories = req.body.calories;
@@ -275,25 +282,21 @@ module.exports = {
             fat : fat
         })
 
-        // console.log(req.body)
+        let panjangBahan = JSON.parse(ingredientsName).length;
+        let panjangLangkah = JSON.parse(steps).length;
 
-        const getResep = await db.Recipes.findAll();
-
-        for (let i = 0 ; i < ingredients.length; i++){
-            let bahan = await db.Ingredients.create({
-                name: ingredients[i].name,
-                qty: ingredients[i].qty,
-                uom: ingredients[i].uom,
-                recipe_id: newId
-            })
-        }
-
-        for (let i = 0; i < steps.length; i++){
-            let langkah = await db.Steps.create({
-                desc: steps[i],
-                recipe_id: newId
-            })
-        }
+        let bahan = await db.Ingredients.create({
+            name: ingredientsName,
+            qty: ingredientsQty,
+            uom: ingredientsUom,
+            recipe_id: newId
+        })
+        
+        let langkah = await db.Steps.create({
+            desc: steps,
+            recipe_id: newId
+        })
+        
 
         const result = {
             "recipe_id" : newId,
@@ -301,8 +304,8 @@ module.exports = {
             "name" : name,
             "description" : desc,
             "by" : "admin",
-            "total_ingredients" : ingredients.length,
-            "total_steps" : steps.length,
+            "total_ingredients" : panjangBahan,
+            "total_steps" : panjangLangkah,
             "image_url" : path,
             "suka" : 0,
             "rating" : 0,

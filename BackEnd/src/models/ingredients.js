@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Ingredients.init({
     name: DataTypes.STRING,
-    qty: DataTypes.INTEGER,
+    qty: DataTypes.STRING,
     uom: DataTypes.STRING,
     recipe_id: DataTypes.STRING
   }, {

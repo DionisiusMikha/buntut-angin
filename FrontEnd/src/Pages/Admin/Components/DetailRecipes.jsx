@@ -20,10 +20,25 @@ function DetailRecipes() {
     const id = window.location.pathname.split("/")[3];
     const cariData = async () => {
         const res = await adminService.getRecipeById(id)
-        
         setRecipe(res.data[0]);
-        setBahan(res.data[0].ingredients);
-        setSteps(res.data[0].steps);
+        
+        let langkah = JSON.parse(res.data[0].steps)
+        setSteps(langkah);
+
+        let bahanName = JSON.parse(res.data[0].ingredients[0].name)
+        let bahanQty = JSON.parse(res.data[0].ingredients[0].qty)
+        let bahanUom = JSON.parse(res.data[0].ingredients[0].uom)
+
+        let bahan2 = [];
+        for(let i=0; i<bahanName.length; i++){
+            bahan2.push({
+                name : bahanName[i],
+                qty : bahanQty[i],
+                uom : bahanUom[i]
+            })
+        }
+        setBahan(bahan2)
+
 
         if (res.data.comments == null){
             setComments([]);
@@ -123,7 +138,7 @@ function DetailRecipes() {
                         <ul className="mt-5 ms-7 list-disc">
                             {bahan.map((i)=>{
                                 return <li className="text-2xl py-2 font-semibold ">
-                                    {i.name} {i.qty} {i.uom}
+                                    {i.name} - {i.qty} - {i.uom}
                                 </li>
                             })}
                         </ul>

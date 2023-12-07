@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       qty: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       uom: {
         type: Sequelize.STRING

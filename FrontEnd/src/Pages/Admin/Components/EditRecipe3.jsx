@@ -28,6 +28,7 @@ function EditRecipe3(props){
     }
 
     async function save(){
+        
         try{
             dispatch(addSteps(steps))
         } catch(err){
@@ -35,8 +36,26 @@ function EditRecipe3(props){
             alert(err.message)
         }
 
+        let ingredientsName = [];
+        for(let i = 0; i < dataIngredients.length; i++){
+            ingredientsName.push(dataIngredients[i].name)
+        }
+        let ingredientsQty = [];
+        for(let i = 0; i < dataIngredients.length; i++){
+            ingredientsQty.push(dataIngredients[i].qty)
+        }
+        let ingredientsUom = [];
+        for(let i = 0; i < dataIngredients.length; i++){
+            ingredientsUom.push(dataIngredients[i].uom)
+        }
+        
+        let bahanName = JSON.stringify(ingredientsName)
+        let bahanQty = JSON.stringify(ingredientsQty)
+        let bahanUom = JSON.stringify(ingredientsUom)
+        let langkah = JSON.stringify(steps)
+
         // save to db
-        const res = await admin.updateRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, dataIngredients, steps, dataR[0].calories,dataR[0].carbo,dataR[0].protein,dataR[0].fat, id)
+        const res = await admin.updateRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, bahanName, bahanQty, bahanUom, langkah, dataR[0].calories,dataR[0].carbo,dataR[0].protein,dataR[0].fat, id)
         // console.log(res)
         if (res.status == 201){
             navigate("/admin/recipes")
