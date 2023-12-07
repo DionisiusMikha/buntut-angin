@@ -5,12 +5,12 @@ import { joiResolver } from "@hookform/resolvers/joi"
 import { useDispatch, useSelector } from "react-redux"
 import { addRecipe } from "../../../Redux/recipesSlice";
 import adminService from "../../../Services/Admin/admin";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function EditRecipe1(props){
-    
     const dispatch = useDispatch();
     const hasil = useSelector((state) => state.recipes.recipe);
+    const [currImg, setCurrImg] = useState(`http://localhost:3000`+hasil[0].image);
     const {register, handleSubmit, reset, formState: { errors }  } = useForm({
         values: {
             name: hasil[0]?.name,
@@ -24,7 +24,6 @@ function EditRecipe1(props){
     });
 
     const change = async data => {
-        // cek apakah data imagenya sudah dalam bentuk path
         let path = ""
         if (typeof data.image != "string"){
             // ambil path img nya
@@ -53,7 +52,6 @@ function EditRecipe1(props){
           alert(e.message)
         }
     }
-
 
     const resetName = () =>{
         reset({ name: "" })
@@ -106,13 +104,15 @@ function EditRecipe1(props){
                         Upload Image
                     </div>  
                     <div className="flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center justify-center">
-                        <input type="file" accept="image/*" {...register("image")} className={`w-full h-12 max-w-s bg-transparent border-none outline-none px-4 py-auto`}/>
+                        <input type="file" accept="image/*" {...register("image")} className={`w-full h-12 max-w-s bg-transparent border-none outline-none px-4 py-auto`} onChange={(e)=>{
+                            setCurrImg(URL.createObjectURL(e.target.files[0]));
+                        }}/>
                     </div>
                     {errors.image && <span style={{ color:"red" }}>{errors.image.message}</span>}
 
                     <div className="flex flex-row mt-3 items-center">
                         <span className="me-7 text-xl font-semibold">Current Image : </span>
-                        <img src={`http://localhost:3000`+hasil[0].image} alt="" style={{
+                        <img src={currImg} alt="" style={{
                             "borderRadius":"50%",
                             "height": "150px",
                             "width": "150px",

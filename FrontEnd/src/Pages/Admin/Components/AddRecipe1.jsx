@@ -3,9 +3,11 @@ import no from '/icon/no.png'
 import { useDispatch, useSelector } from "react-redux"
 import { addRecipe } from "../../../Redux/recipesSlice";
 import adminService from "../../../Services/Admin/admin";
+import { useState } from "react";
 
 function AddRecipe1(props){
     const dispatch = useDispatch();
+    const [currImg, setCurrImg] = useState("");
     const hasil = useSelector((state) => state.recipes.recipe);
     const {register, handleSubmit, reset, formState: { errors }  } = useForm({
         values: {
@@ -91,19 +93,33 @@ function AddRecipe1(props){
             </div>
             <div className="w-2/5">
                 {/* Upload Image */}
-                <div className="h-36">
+                <div className="">
                     <div className="text-3xl font-semibold">
                         Upload Image
                     </div>  
                     <div className="flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center justify-center">
                         <input type="file" accept="image/*" {...register("image", {
                             required: "image required"
-                        })} className={`w-full h-12 max-w-s bg-transparent border-none outline-none px-4 py-auto`}/>
+                        })} className={`w-full h-12 max-w-s bg-transparent border-none outline-none px-4 py-auto`} onChange={(e)=>{
+                            setCurrImg(URL.createObjectURL(e.target.files[0]));
+                        }}/>
                     </div>
                     {errors.image && <span style={{ color:"red" }}>{errors.image.message}</span>}
+                    <div className="flex flex-row mt-3 items-center">
+                        {currImg != "" && 
+                        <div>
+                            <span className="me-7 text-xl font-semibold">Current Image : </span>
+                            <img src={currImg} alt="there is no current image"  style={{
+                                "borderRadius":"50%",
+                                "height": "150px",
+                                "width": "150px",
+                            }}/>
+                        </div>
+                        }
+                    </div>
                 </div>
                 {/* Nutrition */}
-                <div className="my-10">
+                <div className="my-2">
                     <div className="text-3xl font-semibold">
                         Nutrition
                     </div>

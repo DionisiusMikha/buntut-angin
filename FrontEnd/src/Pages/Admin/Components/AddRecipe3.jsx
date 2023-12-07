@@ -8,7 +8,6 @@ import {useNavigate} from "react-router-dom"
 function AddRecipe3(props){
     const navigate = useNavigate()
     const hasil = useSelector((state) => state.recipes.steps);
-    const dataStep = useSelector((state) => state.recipes.steps);
     const dataIngredients = useSelector((state) => state.recipes.ingredients);
     const dataR = useSelector((state) => state.recipes.recipe);
     const dispatch = useDispatch();
@@ -52,7 +51,7 @@ function AddRecipe3(props){
         let bahanUom = JSON.stringify(ingredientsUom)
         let langkah = JSON.stringify(steps)
 
-        // // save to db
+        // save to db
         const res = await admin.addNewRecipe(dataR[0].name, dataR[0].desc, dataR[0].image, bahanName, bahanQty, bahanUom, langkah, dataR[0].calories,dataR[0].carbo,dataR[0].protein,dataR[0].fat)
         console.log(res)
         if (res.status == 201){

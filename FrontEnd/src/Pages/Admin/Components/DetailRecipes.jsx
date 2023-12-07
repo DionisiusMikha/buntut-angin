@@ -39,7 +39,6 @@ function DetailRecipes() {
         }
         setBahan(bahan2)
 
-
         if (res.data.comments == null){
             setComments([]);
         } else {
