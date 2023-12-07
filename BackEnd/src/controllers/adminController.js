@@ -379,7 +379,94 @@ module.exports = {
         return res.status(200).send(resep)
         // return res.status(200).send(getIngredients)
     },
-    addUser : async function(req, res){
-        const {role} = req.params;
+    addDoctor : async function(req, res){
+        const { username, email, display_name, birthdate, password, phone_number, address} = req.body;
+        console.log(req.body)
+        
+        const hasil = await db.Doctor.findOne({
+            where: {
+                username: username,
+                email: email
+            }
+        });
+        
+
+        if (hasil){
+            return res.status(400).json({msg: "user already_exist"})
+        }
+        
+        const today = new Date();
+        const tanggal = new Date(birthdate);
+        let umur = today.getFullYear() - tanggal.getFullYear();
+        console.log(umur)
+
+        const newUser = db.Doctor.create({
+            display_name : display_name,
+            email : email,
+            username : username,
+            password : password,
+            birthdate : birthdate,
+            address: address,
+            phone_number: phone_number,
+        })
+
+        const result = {
+            "message" : "success",
+            "username" : username,
+            "email" : email,
+            "display_name" : display_name,
+            "birthdate" : birthdate,
+            "phone_number" : phone_number,
+            "address" : address,
+        }
+
+        return res.status(201).json(result);
+    },
+    addDietisian : async function(req, res){
+        const {display_name, email, username, password, birthdate, phone_number, address, weight, height, gender} = req.body;
+        
+        const hasil = await db.User.findOne({
+            where: {
+                username: username,
+                email: email
+            }
+        });
+        
+
+        if (hasil){
+            return res.status(400).json({msg: "already_exist"})
+        }
+        
+        const today = new Date();
+        const birthDate = new Date(birthdate);
+        let umur = today.getFullYear() - birthDate.getFullYear();
+        console.log(umur)
+
+        const newUser = db.User.create({
+            display_name : display_name,
+            email : email,
+            username : username,
+            password : password,
+            birthdate : birthdate,
+            balance : 0,
+            weight : weight,
+            height : height,
+            jenis_kelamin : gender,
+            age : umur,
+            address: address,
+            phone_number: phone_number,
+        })
+
+        const result = {
+            "message" : "success",
+            "username" : username,
+            "email" : email,
+            "display_name" : display_name,
+            "birthdate" : birthdate,
+            "age" : umur,
+            "jenis_kelamin" : gender
+        }
+
+        return res.status(201).json(result);
     }
 }
