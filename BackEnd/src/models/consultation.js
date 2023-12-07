@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     doctor_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     tanggal: DataTypes.DATE,
-    jam: DataTypes.TIME
+    jam: DataTypes.TIME,
+    status: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Consultation',

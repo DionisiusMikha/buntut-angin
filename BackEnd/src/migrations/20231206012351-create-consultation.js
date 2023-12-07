@@ -21,6 +21,9 @@ module.exports = {
       jam: {
         type: Sequelize.TIME
       },
+      status: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

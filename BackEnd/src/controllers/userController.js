@@ -434,8 +434,8 @@ module.exports = {
                     res.status(404).json(result);
                 }
                 else {
-                    console.log(convertDate(tanggal).toISOString());
-                    console.log(cariJadwal[0].dataValues.tanggal.toISOString());
+                    // console.log(convertDate(tanggal).toISOString());
+                    // console.log(cariJadwal[0].dataValues.tanggal.toISOString());
                     if (convertDate(tanggal).toISOString().slice(0, 10).replace('T', ' ') != cariJadwal[0].dataValues.tanggal.toISOString().slice(0, 10).replace('T', ' ')){
                         const result = {
                             "message" : "Dokter tidak memiliki jadwal di tanggal tersebut!"
@@ -448,13 +448,28 @@ module.exports = {
                                 doctor_id: cariDokter[0].dataValues.id,
                                 user_id: cariUser[0].dataValues.id,
                                 tanggal: convertDate(tanggal),
-                                jam: convertTime(jam)
+                                jam: convertTime(jam),
+                                status: 0,
                             })
+
+                            let text = "";
+                            const cekConsul = await db.Consultation.findAll();
+
+                            if (cekConsul[0].dataValues.status == 0){
+                                text = "Pending"
+                            }
+                            else if (cekConsul[0].dataValues.status == 1){
+                                text = "Accepted"
+                            }
+                            else if (cekConsul[0].dataValues.status == 2){
+                                text = "Rejected"
+                            }
     
                             const result = {
                                 "message" : "Noted!",
                                 "tanggal" : convertDate(tanggal).toISOString().slice(0, 10).replace('T', ' '),
-                                "jam" : convertTime(jam)
+                                "jam" : convertTime(jam),
+                                "status" : text
                             }
                             res.status(201).json(result);
                         }

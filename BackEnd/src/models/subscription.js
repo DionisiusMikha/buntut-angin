@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Subscription.init({
     user_id: DataTypes.INTEGER,
-    period: DataTypes.DATE
+    period: DataTypes.DATE,
+    status: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Subscription',
