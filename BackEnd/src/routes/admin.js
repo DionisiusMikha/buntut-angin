@@ -10,7 +10,8 @@ router.get("/resep/:id", adminController.getRecipeById);
 
 // user
 router.get("/users", adminController.getAllUsers);
-router.post("/users", adminController.addUser);
+router.post("/users/doctor", adminController.addDoctor);
+router.post("/users/dietisian", adminController.addDietisian);
 router.get("/users/:role/:id", adminController.getUserById);
 
 // image

@@ -76,11 +76,6 @@ module.exports = {
         if (hasil){
             return res.status(400).json({msg: "already_exist"})
         }
-        
-        const today = new Date();
-        const birthDate = new Date(date_of_birth);
-        let umur = today.getFullYear() - birthDate.getFullYear();
-        console.log(umur)
 
         const newUser = db.Doctor.create({
             display_name : display_name,
@@ -88,11 +83,6 @@ module.exports = {
             username : username,
             password : password,
             birthdate : date_of_birth,
-            balance : 0,
-            weight : weight,
-            height : height,
-            jenis_kelamin : gender,
-            age : umur,
             address: address,
             phone_number: phone_number,
         })
@@ -103,8 +93,6 @@ module.exports = {
             "email" : email,
             "display_name" : display_name,
             "birthdate" : date_of_birth,
-            "age" : umur,
-            "jenis_kelamin" : gender
         }
 
         return res.status(201).json(result);
