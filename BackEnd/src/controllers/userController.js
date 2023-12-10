@@ -4,6 +4,14 @@ const multer = require("multer");
 const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
+const { CoreApi } = require('midtrans-client');
+
+const coreApi = new CoreApi({
+    isProduction: false,
+    serverKey: "SB-Mid-server-9Ta-9rQFBi44HhEyv_gVjJPc",
+    clientKey: "SB-Mid-client-Ff5N9IqHFWe3JfeZ"
+});
+
 const upload = multer({
     dest : "../../Uploads/User",
 })
@@ -514,7 +522,53 @@ module.exports = {
             }
         }
     },
-    subscriptions : async function(req, res){
-        
+    subscription: async function(req, res){
+        const username = req.params.username;
+        const price = req.body.price;
+        const cariUser = await db.User.findAll({
+            where: {
+                username: username
+            }
+        })
+
+        if (cariUser.length == 0){
+            const result = {
+                "message" : "User tidak ditemukan!"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            const creditCardOptions = {
+                secure: true,
+            }
+
+            const today = new Date();
+            const bulanDepan = new Date(today);
+            bulanDepan.setDate(today.getDate() + 30);
+
+            const newSubs = await db.Subscription.create({
+                user_id: cariUser[0].dataValues.id,
+                period: bulanDepan.toISOString().slice(0, 10)
+            })
+
+            const transactionDetails = {
+                order_id: newSubs.id,
+                gross_amount: price
+            }
+            
+            coreApi.charge({
+                payment_type: 'credit_card',
+                credit_card: creditCardOptions,
+                transaction_details: transactionDetails,
+            })
+            .then((response) => {
+                console.log('Transaction response: ', response);
+                res.json(response);
+            })
+            .catch((err) => {
+                console.log('Transaction error: ', err);
+                res.status(500).json({err: 'Transaction error'})
+            })
+        }
     }
 }
