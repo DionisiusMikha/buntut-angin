@@ -13,7 +13,7 @@ import DashboardDietisian from './Pages/Dietisian/components/home';
 import RecipesDietisian from './Pages/Dietisian/components/recipes';
 import ReportDietisian from './Pages/Dietisian/components/report';
 import ChatDietisian from './Pages/Dietisian/components/chat';
-import ProfileDietisian from "./Pages/Dietisian/Profile";
+import ProfileDietisian from "./Pages/Dietisian/components/Profile";
 
 // Konsultan
 import KonsultanHomepage from './Pages/Konsultan/Homepage';

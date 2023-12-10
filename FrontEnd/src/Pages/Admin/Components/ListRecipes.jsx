@@ -41,7 +41,7 @@ function ListRecipes (){
                     }}/>
                 </div>
             </div>
-            <div className="bg-white rounded-xl px-10 py-10 min-h-[calc(100vh-9rem)] drop-shadow-lg mb-4">
+            <div className="bg-white rounded-xl px-10 py-10 min-h-[calc(100vh-13rem)] drop-shadow-lg">
                 <div className="grid grid-cols-3 gap-10">
                     {recipes.map((item, index) => {
                         return (

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { FaHome } from "react-icons/fa";
 import iconUser from "/icon/user.png";
 
-import DietisianService from "../../Services/Dietisian/dietisian";
+import DietisianService from "../../../Services/Dietisian/dietisian";
 
 const Profile = () => {
   const [user, setUser] = useState({});
