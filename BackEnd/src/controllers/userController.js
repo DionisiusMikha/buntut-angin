@@ -1,16 +1,17 @@
 const db = require("../models/index");
+const axios = require("axios")
 const joi = require("joi").extend(require('@joi/date'));
 const multer = require("multer");
 const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
-const { CoreApi } = require('midtrans-client');
+// const { CoreApi } = require('midtrans-client');
 
-const coreApi = new CoreApi({
-    isProduction: false,
-    serverKey: "SB-Mid-server-9Ta-9rQFBi44HhEyv_gVjJPc",
-    clientKey: "SB-Mid-client-Ff5N9IqHFWe3JfeZ"
-});
+// const coreApi = new CoreApi({
+//     isProduction: false,
+//     serverKey: "SB-Mid-server-9Ta-9rQFBi44HhEyv_gVjJPc",
+//     clientKey: "SB-Mid-client-Ff5N9IqHFWe3JfeZ"
+// });
 
 const upload = multer({
     dest : "../../Uploads/User",
@@ -524,7 +525,6 @@ module.exports = {
     },
     subscription: async function(req, res){
         const username = req.params.username;
-        const price = req.body.price;
         const cariUser = await db.User.findAll({
             where: {
                 username: username
@@ -535,13 +535,9 @@ module.exports = {
             const result = {
                 "message" : "User tidak ditemukan!"
             }
-            res.status(404).json(result);
+            return res.status(404).json(result);
         }
         else {
-            const creditCardOptions = {
-                secure: true,
-            }
-
             const today = new Date();
             const bulanDepan = new Date(today);
             bulanDepan.setDate(today.getDate() + 30);
@@ -551,23 +547,36 @@ module.exports = {
                 period: bulanDepan.toISOString().slice(0, 10)
             })
 
-            const transactionDetails = {
-                order_id: newSubs.id,
-                gross_amount: price
+            let orderId = new Date();
+            orderId = orderId.toISOString().slice(0, 10).replace('-', '').replace('-', '') + newSubs.dataValues.id;
+            console.log(orderId);
+
+            const option = {
+                method: 'POST',
+                url: "https://app.sandbox.midtrans.com/snap/v1/transactions",
+                headers: {accept: 'application/json', 'content-type': 'application/json',
+                    authorization: 'Basic '+Buffer.from(process.env.SERVER_KEY).toString("base64")
+                },
+                data: {
+                    transaction_details: {
+                        order_id: orderId,
+                        gross_amount: 85000,
+                    },
+                    customer_details: {
+                        email: cariUser[0].dataValues.email
+                    },
+                    credit_card: {secure: true},
+                    callbacks: { 
+                        finish: 'http://localhost:5173/dietisian/subs'
+                    } 
+                }
             }
-            
-            coreApi.charge({
-                payment_type: 'credit_card',
-                credit_card: creditCardOptions,
-                transaction_details: transactionDetails,
-            })
-            .then((response) => {
-                console.log('Transaction response: ', response);
-                res.json(response);
-            })
-            .catch((err) => {
-                console.log('Transaction error: ', err);
-                res.status(500).json({err: 'Transaction error'})
+            await axios.request(option).then( async (response)=>{
+                console.log("\nTrans created successfully\n", "\n")
+                return res.status(201).json({
+                    message: "Requested Payment",
+                    midtrans: response.data,
+                })
             })
         }
     }

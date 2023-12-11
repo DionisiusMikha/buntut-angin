@@ -14,6 +14,7 @@ import RecipesDietisian from './Pages/Dietisian/components/recipes';
 import ReportDietisian from './Pages/Dietisian/components/report';
 import ChatDietisian from './Pages/Dietisian/components/chat';
 import ProfileDietisian from "./Pages/Dietisian/components/Profile";
+import SubscriptionsDietisian from "./Pages/Dietisian/components/Subscriptions";
 
 // Konsultan
 import KonsultanHomepage from './Pages/Konsultan/Homepage';
@@ -79,6 +80,10 @@ const Router = createBrowserRouter([
       {
         path : "profile",
         element : <ProfileDietisian/>,
+      },
+      {
+        path : "subs",
+        element : <SubscriptionsDietisian />,
       },
     ]
   },

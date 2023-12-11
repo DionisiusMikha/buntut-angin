@@ -5,7 +5,7 @@ import Joi from 'joi'
 import { joiResolver } from "@hookform/resolvers/joi"
 
 import { Input, InputGroup, InputLeftElement, Icon, InputRightElement, Button, Select } from '@chakra-ui/react'
-import { PhoneIcon, EmailIcon, CheckIcon } from '@chakra-ui/icons'
+import { PhoneIcon, EmailIcon } from '@chakra-ui/icons'
 import { FaHome } from "react-icons/fa";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 
