@@ -8,6 +8,16 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
     sendMessage: async function (req, res){
-        
+        // const chat_id = req.body.chat_id
+        const value = req.body.value
+
+        const newChat = await db.Chat.create({
+            value: value
+        })
+
+        return res.status(201).json({
+            message: "Message added!",
+            chat: newChat.value
+        })
     }
 }
