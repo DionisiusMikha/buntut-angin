@@ -12,7 +12,6 @@ import { useForm } from 'react-hook-form'
 import DietisianService from "../../../Services/Dietisian/dietisian";
 
 const Profile = () => {
-  const {register, handleSubmit, reset, formState: { errors }  } = useForm();
   const [user, setUser] = useState({});
   const [dob, setdob] = useState("");
   const userId = localStorage.getItem("userId")
@@ -20,6 +19,18 @@ const Profile = () => {
   const [show, setShow] = useState(false)
   const [show1, setShow1] = useState(false)
   const [show2, setShow2] = useState(false)
+  
+  const {register, handleSubmit, reset, formState: { errors }  } = useForm({
+    values : {
+      name : user?.display_name,
+      username : user?.username,
+      email : user?.email,
+      phone_number : user?.phone_number,
+      address : user?.address,
+      birthdate : dob,
+      password : user?.password,
+    }
+  });
 
   const cariUser = async () => {
     const token = localStorage.getItem("token");
@@ -31,10 +42,11 @@ const Profile = () => {
           if (res.status == 200){
               console.log(res.data.data)
               setUser(res.data.data);
-              let tgl = new Date(res.data.data.birthdate)
-              const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-              let hasil = `${tgl.getDate()} ${months[tgl.getMonth()]} ${tgl.getFullYear()}`;
-              setdob(hasil)
+              // let tgl = 
+              // const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+              // let hasil = `${tgl.getDate()} ${months[tgl.getMonth()]} ${tgl.getFullYear()}`;
+              // setdob(hasil)
+              setShow(new Date(res.data.data.birthdate));
           } else {
               navigate("/login");
           }
@@ -77,12 +89,12 @@ const Profile = () => {
           {/* display name */}
           <div className="flex flex-col">
             <div className="font-semibold text-xl">Display Name : </div>
-            <Input size='md' value={user.display_name}  />
+            <Input size='md' {...register("name")} />
           </div>
           {/* username */}
           <div className="flex flex-col mt-4">
             <div className="font-semibold text-xl">Username : </div>
-            <Input size='md' value={user.username}  />
+            <Input size='md' {...register("username")} />
           </div>
           {/* Email & phone number */}
           <div className="grid grid-cols-2 gap-8">
@@ -92,7 +104,7 @@ const Profile = () => {
                 <InputLeftElement pointerEvents='none'>
                   <EmailIcon color='gray.300' />
                 </InputLeftElement>
-                <Input type='tel' value={user.email} />
+                <Input type='email' {...register("email")} />
               </InputGroup>
             </div>
             <div className="flex flex-col mt-4">
@@ -101,7 +113,7 @@ const Profile = () => {
                 <InputLeftElement pointerEvents='none'>
                   <PhoneIcon color='gray.300' />
                 </InputLeftElement>
-                <Input type='tel' value={user.phone_number} />
+                <Input type='tel' {...register("phone_number")} />
               </InputGroup>
             </div>
           </div>
@@ -112,7 +124,7 @@ const Profile = () => {
               <InputLeftElement pointerEvents='none'>
                 <Icon as={FaHome} color='gray.300' />
               </InputLeftElement>
-              <Input type='tel' value={user.address} />
+              <Input type='text'{...register("address")}/>
             </InputGroup>
           </div>
           {/* Birthdate */}
@@ -122,7 +134,7 @@ const Profile = () => {
               <InputLeftElement pointerEvents='none'>
                 <Icon as={LiaBirthdayCakeSolid} color='gray.300' />
               </InputLeftElement>
-              <Input type='tel' value={dob} />
+              <Input type='date' {...register("birthdate")} />
             </InputGroup>
           </div>
           {/* curr pass */}
@@ -159,10 +171,10 @@ const Profile = () => {
                     type={show ? 'text' : 'password'}
                     placeholder='Enter password'
                     focusBorderColor='black'
-                    {...register("password", {
+                    {...register("newPassword", {
                       required: {
                         value: true,
-                        message: "Please enter your password"
+                        message: "Please enter your new password"
                       }
                     })}
                   />
