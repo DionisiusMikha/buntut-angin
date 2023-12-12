@@ -81,6 +81,12 @@ function getAllRecipes(page, limit, search){
     })
 }
 
+function changeStatusSubscription(id, status){
+    return client.post(`/changeStatusSubscription/${id}`, {
+        status : status
+    })
+}
+
 export default {
     getAllUsers,
     registerUser,
@@ -89,4 +95,5 @@ export default {
     cekProfilKonsultan,
     getUserLogin,
     getAllRecipes,
+    changeStatusSubscription,
 }

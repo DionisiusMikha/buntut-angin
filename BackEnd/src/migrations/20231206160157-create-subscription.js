@@ -18,6 +18,9 @@ module.exports = {
       status: {
         type: Sequelize.INTEGER
       },
+      invoice_id: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
