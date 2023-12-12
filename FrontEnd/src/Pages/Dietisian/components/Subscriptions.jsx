@@ -32,30 +32,44 @@ function Subscriptions(){
         cariUser();
     }, [])
 
+    const gantiStatus = async (id, status) =>{
+        
+        const res2 = await DietisianService.changeStatusSubscription(id, status);
+        console.log(res2);
+    }
+
     const beliSubs = async () => {
         client.post(`/subscription/${user.username}`, {}, {
             headers: {"Authorization": "Bearer " + localStorage.getItem("token")}
         }).then((res)=>{
             // Midtrans
+            console.log(res.data.data)
             window.snap.pay(res.data.midtrans.token, {
                 onSuccess: function (result) {
                     /* You may add your own implementation here */
                     alert("Payment success!");
                     console.log(result);
+                    let status = "Success";
+                    gantiStatus(res.data.data.id, status);
                 },
                 onPending: function (result) {
                     /* You may add your own implementation here */
                     alert("Waiting for your payment!");
                     console.log(result);
+                    let status = "Pending";
+                    gantiStatus(res.data.data.id, status);
                 },
                 onError: function (result) {
                     /* You may add your own implementation here */
                     alert("Payment failed!");
                     console.log(result);
+                    let status = "Canceled";
+                    gantiStatus(res.data.data.id, status);
                 },
                 onClose: function () {
                     /* You may add your own implementation here */
-                    alert('You closed the popup without finishing the payment');
+                    alert('You closed the popup without finishing the payment');let status = "Canceled";
+                    gantiStatus(res.data.data.id, status);
                 }
             });
         }).catch(err=>console.log(err))
@@ -64,6 +78,7 @@ function Subscriptions(){
     return(
         <div>
             <h1>Subscriptions</h1>
+            {/* <h1>{user.username}</h1> */}
             <button onClick={()=>{
                 beliSubs();
             }}>Beli</button>

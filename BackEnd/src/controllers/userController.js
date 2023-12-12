@@ -538,7 +538,31 @@ module.exports = {
             return res.status(404).json(result);
         }
         else {
-            const today = new Date();
+            const cariSubs = await db.Subscription.findAll({
+                where: {
+                    user_id: cariUser[0].dataValues.id,
+                    status : 1 //success
+                },
+                order: [
+                    ['id', 'DESC']
+                ],
+                limit: 1
+            })
+
+            // ambil order yg max
+            const nomorSubs = await db.Subscription.findOne({
+                order: [
+                    ['id', 'DESC']
+                ],
+                limit: 1
+            })
+
+            let today = "";
+            if (cariSubs.length == 0){
+                today = new Date();
+            } else {
+                today = new Date(cariSubs[0].dataValues.period)
+            }
             const bulanDepan = new Date(today);
             bulanDepan.setDate(today.getDate() + 30);
 
@@ -546,10 +570,10 @@ module.exports = {
                 user_id: cariUser[0].dataValues.id,
                 period: bulanDepan.toISOString().slice(0, 10)
             })
+            let nomor = nomorSubs.dataValues.id + 1;
 
             let orderId = new Date();
-            orderId = orderId.toISOString().slice(0, 10).replace('-', '').replace('-', '') + newSubs.dataValues.id;
-            console.log(orderId);
+            orderId = orderId.toISOString().slice(0, 10).replace('-', '').replace('-', '') + nomor;
 
             const option = {
                 method: 'POST',
@@ -571,13 +595,77 @@ module.exports = {
                     } 
                 }
             }
+
             await axios.request(option).then( async (response)=>{
                 console.log("\nTrans created successfully\n", "\n")
+
+                const updateSubs = await db.Subscription.update({
+                    invoice_id: orderId
+                }, {
+                    where: {
+                        id: newSubs.dataValues.id
+                    }
+                })
+
                 return res.status(201).json({
                     message: "Requested Payment",
                     midtrans: response.data,
+                    data : {
+                        id : newSubs.dataValues.id,
+                        orderId: orderId,
+                        gross_amount: 85000,
+                        email: cariUser[0].dataValues.email
+                    }
                 })
             })
+        }
+    },
+    changeStatusSubscription : async function (req, res){
+        const id = req.params.id;
+        const status = req.body.status;
+        console.log(id)
+        if (status == "Success"){
+            const updateSubs = await db.Subscription.update({
+                status: 1
+            }, {
+                where: {
+                    id: id
+                }
+            })
+            const result = {
+                "message" : "Subscription updated",
+                "status" : "Success",
+                "id" : id
+            }
+            return res.status(200).json(result);
+        } else if (status == "Pending"){
+            const updateSubs = await db.Subscription.update({
+                status: 0
+            }, {
+                where: {
+                    id: id
+                }
+            })
+            const result = {
+                "message" : "Subscription updated",
+                "status" : "Pending",
+                "id" : id
+            }
+            return res.status(200).json(result);    
+        } else if (status == "Canceled"){
+            const updateSubs = await db.Subscription.update({
+                status: -1
+            }, {
+                where: {
+                    id: id
+                }
+            })
+            const result = {
+                "message" : "Subscription updated",
+                "status" : "Canceled",
+                "id" : id
+            }
+            return res.status(200).json(result);    
         }
     }
 }

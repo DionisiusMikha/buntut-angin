@@ -12,5 +12,6 @@ router.get("/resep", userController.getAllResep);
 router.get("/jadwal", userController.getSchedule);
 router.post("/janjian/:username", userController.janjian);
 router.post("/subscription/:username", userController.subscription);
+router.post("/changeStatusSubscription/:id", userController.changeStatusSubscription);
 
 module.exports = router;
