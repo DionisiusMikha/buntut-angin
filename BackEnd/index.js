@@ -80,7 +80,8 @@ app.post("/api/users/send_recovery_email", (req, res) => {
     sendEmail(req.body)
       .then((response) => res.send(response.message))
       .catch((error) => res.status(500).send(error.message));
-  });
+});
+
 
 
 

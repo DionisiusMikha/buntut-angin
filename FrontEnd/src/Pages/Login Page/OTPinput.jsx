@@ -11,11 +11,15 @@ export default function OTPInput() {
   const [otp, setOTP] = useState("");
 
   useEffect(() => {
-    if (location.state) {
-      const { otp, email } = location.state;
-      setOTP(otp);
-      setEmail(email);
-    }
+    const fetchData = async () => {
+      if (location.state) {
+        const { otp, email } = location.state;
+        setEmail(email);
+        setOTP(otp);
+      }
+    };
+  
+    fetchData();
   }, [location.state]);
 
   function resendOTP() {
@@ -33,14 +37,16 @@ export default function OTPInput() {
       .catch(console.log);
   }
 
-  // function verifyOTP() {
-  //   const enteredOTP = OTPinput.join("");
-  //   if (enteredOTP === otp) {
-  //     setPage("reset");
-  //   } else {
-  //     alert("The code you have entered is not correct, try again or re-send the link");
-  //   }
-  // }
+  function verifyOTP() {
+    const enteredOTP = OTPinput.join("");
+    if (enteredOTP === otp) {
+      alert("OTP is correct");
+      window.location.href = "/resetpassword";
+    } else {
+      alert("OTP is incorrect");
+      alert(enteredOTP);
+    }
+  }
 
   useEffect(() => {
     let interval = setInterval(() => {
@@ -71,31 +77,30 @@ export default function OTPInput() {
             <form>
               <div className="flex flex-col space-y-16">
                 <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-                  {Array.from({ length: 4 }, (_, index) => (
-                    <div key={index} className="w-16 h-16">
-                      <input
-                        maxLength="1"
-                        className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-600"
-                        type="text"
-                        name=""
-                        id=""
-                        value={OTPinput[index]}
-                        onChange={(e) => {
-                          const newOTPinput = [...OTPinput];
-                          newOTPinput[index] = e.target.value;
-                          setOTPinput(newOTPinput);
-                        }}
-                      />
-                    </div>
-                  ))}
+                {Array.from({ length: 4 }, (_, index) => (
+                  <div key={index} className="w-16 h-16">
+                    <input
+                      maxLength="1"
+                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-600"
+                      type="text"
+                      id="OTPinput"
+                      value={OTPinput[index]}
+                      onChange={(e) => {
+                        const newOTPinput = [...OTPinput];
+                        newOTPinput[index] = e.target.value;
+                        setOTPinput(newOTPinput);
+                        e.target.value = e.target.value.slice(-1);
+                      }}
+                    />
+                  </div>
+                ))}
                 </div>
 
                 <div className="flex flex-col space-y-5">
                   <div>
                     <a
-                      // onClick={() => verifyOTP()}
+                      onClick={() => verifyOTP()}
                       className="flex flex-row cursor-pointer items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-green-600 border-none text-white text-sm shadow-sm"
-                      href="/resetpassword"
                     >
                       Verify Account
                     </a>
