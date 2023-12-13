@@ -15,17 +15,17 @@ module.exports = (sequelize, DataTypes) => {
   }
   Room.init({
     room_id: {
-      type: DataTypes.STRING(4),
+      type: DataTypes.STRING,
       allowNull: false,
+      autoIncrement: false,
       primaryKey: true,
-      autoIncrement: true,
     },
     name: DataTypes.STRING,
-    username: DataTypes.STRING,
+    username: DataTypes.STRING
   }, {
     sequelize,
+    timestamps: false,
     modelName: 'Room',
-    timestamps: false
   });
   return Room;
 };
