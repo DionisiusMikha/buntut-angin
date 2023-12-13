@@ -9,10 +9,13 @@ import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import iconUser from "/icon/user.png";
 import { useForm } from 'react-hook-form'
 import {useNavigate} from "react-router-dom";
-
+import Dialog from "./Dialog";
+import axios from "axios";
 import DietisianService from "../../../Services/Dietisian/dietisian";
 
 const Profile = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [user_id, setUser_id] = useState();
   const [user, setUser] = useState({});
   const [dob, setdob] = useState("");
   const userId = localStorage.getItem("userId")
@@ -42,8 +45,8 @@ const Profile = () => {
         try {
           const res = await DietisianService.getUserLogin(token);
           if (res.status == 200){
-              console.log(res.data.data)
-              setUser(res.data.data);
+              setUser({...res.data.data});
+              setUser_id(res.data.data.id);
               let tgl = new Date(res.data.data.birthdate)
               let bulan = tgl.getMonth() + 1;
               if (bulan < 10){
@@ -60,8 +63,31 @@ const Profile = () => {
     }
   }
 
+  const fetchProfilePic = async() => {
+    await axios.get(`http://localhost:3000/api/users/profile-picture/${user_id}`, {
+      responseType: 'arraybuffer'
+    }).then(response => {
+        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+
+        const imageUrl = URL.createObjectURL(blob);
+
+        document.getElementById("profileImage").src = imageUrl;
+    }).catch(error => {
+        console.error("Error fetching image:", error);
+    });
+  }
+
+  const showDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+  };
+
   useEffect(() => {
     cariUser();
+    fetchProfilePic();
   }, [])
 
   const handleClick = () => setShow(!show)
@@ -69,7 +95,7 @@ const Profile = () => {
   const handleClick2 = () => setShow2(!show2)
 
   const submit = async (data) => {
-    console.log(data)
+    const res = await  DietisianService.editUser(user_id, data);
   }
   
   return(
@@ -78,10 +104,10 @@ const Profile = () => {
       <form className="overflow-scroll bg-white rounded-2xl w-full min-h-[calc(100vh-9rem)] drop-shadow-xl px-10 py-10" onSubmit={handleSubmit(submit)}>
         {/* photo profile */}
         <div className="bg-white drop-shadow-lg rounded-lg py-5 px-10 flex flex-row items-center">
-          {user.profile_picture ? <img src={user.profile_picture} alt="ADA" className="w-24"/> : <img src={iconUser} alt="KOSONG" className="h-24"/>}
-          <div className="bg-white rounded-full p-4 drop-shadow-md h-16 w-16 -ms-10 mt-[85px] p-auto">
+          {user.profile_picture ? <img id="profileImage" alt="ADA" className="w-24"/> : <img src={iconUser} alt="KOSONG" className="h-24"/>}
+          <button className="bg-white rounded-full p-4 drop-shadow-md h-16 w-16 -ms-10 mt-[85px] p-auto" onClick={showDialog}>
             <Icon as={LuPenLine} boxSize={6} w={7} h={7}/>
-          </div>
+          </button>
           <div className="flex flex-col justify-center">
             <div className="text-3xl font-bold px-10">{user.display_name}</div>
             {role ==  "Dietisian" && 
@@ -185,6 +211,7 @@ const Profile = () => {
                         message: "Please enter your new password"
                       }
                     })}
+                    disabled
                   />
                   <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -227,6 +254,7 @@ const Profile = () => {
           </div>
         </div>
       </form>
+      <Dialog isOpen={isDialogOpen} onClose={closeDialog} userId={userId-1}/>
     </div>
   )
 }

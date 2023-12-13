@@ -17,5 +17,6 @@ router.get("/getLoginUser", doctorController.getLoginUser);
 router.get("/users", doctorController.getAllUsers);
 router.get("/", doctorController.getAllDoctor);
 router.post("/schedule/:username", doctorController.aturJadwal);
+router.put("/edit/:id_user", doctorController.editDoctor);
 
 module.exports = router;

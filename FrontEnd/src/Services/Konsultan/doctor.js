@@ -24,6 +24,31 @@ function loginUser(username, password){
     });
 }
 
+function editUser(user_id, data){
+    return client.put(`/edit/${user_id}`, {
+        username: data.username,
+        address: data.address,
+        email: data.email,
+        phone_number: data.phone_number,
+        birthdate: data.date_of_birth,
+        gender: data.gender,
+        display_name: data.display_name,
+    })
+    .then((response) => {
+        console.log(response);
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
+        if (error.response) {
+            return error={
+                data : error.response.data,
+                status : error.response.status
+            };
+        } 
+    });
+}
+
 function viewJadwal(id){
     return client.get(`/get-jadwal/${id}`)
     .then((response) => {
@@ -72,6 +97,7 @@ export default {
     getAllDoctor,
     getUserLogin,
     getAllUsers,
+    editUser,
     loginUser,
     viewJadwal
 }
