@@ -6,6 +6,10 @@ import Loader from "./Component/Loader";
 import LandingPage from "./Pages/Landing Page/LandingPages";
 import Login from "./Pages/Login Page/LoginPage";
 import Register from "./Pages/Register Page/RegisterPage";
+import SendEmail from "./Pages/Login Page/SendEmail";
+import OTPinput from "./Pages/Login Page/OTPinput";
+import ResetPassword from "./Pages/Login Page/ResetPassword";
+import Recovered from "./Pages/Login Page/Recovered";
 
 // Dietisian
 import DietisianHomepage from "./Pages/Dietisian/Homepage"
@@ -21,6 +25,8 @@ import SubscriptionsDietisian from "./Pages/Dietisian/components/Subscriptions";
 import KonsultanHomepage from './Pages/Konsultan/Homepage';
 import DashboardKonsultan from './Pages/Konsultan/components/home';
 import RecipesKonsultan from './Pages/Konsultan/components/recipes';
+import ChatKonsultan from './Pages/Konsultan/components/chat';
+import BlankChatKonsultan from './Pages/Konsultan/components/blankChat';
 import PatientListKonsultan from './Pages/Konsultan/components/patientList';
 import SettingsKonsultan from './Pages/Konsultan/components/settings';
 
@@ -50,6 +56,22 @@ const Router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/sendemail",
+    element: <SendEmail />,
+  },
+  {
+    path: "/OTPinput",
+    element: <OTPinput />,
+  },
+  {
+    path: "/resetpassword",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/recovered",
+    element: <Recovered />,
   },
   {
     path: "/loading",
@@ -112,6 +134,14 @@ const Router = createBrowserRouter([
       {
         path: "settings",
         element: <SettingsKonsultan/>
+      },
+      {
+        path: "chat",
+        element: <BlankChatKonsultan/>
+      },
+      {
+        path: "chat/:room_id",
+        element: <ChatKonsultan/>
       }
     ]
   },

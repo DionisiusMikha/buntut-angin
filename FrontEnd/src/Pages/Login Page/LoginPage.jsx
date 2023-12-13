@@ -56,13 +56,23 @@ const LoginPage = () => {
                         setError(res2.data.message);
                         reset();
                     }
+                }}}
+        const res = await DietisianService.loginUser(data.username, data.password);
+            if (res.data.message == "user not found"){
+                const res2 = await DoctorService.loginUser(data.username, data.password);
+                console.log(res2)
+                if (res2.status == 200){
+                    localStorage.setItem("tokenDoctor", res.data.token);
+                    navigate("/konsultan/home");
                 } else {
-                    setError(res.data.message);
+                    setError(res2.data.message);
                     reset();
                 }
+            } else {
+                setError(res.data.message);
+                reset();
             }
         }
-    }
 
     const resetText = () => {
         reset({
@@ -114,7 +124,7 @@ const LoginPage = () => {
                             </div>
                         </div>
                         <div className='text-right text-sm text-gray-500 mt-2'>
-                            Recover Password?
+                            <a href="/sendemail">Forgot Password?</a>
                         </div>
                         <div className='h-32'>
                             <button className='w-full text-center font-semibold bg-green-500 rounded-2xl mt-16 py-3 text-white hover:bg-green-600'>
