@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       desc: {
-        type: Sequelize.STRING
+        type: Sequelize.JSON
       },
       recipe_id: {
         type: Sequelize.STRING

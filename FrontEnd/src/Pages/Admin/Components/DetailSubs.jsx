@@ -32,7 +32,7 @@ function DetailSubs(){
                 <div className='font-semibold text-2xl'>{users.display_name}</div>
                 <div className='font-semibold text-2xl'>Total Bayar : {total}</div>
             </div>
-            <div className="bg-white min-h-[calc(100vh-13rem)] sm:rounded-3xl drop-shadow-lg">
+            <div className="bg-white min-h-[calc(100vh-15.5rem)] sm:rounded-3xl drop-shadow-lg">
                 <div className="overflow-y-auto w-full h-5/6 flex flex-col bg-white rounded-t-xl">
                     <div id='thead' className='w-full h-12 bg-gray-300 flex justify-around items-center px-6'>
                         <div className='w-1/12 flex items-center gap-x-3'>

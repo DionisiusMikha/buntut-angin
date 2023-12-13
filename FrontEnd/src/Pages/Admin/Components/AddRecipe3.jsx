@@ -57,6 +57,7 @@ function AddRecipe3(props){
         if (res.status == 201){
             navigate("/admin/recipes")
         }
+        
     }
 
     return (
