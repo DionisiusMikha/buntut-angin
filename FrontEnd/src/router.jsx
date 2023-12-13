@@ -13,6 +13,7 @@ import DashboardDietisian from './Pages/Dietisian/components/home';
 import RecipesDietisian from './Pages/Dietisian/components/recipes';
 import ReportDietisian from './Pages/Dietisian/components/report';
 import ChatDietisian from './Pages/Dietisian/components/chat';
+import BlankChatDietisian from './Pages/Dietisian/components/blankChat';
 import ProfileDietisian from "./Pages/Dietisian/components/Profile";
 import SubscriptionsDietisian from "./Pages/Dietisian/components/Subscriptions";
 
@@ -76,6 +77,10 @@ const Router = createBrowserRouter([
       },
       {
         path: "chat",
+        element: <BlankChatDietisian/>
+      },
+      {
+        path: "chat/:room_id",
         element: <ChatDietisian/>
       },
       {
@@ -157,7 +162,7 @@ const Router = createBrowserRouter([
         element: <Subscriptions/>
       },
       {
-        path: "subscriptions/detail/:id",
+        path: "subscriptions/detail/:room_id",
         element: <DetailSubs />
       },
     ]

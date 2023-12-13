@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import doctorService from '../../../Services/konsultan/doctor';
+import doctorService from '../../../Services/Konsultan/doctor';
 import acc from '/icon/acc.png';
 import menu from "/icon/menu.png";
 import {useNavigate} from "react-router-dom";

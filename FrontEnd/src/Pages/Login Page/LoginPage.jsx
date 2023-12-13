@@ -40,7 +40,6 @@ const LoginPage = () => {
         if (data.username == "lifelose" && data.password == "2024dionkurus"){
             navigate("/admin/home")
         } else {
-
             const res = await DietisianService.loginUser(data.username, data.password);
             
             if(res.status == 200){
@@ -49,7 +48,7 @@ const LoginPage = () => {
             } else {
                 if (res.data.message == "user not found"){
                     const res2 = await DoctorService.loginUser(data.username, data.password);
-                    console.log(res2)
+                    
                     if (res2.status == 200){
                         localStorage.setItem("tokenDoctor", res.data.token);
                         navigate("/konsultan/home");

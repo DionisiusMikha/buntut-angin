@@ -1,4 +1,4 @@
-import doctorService from '../../../Services/konsultan/doctor';
+import doctorService from '../../../Services/Konsultan/doctor';
 import { useState, useEffect } from 'react';
 import menu from "/icon/menu.png";
 import acc from '/icon/acc.png';
@@ -10,9 +10,8 @@ function Home() {
         const token = localStorage.getItem("token")
         
         const user = await doctorService.getUserLogin(token);
-
+        console.log(user)
         const result = await doctorService.viewJadwal(user.data.data.id);
-        console.log(result.data)
         setJadwal([...result.data]);
     }
 
@@ -54,10 +53,6 @@ function Home() {
                             <img src={acc} className="w-5 h-5" />
                             <p className='text-xl'>Status</p>
                         </div>
-                        <div className='w-2/12 flex justify-center items-center gap-x-3'>
-                            <img src={acc} className="w-5 h-5" />
-                            <p className='text-xl'>Tag</p>
-                        </div>
                         <div className='w-1/12'></div>
                     </div>
                     {jadwal.map((item, idx) => (
@@ -77,19 +72,14 @@ function Home() {
                                     <p className='w-20 h-8 flex justify-center items-center rounded-lg text-xl text-white bg-red-500'>REJECT</p>
                                 )}
                             </div>
-                            <div className='w-2/12 flex justify-center items-center'>
-                                {item.type === 0 ? (
-                                    <p className='w-20 h-8 flex justify-center items-center rounded-lg text-xl text-white bg-indigo-600'>Ask</p>
-                                ) : (
-                                    <p className='w-28 h-8 flex justify-center items-center rounded-lg text-xl text-white bg-indigo-600'>Consult</p>
-                                )}
-                            </div>
                             <div className='w-1/12 flex justify-end items-center'>
-                                <img src={menu} className="w-5 h-5" onClick={()=>{
-                                    localStorage.setItem("userRole", user.role);
-                                    localStorage.setItem("userId", user.id);
-                                    navigate(`/admin/patient-list/detail`)
-                                }}/>
+                                <button className='w-6 flex justify-center items-center'>
+                                    <img src={menu} className="w-5 h-5" onClick={()=>{
+                                        localStorage.setItem("userRole", user.role);
+                                        localStorage.setItem("userId", user.id);
+                                        navigate(`/konsultan/home/detail-user`)
+                                    }}/>
+                                </button>
                             </div>
                         </div>
                     ))}

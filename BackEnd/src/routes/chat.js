@@ -3,5 +3,8 @@ const chatController = require("../controllers/chatController");
 const router = Router();
 
 router.post("/message", chatController.sendMessage);
+router.get("/get-message/:room_id", chatController.getMessage);
+router.get("/get-username/:room_id", chatController.getUsername);
+router.get("/get-rooms", chatController.getRooms);
 
 module.exports = router;

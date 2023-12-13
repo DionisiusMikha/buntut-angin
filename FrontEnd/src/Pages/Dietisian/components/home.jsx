@@ -16,7 +16,6 @@ function Home() {
             try {
                 const res = await DietisianService.getUserLogin(token);
                 if (res.status == 200){
-                    console.log(res.data.data);
                     setUser(res.data.data);
                 } else {
                     navigate("/login");
