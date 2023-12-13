@@ -75,7 +75,7 @@ export default function OTPInput() {
                     <div key={index} className="w-16 h-16">
                       <input
                         maxLength="1"
-                        className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                        className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-600"
                         type="text"
                         name=""
                         id=""
@@ -94,7 +94,7 @@ export default function OTPInput() {
                   <div>
                     <a
                       // onClick={() => verifyOTP()}
-                      className="flex flex-row cursor-pointer items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
+                      className="flex flex-row cursor-pointer items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-green-600 border-none text-white text-sm shadow-sm"
                       href="/resetpassword"
                     >
                       Verify Account
@@ -106,7 +106,7 @@ export default function OTPInput() {
                     <a
                       className="flex flex-row items-center"
                       style={{
-                        color: disable ? "gray" : "blue",
+                        color: disable ? "gray" : "green",
                         cursor: disable ? "none" : "pointer",
                         textDecorationLine: disable ? "none" : "underline",
                       }}
