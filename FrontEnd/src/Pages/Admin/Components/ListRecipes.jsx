@@ -2,8 +2,11 @@ import {useState, useEffect} from 'react';
 import Card from "./Card";
 import { useLoaderData, useNavigate } from "react-router-dom"
 import adminService from '../../../Services/Admin/admin';
+import { useDispatch, useSelector } from "react-redux"
+import { reset } from "../../../Redux/recipesSlice";
 
 function ListRecipes (){
+    const dispatch = useDispatch();
     const [limit, setLimit] = useState(10);
     const [search, setSearch] = useState('');
     const [recipes, setRecipes] = useState([]);
@@ -49,7 +52,12 @@ function ListRecipes (){
                         )
                     })}
                     <div className="w-full h-[24rem] bg-green-100 py-2 px-10 rounded-lg flex flex-col items-center justify-center text-4xl font-semibold text-gray-600" onClick={()=>{
-                        navigate(`/admin/recipes/add`);
+                        try{
+                            navigate(`/admin/recipes/add`);
+                            dispatch(reset());
+                        } catch(err){
+                            console.log(err);
+                        }
                     }}>
                         + Add New
                     </div>

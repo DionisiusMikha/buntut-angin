@@ -36,9 +36,14 @@ export const recipeSlice = createSlice({
                 fat : action.payload.fat,
             })
         },
+        reset : (state) => {
+            state.recipe = [];
+            state.ingredients = [];
+            state.steps = [];
+        }
     }
 })
 
-export const { addIngredients, addRecipe, addSteps } = recipeSlice.actions
+export const { addIngredients, addRecipe, addSteps, reset } = recipeSlice.actions
 
 export default recipeSlice.reducer

@@ -10,13 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.JSON
       },
       qty: {
-        type: Sequelize.STRING
+        type: Sequelize.JSON
       },
       uom: {
-        type: Sequelize.STRING
+        type: Sequelize.JSON
       },
       recipe_id: {
         type: Sequelize.STRING

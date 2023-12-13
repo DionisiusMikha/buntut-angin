@@ -2723,6 +2723,26 @@ html {
   min-height: 100vh;
 }
 
+.min-h-\[calc\(100vh-17rem\)\] {
+  min-height: calc(100vh - 17rem);
+}
+
+.min-h-\[calc\(100vh-16rem\)\] {
+  min-height: calc(100vh - 16rem);
+}
+
+.min-h-\[calc\(100vh-15rem\)\] {
+  min-height: calc(100vh - 15rem);
+}
+
+.min-h-\[calc\(100vh-14\.5rem\)\] {
+  min-height: calc(100vh - 14.5rem);
+}
+
+.min-h-\[calc\(100vh-15\.5rem\)\] {
+  min-height: calc(100vh - 15.5rem);
+}
+
 .w-1\/12 {
   width: 8.333333%;
 }
@@ -2865,6 +2885,10 @@ html {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.w-3\/4 {
+  width: 75%;
 }
 
 .max-w-lg {
@@ -3010,6 +3034,10 @@ html {
 
 .gap-y-6 {
   row-gap: 1.5rem;
+}
+
+.gap-y-8 {
+  row-gap: 2rem;
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
@@ -3656,6 +3684,11 @@ html {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
 }
 
 .font-bold {

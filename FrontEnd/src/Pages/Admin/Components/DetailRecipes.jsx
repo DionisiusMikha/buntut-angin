@@ -21,7 +21,7 @@ function DetailRecipes() {
     const cariData = async () => {
         const res = await adminService.getRecipeById(id)
         setRecipe(res.data[0]);
-        
+    
         let langkah = JSON.parse(res.data[0].steps)
         setSteps(langkah);
 
