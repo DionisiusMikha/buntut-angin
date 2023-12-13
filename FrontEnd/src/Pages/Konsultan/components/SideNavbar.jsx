@@ -3,6 +3,7 @@ import logo from '/img/Logo-lebar 1.png'
 import navbar1 from '/icon/navbar1.png'
 import navbar2 from '/icon/navbar2.png'
 import navbar3 from '/icon/navbar3.png'
+import navbar4 from '/icon/navbar4.png'
 import navbar6 from '/icon/navbar6.png'
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
@@ -80,7 +81,7 @@ function SideNavbar({hovered}){
                     <NavLink className='w-full h-full flex justify-start items-center hover:scale-90' to={`/konsultan/chat`} style={(state) => {
                         return state.isActive ? style : {backgroundColor:"transparent"}
                     }}>
-                        <img src={navbar6} alt="" className='w-7'/>
+                        <img src={navbar4} alt="" className='w-7'/>
                         <p className='text-xl text-black font-semibold ms-2'>Chat</p>
                     </NavLink>
                 </div>

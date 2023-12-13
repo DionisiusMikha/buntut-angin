@@ -128,7 +128,7 @@ const Profile = () => {
           {/* username */}
           <div className="flex flex-col mt-4">
             <div className="font-semibold text-xl">Username : </div>
-            <Input size='md' {...register("username")} />
+            <Input size='md' {...register("username")} disabled/>
           </div>
           {/* Email & phone number */}
           <div className="grid grid-cols-2 gap-8">
