@@ -21,6 +21,8 @@ import SubscriptionsDietisian from "./Pages/Dietisian/components/Subscriptions";
 import KonsultanHomepage from './Pages/Konsultan/Homepage';
 import DashboardKonsultan from './Pages/Konsultan/components/home';
 import RecipesKonsultan from './Pages/Konsultan/components/recipes';
+import ChatKonsultan from './Pages/Konsultan/components/chat';
+import BlankChatKonsultan from './Pages/Konsultan/components/blankChat';
 import PatientListKonsultan from './Pages/Konsultan/components/patientList';
 import SettingsKonsultan from './Pages/Konsultan/components/settings';
 
@@ -112,6 +114,14 @@ const Router = createBrowserRouter([
       {
         path: "settings",
         element: <SettingsKonsultan/>
+      },
+      {
+        path: "chat",
+        element: <BlankChatKonsultan/>
+      },
+      {
+        path: "chat/:room_id",
+        element: <ChatKonsultan/>
       }
     ]
   },

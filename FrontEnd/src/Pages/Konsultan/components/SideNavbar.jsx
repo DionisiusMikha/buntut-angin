@@ -76,6 +76,14 @@ function SideNavbar({hovered}){
                         <p className='text-xl text-black font-semibold ms-2'>Settings</p>
                     </NavLink>
                 </div>
+                <div className='w-1/2 h-8'>
+                    <NavLink className='w-full h-full flex justify-start items-center hover:scale-90' to={`/konsultan/chat`} style={(state) => {
+                        return state.isActive ? style : {backgroundColor:"transparent"}
+                    }}>
+                        <img src={navbar6} alt="" className='w-7'/>
+                        <p className='text-xl text-black font-semibold ms-2'>Chat</p>
+                    </NavLink>
+                </div>
                 {/* Logout */}
                 <div className='w-full flex flex-col justify-center items-center'>
                     <div className='border-black border rounded-xl w-2/3 h-28 text-lg font-semibold rotate-6 flex flex-col justify-center items-center'>
