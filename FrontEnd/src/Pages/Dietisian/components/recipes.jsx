@@ -143,6 +143,7 @@ function ListRecipes (){
                     </div>
                 </div>
             </div>
+            <div className="text-4xl text-center font-semibold">Try Another Recipes</div>
            </div>
         </>
     )
