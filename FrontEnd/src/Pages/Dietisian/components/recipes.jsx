@@ -21,7 +21,6 @@ function ListRecipes (){
 
     const getTop3 = async () =>{
         const allRecipes = await adminService.getTop3();
-        console.log(allRecipes.data.data[0])
         setTopRecipe1(allRecipes.data.data[0])
         setTopRecipe2(allRecipes.data.data[1])
         setTopRecipe3(allRecipes.data.data[2])
@@ -67,13 +66,15 @@ function ListRecipes (){
                 </div>
             </div>
             {/* top 3 */}
-            <div className='flex flex-row items-center justify-between my-6'>
+            <div className='flex flex-row items-center justify-between my-10'>
                 {/* kiri */}
-                <div className='bg-orange-200 w-1/2 rounded-3xl py-5 px-5 me-20 flex flex-col justify-center h-[34rem]'>
+                <div className='bg-orange-200 w-1/2 rounded-3xl py-5 px-5 me-14 flex flex-col justify-center h-[34rem]'>
                     <div className='text-3xl font-semibold'>{topRecipe1.name}</div>
                     <div className='flex flex-row items-center'>
                         <div className='text-lg font-medium'>{topRecipe1.description}</div>
-                        <img src={`http://localhost:3000${topRecipe1.image}`} alt="" width={"200px"} />
+                        <img src={`http://localhost:3000${topRecipe1.image}`} alt="" style={{
+                            width: "375px",
+                        }} />
                     </div>
                     <div className="bg-white p-3 rounded-xl flex flex-row items-center w-fit justify-center mt-10 px-4">
                         <div className="flex flex-row items-center">
@@ -91,8 +92,8 @@ function ListRecipes (){
                     </div>
                 </div>
                 {/* kanan */}
-                <div className='flex flex-col w-1/2 ms-20 h-[34rem]'>
-                    <div className='h-1/2 bg-blue-200 w-full rounded-3xl py-5 px-5 mb-3'>
+                <div className='flex flex-col w-1/2 ms-14 h-[34rem]'>
+                    <div className='h-1/2 bg-blue-200 w-full rounded-3xl py-5 px-5 mb-3 items-center flex'>
                         <div className='flex flex-row items-center'>
                             <img src={`http://localhost:3000${topRecipe2.image}`} alt="" className='-ms-24 me-5' width={"200px"} />
                             <div>
@@ -115,7 +116,7 @@ function ListRecipes (){
                             </div>
                         </div>
                     </div>
-                    <div className='h-1/2 w-full bg-yellow-200 rounded-3xl py-5 px-5 mt-3'>
+                    <div className='h-1/2 w-full bg-yellow-200 rounded-3xl py-5 px-5 mt-3 items-center flex'>
                     <div className='flex flex-row items-center'>
                             <img src={`http://localhost:3000${topRecipe3.image}`} alt="" className='-ms-24 me-5' width={"200px"}/>
                             <div>
