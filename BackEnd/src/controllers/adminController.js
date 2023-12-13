@@ -27,6 +27,10 @@ const upload = multer({
 })
 const { Op } = db.Sequelize
 
+function dateToString(tanggal){
+    return (tanggal.toISOString().slice(0, 10).replace('T', ' '))
+}
+
 //==========================================
 
 module.exports = {
@@ -471,5 +475,132 @@ module.exports = {
         }
 
         return res.status(201).json(result);
-    }
+    },
+    getAllSubscriptions: async function(req, res){
+        const {limit, search} = req.query;        
+        let result = [];
+
+        const getSubs = await db.Subscription.findAll({
+            attributes: ['id', 'user_id', 'period', 'status', 'invoice_id'],
+            order : [
+                ['id', 'DESC']
+            ]
+        })
+
+        for (let i = 0 ; i < getSubs.length; i++){
+            if (getSubs[i].dataValues.status == 1){
+                if (result.length == 0){
+                    const getUser = await db.User.findByPk(getSubs[i].dataValues.user_id)
+                    let statusSubs = "";
+                    const today = new Date();
+                    if (getSubs[i].dataValues.period > today){
+                        statusSubs = "active"
+                    } else {
+                        statusSubs = "expired"
+                    }
+                    result.push({
+                        id  :getSubs[i].dataValues.id,
+                        userId : getSubs[i].dataValues.user_id,
+                        name: getUser.dataValues.display_name,
+                        period : new Date(getSubs[i].dataValues.period).toISOString().slice(0, 10).replace('T', ' '),
+                        statusPembayaran: getSubs[i].dataValues.status,
+                        status: statusSubs,
+                        invoice_id : getSubs[i].dataValues.invoice_id
+                    })
+                } else {
+                    // cek apakah ada user id di result
+                    let ada = false;
+                    for (let j = 0 ; j < result.length; j++){
+                        if (result[j].userId == getSubs[i].dataValues.user_id){
+                            ada = true;
+                        }
+                    }
+                    if (!ada){
+                        const getUser = await db.User.findByPk(getSubs[i].dataValues.user_id)
+                        let statusSubs = "";
+                        const today = new Date();
+                        if (getSubs[i].dataValues.period > today){
+                            statusSubs = "active"
+                        } else {
+                            statusSubs = "expired"
+                        }
+                        result.push({
+                            id  :getSubs[i].dataValues.id,
+                            userId : getSubs[i].dataValues.user_id,
+                            name: getUser.dataValues.display_name,
+                            period : new Date(getSubs[i].dataValues.period).toISOString().slice(0, 10).replace('T', ' '),
+                            statusPembayaran: getSubs[i].dataValues.status,
+                            status: statusSubs,
+                            invoice_id : getSubs[i].dataValues.invoice_id
+                        })
+                    }
+                }
+            }
+            
+        }
+
+        // sort by name
+        result.sort((a, b) => {
+            if (a.name < b.name){
+                return -1
+            }
+            if (a.name > b.name){
+                return 1
+            }
+            return 0
+        })
+
+        // limit
+        if (limit !== undefined && limit !== ""){
+            result = result.slice(0, limit)
+        }
+
+        // search by name
+        if (search !== undefined && search !== ""){
+            result = result.filter(item => {
+                return item.name.toLowerCase().includes(search.toLowerCase())
+            })
+        }
+
+        return res.status(200).send(result)
+    },
+    getSubscriptionsById : async function (req, res){
+        const userId = req.params.id;
+        const getSubs = await db.Subscription.findAll({
+            where: {
+                user_id: userId
+            }
+        })
+        const getUser = await db.User.findByPk(userId)
+        
+        let result = [];
+        let totalBayar = 0;
+        for (let i = 0 ; i < getSubs.length; i++){
+            let statusSubs = "";
+            const today = new Date();
+            if (getSubs[i].dataValues.period > today && getSubs[i].dataValues.status == 1){
+                statusSubs = "active"
+            } else {
+                statusSubs = "expired"
+            }
+            if (getSubs[i].dataValues.status == 1){
+                totalBayar += 85000;
+            }
+            result.push({
+                id  :getSubs[i].dataValues.id,
+                userId : getSubs[i].dataValues.user_id,
+                period : new Date(getSubs[i].dataValues.period).toISOString().slice(0, 10).replace('T', ' '),
+                statusPembayaran: getSubs[i].dataValues.status,
+                status: statusSubs,
+                invoice_id : getSubs[i].dataValues.invoice_id,
+            })
+        }
+
+        return res.status(200).send({
+            "message" : "success",
+            "user" : getUser,
+            "data" : result,
+            total : totalBayar,
+        })
+    },
 }

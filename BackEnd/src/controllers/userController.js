@@ -541,7 +541,7 @@ module.exports = {
             const cariSubs = await db.Subscription.findAll({
                 where: {
                     user_id: cariUser[0].dataValues.id,
-                    status : 1 //success
+                    status : 1
                 },
                 order: [
                     ['id', 'DESC']

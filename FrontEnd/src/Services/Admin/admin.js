@@ -90,6 +90,14 @@ function addNewDietisian(display_name, email, username, password, birthdate, pho
     })
 }
 
+function getAllSubs(){
+    return client.get("/subs")
+}
+
+function getDetailSubs(id){
+    return client.get(`/subs/${id}`)
+}
+
 export default {
     getAllUsers,
     uploadImage,
@@ -99,5 +107,7 @@ export default {
     getRecipeById,
     updateRecipe,
     addNewDoctor,
-    addNewDietisian
+    addNewDietisian,
+    getAllSubs,
+    getDetailSubs,
 }

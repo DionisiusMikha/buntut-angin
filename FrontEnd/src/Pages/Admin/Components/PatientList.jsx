@@ -31,7 +31,7 @@ function PatientList() {
                     }}>Add New User</button>
                 </div>
                 <div className="flex flex-row justify-between items-center">
-                    <div className="rounded-lg py-2 px-4 mb-4 text-xl font-semibold flex items-center justify-center">
+                    <div className="rounded-lg py-2 mb-4 text-xl font-semibold flex items-center justify-center">
                         <span className="me-3">Show</span>
                             <select className="bg-gray-200" onChange={(e)=>{
                                 setLimit(e.target.value)

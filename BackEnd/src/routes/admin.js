@@ -17,4 +17,8 @@ router.get("/users/:role/:id", adminController.getUserById);
 // image
 router.post("/image/:name", adminController.uploadImage);
 
+// subs
+router.get("/subs", adminController.getAllSubscriptions);
+router.get("/subs/:id", adminController.getSubscriptionsById);
+
 module.exports = router;

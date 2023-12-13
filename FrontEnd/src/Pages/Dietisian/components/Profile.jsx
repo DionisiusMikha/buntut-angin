@@ -8,6 +8,7 @@ import { LiaBirthdayCakeSolid } from "react-icons/lia";
 
 import iconUser from "/icon/user.png";
 import { useForm } from 'react-hook-form'
+import {useNavigate} from "react-router-dom";
 
 import DietisianService from "../../../Services/Dietisian/dietisian";
 
@@ -19,6 +20,7 @@ const Profile = () => {
   const [show, setShow] = useState(false)
   const [show1, setShow1] = useState(false)
   const [show2, setShow2] = useState(false)
+  const navigate = useNavigate();
   
   const {register, handleSubmit, reset, formState: { errors }  } = useForm({
     values : {
@@ -42,11 +44,13 @@ const Profile = () => {
           if (res.status == 200){
               console.log(res.data.data)
               setUser(res.data.data);
-              // let tgl = 
-              // const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-              // let hasil = `${tgl.getDate()} ${months[tgl.getMonth()]} ${tgl.getFullYear()}`;
-              // setdob(hasil)
-              setShow(new Date(res.data.data.birthdate));
+              let tgl = new Date(res.data.data.birthdate)
+              let bulan = tgl.getMonth() + 1;
+              if (bulan < 10){
+                bulan = "0" + bulan;
+              }
+              let hasil = `${tgl.getFullYear()}-${bulan}-${tgl.getDate()}`;
+              setdob(hasil)
           } else {
               navigate("/login");
           }
@@ -63,11 +67,15 @@ const Profile = () => {
   const handleClick = () => setShow(!show)
   const handleClick1 = () => setShow1(!show1)
   const handleClick2 = () => setShow2(!show2)
+
+  const submit = async (data) => {
+    console.log(data)
+  }
   
   return(
     <div className="w-full h-full flex py-10 px-12">
       {/* PROFILE */}
-      <form className="overflow-scroll bg-white rounded-2xl w-full min-h-[calc(100vh-9rem)] drop-shadow-xl px-10 py-10" >
+      <form className="overflow-scroll bg-white rounded-2xl w-full min-h-[calc(100vh-9rem)] drop-shadow-xl px-10 py-10" onSubmit={handleSubmit(submit)}>
         {/* photo profile */}
         <div className="bg-white drop-shadow-lg rounded-lg py-5 px-10 flex flex-row items-center">
           {user.profile_picture ? <img src={user.profile_picture} alt="ADA" className="w-24"/> : <img src={iconUser} alt="KOSONG" className="h-24"/>}
@@ -184,7 +192,7 @@ const Profile = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                {errors.password && <span style={{ color:"red" }}>{errors.password.message}</span>}
+                {errors.newPassword && <span style={{ color:"red" }}>{errors.newPassword.message}</span>}
               </div>
               <div className="flex flex-col mt-4">
                 <div className="font-semibold text-xl">Confirm New Password : </div>
@@ -209,7 +217,14 @@ const Profile = () => {
                 </InputGroup>
                 {errors.confirmPassword && <span style={{ color:"red" }}>{errors.confirmPassword.message}</span>}
               </div>
-            </div>
+          </div>
+          {/* button save or cancel */}
+          <div className="flex flex-row justify-end mt-5">
+            <button className="btn btn-outline btn-neutral btn-wide mx-5" onClick={()=>{
+              navigate("/dietisian/home");
+            }}>Cancel</button>
+            <button className="btn btn-neutral btn-wide">Save changes</button>
+          </div>
         </div>
       </form>
     </div>

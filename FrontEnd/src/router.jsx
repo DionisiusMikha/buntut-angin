@@ -35,6 +35,7 @@ import PatientListAdmin from './Pages/Admin/Components/PatientList';
 import ProfileAdmin from "./Pages/Admin/Components/Profile";
 import Subscriptions from "./Pages/Admin/Components/Subscriptions";
 import AddNewUser from "./Pages/Admin/Components/AddNewUser";
+import DetailSubs from "./Pages/Admin/Components/DetailSubs";
 
 const Router = createBrowserRouter([
   {
@@ -154,6 +155,10 @@ const Router = createBrowserRouter([
       {
         path: "subscriptions",
         element: <Subscriptions/>
+      },
+      {
+        path: "subscriptions/detail/:id",
+        element: <DetailSubs />
       },
     ]
   },
