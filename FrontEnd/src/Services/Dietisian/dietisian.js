@@ -114,6 +114,12 @@ function changeStatusSubscription(id, status){
     })
 }
 
+function sendEmail(email){
+    return client.post("/send_recovery_email", {
+        email : email
+    })
+}
+
 export default {
     getAllUsers,
     registerUser,
@@ -124,4 +130,5 @@ export default {
     getUserLogin,
     getAllRecipes,
     changeStatusSubscription,
+    sendEmail
 }

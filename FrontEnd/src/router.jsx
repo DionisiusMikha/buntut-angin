@@ -6,6 +6,10 @@ import Loader from "./Component/Loader";
 import LandingPage from "./Pages/Landing Page/LandingPages";
 import Login from "./Pages/Login Page/LoginPage";
 import Register from "./Pages/Register Page/RegisterPage";
+import SendEmail from "./Pages/Login Page/SendEmail";
+import OTPinput from "./Pages/Login Page/OTPinput";
+import ResetPassword from "./Pages/Login Page/ResetPassword";
+import Recovered from "./Pages/Login Page/Recovered";
 
 // Dietisian
 import DietisianHomepage from "./Pages/Dietisian/Homepage"
@@ -52,6 +56,22 @@ const Router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/sendemail",
+    element: <SendEmail />,
+  },
+  {
+    path: "/OTPinput",
+    element: <OTPinput />,
+  },
+  {
+    path: "/resetpassword",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/recovered",
+    element: <Recovered />,
   },
   {
     path: "/loading",

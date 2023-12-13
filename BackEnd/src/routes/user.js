@@ -16,4 +16,5 @@ router.post("/janjian/:username", userController.janjian);
 router.post("/subscription/:username", userController.subscription);
 router.post("/changeStatusSubscription/:id", userController.changeStatusSubscription);
 
+
 module.exports = router;
