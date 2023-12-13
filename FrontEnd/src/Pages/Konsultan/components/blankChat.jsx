@@ -90,7 +90,7 @@ function Chat() {
                         <hr className="text-rose-800 border-2 border-rose-800 opacity-30"/>
                         <div className="w-full h-5/6 flex flex-col overflow-y-auto gap-y-4 mt-8">
                             {listRoom.map((item, idx) => (
-                                <Link key={idx} className="w-full h-20 flex items-center" to={`/dietisian/chat/${item.room_id}`}>
+                                <Link key={idx} className="w-full h-20 flex items-center" to={`/konsultan/chat/${item.room_id}`}>
                                     <div className="w-1/6 h-full flex items-center">
                                         <img src={acc} className="w-12 h-12 border border-black rounded-full"/>
                                     </div>
