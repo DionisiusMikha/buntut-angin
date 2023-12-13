@@ -19,7 +19,7 @@ function Home() {
 
     return (
         <>
-           <div className="flex flex-col justify-evenly mt-3 mx-5">3
+           <div className="flex flex-col justify-evenly mt-3 mx-5">
                 <div className="bg-white w-full mt-8 h-full rounded-xl drop-shadow-md px-5 py-5">
                     <div className="text-3xl font-semibold">Subscriptions</div>
                     <div className="max-w-xxxl w-full bg-white rounded-lg shadow dark:bg-gray-800 md-6 p-1">
