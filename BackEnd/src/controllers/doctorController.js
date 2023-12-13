@@ -139,16 +139,16 @@ module.exports = {
         }
     },
     editDoctor: async function(req, res){
-        const uploadFile = upload.single("profile_picture");
-        uploadFile(req, res, async function (err){
-            if (err instanceof multer.MulterError){
-                return res.status(400).send({msg: "File too large"});
-            }
-            else if (err){
-                return res.status(400).send({msg: "File not supported"});
-            }
+        // const uploadFile = upload.single("profile_picture");
+        // uploadFile(req, res, async function (err){
+        //     if (err instanceof multer.MulterError){
+        //         return res.status(400).send({msg: "File too large"});
+        //     }
+        //     else if (err){
+        //         return res.status(400).send({msg: "File not supported"});
+        //     }
             const idUser = req.params.id_user;
-            const {username, email, phone_number, date_of_birth, display_name} = req.body;
+            const { username, email, phone_number, birthdate, display_name, address, gender } = req.body;
 
             const checkUser = await db.Doctor.findByPk(idUser)
             if (!checkUser){
@@ -169,19 +169,22 @@ module.exports = {
                         const updateUser = await db.Doctor.update({
                             username: username,
                             email: email,
+                            birthdate: birthdate,
                             phone_number: phone_number,
-                            birthdate: date_of_birth,
+                            address: address,
+                            birthdate: birthdate,
+                            gender: gender,
                             display_name: display_name,
-                            profile_picture : `/assets/${checkUser.dataValues.username}.png`
+                            // profile_picture : `/assets/${checkUser.dataValues.username}.png`
                         }, {
                             where: {
                                 id: idUser
                             }
                         })
-                        fs.renameSync(
-                            `./uploads/${req.file.filename}`,
-                            `./assets/${checkUser.dataValues.username}.png`
-                        );
+                        // fs.renameSync(
+                        //     `./uploads/${req.file.filename}`,
+                        //     `./assets/${checkUser.dataValues.username}.png`
+                        // );
                         const result = {
                             "message" : "Data updated",
                             "username" : username,
@@ -189,7 +192,7 @@ module.exports = {
                             "phone_number" : phone_number,
                             "birthdate" : date_of_birth,
                             "display_name" : display_name,
-                            "profile_picture" : `/assets/${checkUser.dataValues.username}.png`
+                            // "profile_picture" : `/assets/${checkUser.dataValues.username}.png`
                         }
                         res.status(200).json(result);
                     }
@@ -198,7 +201,7 @@ module.exports = {
                     }
                 }
             }
-        })
+        // })
     },
     addRecipe: async function(req, res){
         const doctorId = req.body.doctor_id;

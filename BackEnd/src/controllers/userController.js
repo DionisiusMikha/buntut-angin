@@ -12,6 +12,7 @@ const jwt = require("jsonwebtoken");
 //     serverKey: "SB-Mid-server-9Ta-9rQFBi44HhEyv_gVjJPc",
 //     clientKey: "SB-Mid-client-Ff5N9IqHFWe3JfeZ"
 // });
+const path = require("path");
 
 const upload = multer({
     dest : "../../Uploads/User",
@@ -171,7 +172,7 @@ module.exports = {
     },
     editUser: async function(req, res){
         const idUser = req.params.id_user;
-        const { username, email, phone_number, birthdate, display_name, address, weight, height, profile_picture, gender } = req.body;
+        const { username, email, phone_number, birthdate, display_name, address, weight, height, gender } = req.body;
 
         const checkUser = await db.User.findByPk(idUser)
         if (!checkUser){
@@ -198,8 +199,7 @@ module.exports = {
                         address: address,
                         weight: weight,
                         height: height,
-                        jenis_kelamin: gender,
-                        profile_picture: profile_picture
+                        jenis_kelamin: gender
                     }, {
                         where: {
                             id: idUser
@@ -217,7 +217,6 @@ module.exports = {
                         "address" : address,
                         "weight" : weight,
                         "gender" : gender,
-                        "profile_picture" : profile_picture
                     }
                     res.status(200).json(result);
                 }
@@ -226,66 +225,50 @@ module.exports = {
                 }
             }
         }
-        // const uploadFile = upload.single("profile_picture");
-        // uploadFile(req, res, async function (err){
-        //     if (err instanceof multer.MulterError){
-        //         return res.status(400).send({msg: "File too large"});
-        //     }
-        //     else if (err){
-        //         return res.status(400).send({msg: "File not supported"});
-        //     }
-        //     const idUser = req.params.id_user;
-        //     const {username, email, phone_number, birthdate, display_name, address, weight, heigth} = req.body;
+    },
+    editProfilePicture: async function(req, res){
+        const idUser = req.params.id_user;
 
-        //     const checkUser = await db.User.findByPk(idUser)
-        //     if (!checkUser){
-        //         const result = {
-        //             "message" : "User not found"
-        //         }
-        //         res.status(404).json(result);
-        //     }
-        //     else {
-        //         if (checkUser.dataValues.username == username){
-        //             const result = {
-        //                 "message" : "User already exists"
-        //             }
-        //             res.status(400).json(result);
-        //         }
-        //         else {
-        //             try{
-        //                 const updateUser = await db.User.update({
-        //                     username: username,
-        //                     email: email,
-        //                     phone_number: phone_number,
-        //                     birthdate: date_of_birth,
-        //                     display_name: display_name,
-        //                     profile_picture : `/assets/${checkUser.dataValues.username}.png`
-        //                 }, {
-        //                     where: {
-        //                         id: idUser
-        //                     }
-        //                 })
-        //                 fs.renameSync(
-        //                     `../../Uploads/User/${req.file.filename}`,
-        //                     `./assets/${checkUser.dataValues.username}.png`
-        //                 );
-        //                 const result = {
-        //                     "message" : "Data updated",
-        //                     "username" : username,
-        //                     "email" : email,
-        //                     "phone_number" : phone_number,
-        //                     "birthdate" : date_of_birth,
-        //                     "display_name" : display_name,
-        //                     "profile_picture" : `/assets/${checkUser.dataValues.username}.png`
-        //                 }
-        //                 res.status(200).json(result);
-        //             }
-        //             catch(err){
-        //                 return res.status(400).json({message: "Error updating data", error: err.message});
-        //             }
-        //         }
-        //     }
-        // })
+        const uploadFile = upload.single("profile_picture");
+        uploadFile(req, res, async function (err){
+            if (err instanceof multer.MulterError){
+                return res.status(400).send({msg: "File too large"});
+            }
+            else if (err){
+                return res.status(400).send({msg: "File not supported"});
+            }
+
+            const checkUser = await db.User.findByPk(idUser)
+            if (!checkUser){
+                const result = {
+                    "message" : "User not found"
+                }
+                res.status(404).json(result);
+            }
+            else {
+                try{
+                    const updateUser = await db.User.update({
+                        profile_picture : `../../assets/${checkUser.dataValues.username}.png`
+                    }, {
+                        where: {
+                            id: idUser
+                        }
+                    })
+                    fs.renameSync(
+                        `../../Uploads/User/${req.file.filename}`,
+                        `./assets/${checkUser.dataValues.username}.png`
+                    );
+                    const result = {
+                        "message" : "Data updated",
+                        "profile_picture" : `../../assets/${checkUser.dataValues.username}.png`
+                    }
+                    res.status(200).json(result);
+                }
+                catch(err){
+                    return res.status(400).json({message: "Error updating data", error: err.message});
+                }
+            }
+        })
     },
     cekProfilKonsultan: async function(req, res){
         // const idKonsultan = req.params.id_konsultan;
@@ -333,6 +316,20 @@ module.exports = {
             catch(err){
                 return res.status(400).send('Invalid JWT Key');
             }
+        }
+    },
+    getProfilePicture: async function(req, res){
+        const idUser = req.params.id_user;
+
+        const checkUser = await db.User.findByPk(idUser)
+        if (!checkUser){
+            const result = {
+                "message" : "User not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            return res.status(200).sendFile(path.join(__dirname, `${checkUser.dataValues.profile_picture}`));
         }
     },
     getAllResep: async function(req, res){

@@ -46,8 +46,35 @@ function loginUser(username, password){
     });
 }
 
-function editUser(){
-    return client.get("/edit/:id_user");
+function editUser(user_id, data){
+    return client.put(`/edit/${user_id}`, {
+        username: data.username,
+        email: data.email,
+        phone_number: data.phone_number,
+        birthdate: data.birthdate,
+        display_name: data.display_name,
+        address: data.address,
+        weight: data.weight,
+        height: data.height,
+        jenis_kelamin: data.gender
+    })
+    .then((response) => {
+        console.log(response);
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
+        if (error.response) {
+            return error={
+                data : error.response.data,
+                status : error.response.status
+            };
+        } 
+    });
+}
+
+function uploadProfilePicture(image, user_id){
+    return client.put(`/edit-picture/${user_id}`, image);
 }
 
 function cekProfilKonsultan(){
@@ -93,6 +120,7 @@ export default {
     loginUser,
     editUser,
     cekProfilKonsultan,
+    uploadProfilePicture,
     getUserLogin,
     getAllRecipes,
     changeStatusSubscription,
