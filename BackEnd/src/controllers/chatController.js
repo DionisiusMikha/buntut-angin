@@ -48,19 +48,53 @@ module.exports = {
     },
     getRooms: async function (req, res){
         const { username } = req.query;
-
         try {
-            const result = await db.Room.findAll({
-                where: {
-                    username: {
-                        [Op.like]: `%${username}%`
-                    }
+            //ambil room klo username yg dimasukkan ada
+            const room = await db.Room.findAll()
+            let ruang = [];
+            for(let i = 0; i < room.length; i++){
+                if(room[i].username.includes(username)){
+                    let user = JSON.parse(room[i].username);
+                    ruang.push({
+                        room_id: room[i].room_id,
+                        name: room[i].name,
+                        username: user
+                    });
                 }
-            })
-    
-            return res.status(200).send(result);
+            }
+            return res.status(200).send(ruang);
         } catch (error) {
             return res.status(400).send(error);
         }
+    },
+    addRooms : async function(req, res){
+        const {user1, user2, name} = req.body;
+        const allRoom = await db.Room.findAll({
+            attributes: ["room_id"],
+            order : [["room_id", "DESC"]]
+        });
+        let room_id = 0;
+        if(allRoom.length == 0){
+            room_id = 1;
+        } else {
+            let hasil = parseInt((allRoom[0].room_id).substring(4,5));           
+            room_id = hasil + 1;
+        }
+        const newRoom = await db.Room.create({
+            room_id: `ROOM${room_id}`,
+            name: name,
+            username: JSON.stringify([user1, user2])
+        });
+        return res.status(201).json({
+            message: "Room added!",
+            room: {
+                room_id: newRoom.room_id,
+                name: newRoom.name,
+                username: {
+                    user1: user1,
+                    user2: user2
+                }
+            }
+        })
     }
 }
