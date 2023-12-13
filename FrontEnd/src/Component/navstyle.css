@@ -3711,6 +3711,10 @@ html {
   padding-top: 2rem;
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
 .text-center {
   text-align: center;
 }
