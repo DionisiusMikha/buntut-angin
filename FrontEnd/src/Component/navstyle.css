@@ -2414,6 +2414,11 @@ html {
   margin-bottom: 1.5rem;
 }
 
+.-mx-5 {
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+}
+
 .-me-40 {
   margin-inline-end: -10rem;
 }
@@ -2586,6 +2591,54 @@ html {
   margin-top: 85px;
 }
 
+.ms-4 {
+  margin-inline-start: 1rem;
+}
+
+.ms-5 {
+  margin-inline-start: 1.25rem;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.me-14 {
+  margin-inline-end: 3.5rem;
+}
+
+.ms-14 {
+  margin-inline-start: 3.5rem;
+}
+
+.ms-20 {
+  margin-inline-start: 5rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.-ms-5 {
+  margin-inline-start: -1.25rem;
+}
+
+.-ms-0 {
+  margin-inline-start: -0px;
+}
+
+.-ms-40 {
+  margin-inline-start: -10rem;
+}
+
+.-ms-20 {
+  margin-inline-start: -5rem;
+}
+
+.-ms-24 {
+  margin-inline-start: -6rem;
+}
+
 .block {
   display: block;
 }
@@ -2700,6 +2753,30 @@ html {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-48 {
+  height: 12rem;
+}
+
+.h-auto {
+  height: auto;
+}
+
+.h-\[\] {
+  height: ;
+}
+
+.h-\[130\] {
+  height: 130;
+}
+
+.h-\[96\] {
+  height: 96;
+}
+
+.h-\[34rem\] {
+  height: 34rem;
 }
 
 .max-h-fit {
@@ -2889,6 +2966,11 @@ html {
 
 .w-3\/4 {
   width: 75%;
+}
+
+.w-fit {
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .max-w-lg {
@@ -3287,6 +3369,16 @@ html {
 .bg-yellow-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(250 204 21 / var(--tw-bg-opacity));
+}
+
+.bg-orange-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 215 170 / var(--tw-bg-opacity));
+}
+
+.bg-yellow-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 240 138 / var(--tw-bg-opacity));
 }
 
 .bg-\[url\(\'\/img\/bg-buah\.png\'\)\] {

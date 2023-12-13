@@ -98,6 +98,10 @@ function getDetailSubs(id){
     return client.get(`/subs/${id}`)
 }
 
+function getTop3(){
+    return client.get("/getTop3Recipes")
+}
+
 export default {
     getAllUsers,
     uploadImage,
@@ -110,4 +114,5 @@ export default {
     addNewDietisian,
     getAllSubs,
     getDetailSubs,
+    getTop3,
 }

@@ -603,4 +603,53 @@ module.exports = {
             total : totalBayar,
         })
     },
+    getTop3Recipes : async function (req, res){
+        const getResep = await db.Recipes.findAll({
+            order : [
+                ['suka', 'DESC']
+            ],
+            limit : 3
+        })
+
+        let result = [];
+        for (let i = 0 ; i < getResep.length; i++){
+            const getIngredients = await db.Ingredients.findAll({
+                where: {
+                    recipe_id: getResep[i].dataValues.id
+                }
+            });
+
+            const getSteps = await db.Steps.findAll({
+                where: {
+                    recipe_id: getResep[i].dataValues.id
+                }
+            })
+
+            let ingredients = [];
+            for (let j = 0 ; j < getIngredients.length; j++){
+                ingredients.push(getIngredients[j].name + " " + getIngredients[j].qty + " " + getIngredients[j].uom)
+            }
+
+            let steps = [];
+            for (let j = 0; j < getSteps.length; j++){
+                steps.push(getSteps[j].desc)
+            }
+
+            result.push({
+                recipe_id: getResep[i].dataValues.id,
+                name: getResep[i].dataValues.name,
+                image  :getResep[i].dataValues.image_url,
+                description: getResep[i].dataValues.description,
+                like : getResep[i].dataValues.suka,
+                rating : getResep[i].dataValues.rating,
+                ingredients,
+                steps
+            })
+        }
+
+        return res.status(200).send({
+            "message" : "success",
+            "data" : result
+        })
+    }
 }
