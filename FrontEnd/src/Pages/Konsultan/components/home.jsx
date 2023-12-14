@@ -2,12 +2,13 @@ import doctorService from '../../../Services/konsultan/doctor';
 import { useState, useEffect } from 'react';
 import menu from "/icon/menu.png";
 import acc from '/icon/acc.png';
+import { useDispatch, useSelector } from "react-redux"
 
 function Home() {
     const [jadwal, setJadwal] = useState([]);
 
     const fetchJadwal = async() => {
-        console.log(localStorage.getItem("tokenDoctor"))
+        // console.log(localStorage.getItem("tokenDoctor"))
         const token = localStorage.getItem("tokenDoctor")
         
         const user = await doctorService.getUserLogin(token);

@@ -16,8 +16,11 @@ import Joi from 'joi'
 import { joiResolver } from "@hookform/resolvers/joi"
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux"
+import { getDietisian, getDoctor } from '../../Redux/loginSlice';
 
 const LoginPage = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const schema = Joi.object({
         username: Joi.string().required().messages({
@@ -43,15 +46,24 @@ const LoginPage = () => {
             const res = await DietisianService.loginUser(data.username, data.password);
             
             if(res.status == 200){
-                localStorage.setItem("token", res.data.token);
-                navigate("/dietisian/home");
+                try {
+                    dispatch(getDietisian(res.data.token))
+                    localStorage.setItem("token", res.data.token)
+                    navigate("/dietisian/home");
+                } catch (error) {
+                    console.log(error)   
+                }
             } else {
                 if (res.data.message == "user not found"){
                     const res2 = await DoctorService.loginUser(data.username, data.password);
-                    
                     if (res2.status == 200){
-                        localStorage.setItem("tokenDoctor", res2.data.token);
-                        navigate("/konsultan/home");
+                        try {
+                            dispatch(getDoctor(res2.data.token))
+                            localStorage.setItem("tokenDoctor", res2.data.token);
+                            navigate("/konsultan/home");
+                        } catch (error) {
+                            console.log(error)   
+                        }
                     } else {
                         setError(res2.data.message);
                         reset();

@@ -6,10 +6,13 @@ import DietisianService from "../../../Services/Dietisian/dietisian";
 import DoctorService from '../../../Services/konsultan/doctor';
 import ChatService from '../../../Services/Chat/chat';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux"
 
 function Chat() {
-    console.log(localStorage.getItem("tokenDoctor"))
-    const tokenD = localStorage.getItem("tokenDoctor")
+    // console.log(localStorage.getItem("tokenDoctor"))
+    // const tokenD = localStorage.getItem("tokenDoctor")
+    const tokenD = useSelector((state) => state.login.doctor)
+    console.log(tokenD)
     const [chatActive, setChatActive] = useState("group");
     const [user, setUser] = useState('');
 

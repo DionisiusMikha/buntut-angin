@@ -2876,6 +2876,10 @@ html {
   height: 100vh;
 }
 
+.h-auto {
+  height: auto;
+}
+
 .max-h-fit {
   max-height: -moz-fit-content;
   max-height: fit-content;
@@ -3068,6 +3072,10 @@ html {
 
 .max-w-xs {
   max-width: 20rem;
+}
+
+.max-w-sm {
+  max-width: 24rem;
 }
 
 .table-fixed {
