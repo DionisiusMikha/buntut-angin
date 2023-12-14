@@ -10,8 +10,9 @@ import DoctorService from '../../../Services/konsultan/doctor';
 import ChatService from '../../../Services/Chat/chat';
 import { Link } from 'react-router-dom';
 
+const socket = io.connect("http://localhost:6969");
+
 function Chat() {
-    const socket = io.connect("http://localhost:6969");
     const token = localStorage.getItem("token");
     const room_id = window.location.pathname.split("/")[3];
     const [chatActive, setChatActive] = useState("group");
@@ -69,16 +70,7 @@ function Chat() {
         if(res.status == 200){
             setUser(res.data.data.username);
             getRooms(res.data.data.username);
-        } else {
-            if (res.data.message == "user not found"){
-                const res2 = await DoctorService.getUserLogin(token);
-                
-                if (res2.status == 200){
-                    setUser(res2.data.data.username);
-                    getRooms(res2.data.data.username);
-                }
-            }
-        }
+        } 
     }
 
     const getUserDisplay = async() => {
@@ -97,6 +89,7 @@ function Chat() {
     }
 
     const getChat = async() => {
+        console.log("masok");
         const result = await ChatService.getChat(room_id);
         setMessageList([...result.data]);
     }
@@ -122,6 +115,7 @@ function Chat() {
     useEffect(() => {
         socket.on("receiveMessage", (data) => {
             setMessageList((list) => [...list, data]);
+            getChat();
         });
 
         return () => {
@@ -136,10 +130,10 @@ function Chat() {
     useEffect(() => {
         setUserDisplay('');
         setListRoom([]);
+        getUser();
         getChat();
         getUserDisplay();
         joinRoom();
-        getUser();
     }, [room])
 
     return (

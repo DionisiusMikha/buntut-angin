@@ -12,8 +12,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux"
 
 
+const socket = io.connect("http://localhost:6969");
 function Chat() {
-    const socket = io.connect("http://localhost:6969");
     
     const tokenDoctor = localStorage.getItem("tokenDoctor");
     const chatRef = useRef(null);
@@ -41,7 +41,7 @@ function Chat() {
                 room: room_id,
                 message: watch("input_message")
             };
-            console.log(user);
+            // console.log(user);
             const showMsg = {
                 username: user,
                 room_id: room,
@@ -49,6 +49,7 @@ function Chat() {
             }
     
             await socket.emit("sendMessage", messageData);
+            
             await axios.post(`http://localhost:3000/api/chats/message`, {
                 username: user,
                 room_id: room,
@@ -66,7 +67,6 @@ function Chat() {
         if (res2.status == 200){
             setUser(res2.data.data.username);
             getRooms(res2.data.data.username); 
-            // console.log(res2.data.data.username);
         }
     }
 
@@ -86,6 +86,7 @@ function Chat() {
     }
 
     const getChat = async() => {
+        console.log("masok");
         const result = await ChatService.getChat(room_id);
         setMessageList([...result.data]);
     }
@@ -121,6 +122,7 @@ function Chat() {
     useEffect(() => {
         socket.on("receiveMessage", (data) => {
             setMessageList((list) => [...list, data]);
+            getChat();
         });
 
         return () => {
@@ -133,7 +135,6 @@ function Chat() {
         setUserDisplay('');
         setListRoom([]);
         getUser();
-        getRooms();
         getChat();
         getUserDisplay();
         joinRoom();
