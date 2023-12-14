@@ -52,7 +52,6 @@ function editUser(user_id, data){
 function viewJadwal(id){
     return client.get(`/get-jadwal/${id}`)
     .then((response) => {
-        // console.log(response);
         return response;
     })
     .catch((error) => {

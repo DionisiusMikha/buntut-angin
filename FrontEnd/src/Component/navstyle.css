@@ -788,6 +788,12 @@ html {
     --tw-bg-opacity: 1;
     background-color: hsl(var(--b2) / var(--tw-bg-opacity));
   }
+
+  .table-zebra tr.hover:hover,
+  .table-zebra tr.hover:nth-child(even):hover {
+    --tw-bg-opacity: 1;
+    background-color: hsl(var(--b3) / var(--tw-bg-opacity));
+  }
 }
 
 .btn {
@@ -2780,10 +2786,6 @@ html {
   height: 50%;
 }
 
-.h-1\/4 {
-  height: 25%;
-}
-
 .h-12 {
   height: 3rem;
 }
@@ -2868,6 +2870,10 @@ html {
   height: calc(100vh - 9rem);
 }
 
+.h-auto {
+  height: auto;
+}
+
 .h-full {
   height: 100%;
 }
@@ -2876,8 +2882,8 @@ html {
   height: 100vh;
 }
 
-.h-auto {
-  height: auto;
+.max-h-1 {
+  max-height: 0.25rem;
 }
 
 .max-h-fit {
@@ -3062,6 +3068,10 @@ html {
   width: 100vw;
 }
 
+.max-w-3xl {
+  max-width: 48rem;
+}
+
 .max-w-lg {
   max-width: 32rem;
 }
@@ -3070,12 +3080,12 @@ html {
   max-width: 28rem;
 }
 
-.max-w-xs {
-  max-width: 20rem;
-}
-
 .max-w-sm {
   max-width: 24rem;
+}
+
+.max-w-xs {
+  max-width: 20rem;
 }
 
 .table-fixed {
@@ -3772,6 +3782,10 @@ html {
 
 .pb-3 {
   padding-bottom: 0.75rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
 }
 
 .pb-5 {

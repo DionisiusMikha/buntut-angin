@@ -11,7 +11,7 @@ module.exports = {
     sendMessage: async function (req, res){
         // const chat_id = req.body.chat_id
         const { username, room_id, value } = req.body; 
-        console.log(req.body)
+        // console.log(req.body)
         const newChat = await db.Chat.create({
             username: username,
             room_id: room_id,
@@ -48,7 +48,7 @@ module.exports = {
     },
     getRooms: async function (req, res){
         const { username } = req.query;
-        console.log(username) 
+        // console.log(username) 
         try {
             //ambil room klo username yg dimasukkan ada
             const room = await db.Room.findAll()

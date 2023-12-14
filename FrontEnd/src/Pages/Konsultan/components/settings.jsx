@@ -8,6 +8,7 @@ import iconUser from "/icon/user.png";
 import { useForm } from 'react-hook-form'
 import {useNavigate} from "react-router-dom";
 import KonsultanService from "../../../Services/konsultan/doctor";
+import {useSelector} from "react-redux";
 
 const Settings = () => {
   const [user, setUser] = useState({});
@@ -31,8 +32,8 @@ const Settings = () => {
     }
   });
 
+  const token = useSelector((state) => state.login.doctor)
   const cariUser = async () => {
-    const token = localStorage.getItem("token");
     if(!token){
         navigate("/login");
     } else {
@@ -77,12 +78,6 @@ const Settings = () => {
           <img src={iconUser} alt="KOSONG" className="h-24"/>
           <div className="flex flex-col justify-center">
             <div className="text-3xl font-bold px-10">{user.display_name}</div>
-            {role ==  "Dietisian" && 
-            <div>
-              <div className="text-xl px-10">Weight : {user.weight} Kg</div>
-              <div className="text-xl px-10">Height : {user.height} Cm</div>
-              <div className="text-xl px-10">Age : {user.age} y.o.</div>
-            </div>}
           </div>
         </div>
         {/* detail profile */}

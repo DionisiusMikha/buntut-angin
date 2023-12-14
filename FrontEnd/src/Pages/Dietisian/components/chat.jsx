@@ -96,7 +96,6 @@ function Chat() {
 
     const getRooms = async(userss) => {
         const result = await ChatService.getRooms(userss);
-        // console.log(result.data);
         setListRoom([...result.data]);
     }
 
@@ -122,10 +121,6 @@ function Chat() {
             socket.off('receiveMessage');
         };
     }, [socket]);
-
-    // useEffect(() => {
-    //     getUser();
-    // }, [])
 
     useEffect(() => {
         setUserDisplay('');

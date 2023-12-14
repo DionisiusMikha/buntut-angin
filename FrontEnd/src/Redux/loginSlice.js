@@ -10,11 +10,9 @@ export const recipeSlice = createSlice({
     initialState,
     reducers:{
         getDietisian : (state, action) => {
-            // console.log(action.payload)
             state.dietisian = action.payload
         },
         getDoctor : (state, action) => {
-            console.log(action.payload)
             state.doctor = action.payload
         },
     }
