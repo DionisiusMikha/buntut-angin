@@ -569,7 +569,12 @@ module.exports = {
                 user_id: cariUser[0].dataValues.id,
                 period: bulanDepan.toISOString().slice(0, 10)
             })
-            let nomor = nomorSubs.dataValues.id + 1;
+            let nomor = "";
+            if (nomorSubs.dataValues.id == null){
+                nomorSubs.dataValues.id = 0;
+            } else {
+                nomorSubs.dataValues.id + 1;
+            }
 
             let orderId = new Date();
             orderId = orderId.toISOString().slice(0, 10).replace('-', '').replace('-', '') + nomor;
