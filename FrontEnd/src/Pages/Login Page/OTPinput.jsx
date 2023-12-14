@@ -38,11 +38,11 @@ export default function OTPInput() {
   }
 
   function verifyOTP() {
-    const enteredOTP = OTPinput.join("");
+    const enteredOTP = parseInt(OTPinput.join(""));
     if (enteredOTP === otp) {
       alert("OTP is correct");
       window.location.href = "/resetpassword";
-    } else {
+    } else if(enteredOTP == null ) {
       alert("OTP is incorrect");
       alert(enteredOTP);
     }
