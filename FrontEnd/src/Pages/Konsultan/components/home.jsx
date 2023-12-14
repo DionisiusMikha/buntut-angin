@@ -1,4 +1,4 @@
-import doctorService from '../../../Services/Konsultan/doctor';
+import doctorService from '../../../Services/konsultan/doctor';
 import { useState, useEffect } from 'react';
 import menu from "/icon/menu.png";
 import acc from '/icon/acc.png';
@@ -7,10 +7,11 @@ function Home() {
     const [jadwal, setJadwal] = useState([]);
 
     const fetchJadwal = async() => {
-        const token = localStorage.getItem("token")
+        console.log(localStorage.getItem("tokenDoctor"))
+        const token = localStorage.getItem("tokenDoctor")
         
         const user = await doctorService.getUserLogin(token);
-        console.log(user)
+        // console.log(user)
         const result = await doctorService.viewJadwal(user.data.data.id);
         setJadwal([...result.data]);
     }

@@ -19,19 +19,21 @@ function Chat() {
         const res = await DietisianService.getUserLogin(token);
         if(res.status == 200){
             setUser(res.data.data.username);
+            getRooms(res.data.data.username); 
         } else {
             if (res.data.message == "user not found"){
                 const res2 = await DoctorService.getUserLogin(token);
                 
                 if (res2.status == 200){
                     setUser(res2.data.data.username);
+                    getRooms(res2.data.data.username);
                 }
             }
         }
     }
 
-    const getRooms = async() => {
-        const result = await ChatService.getRooms(user);
+    const getRooms = async(data) => {
+        const result = await ChatService.getRooms(data);
         setListRoom([...result.data]);
     }
 
@@ -51,7 +53,7 @@ function Chat() {
     useEffect(() => {
         setListRoom([]);
         getUser();
-        getRooms();
+        // getRooms();
     }, [])
 
     return (

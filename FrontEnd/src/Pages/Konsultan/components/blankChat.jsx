@@ -7,31 +7,34 @@ import DoctorService from '../../../Services/konsultan/doctor';
 import ChatService from '../../../Services/Chat/chat';
 import { Link } from 'react-router-dom';
 
-const token = localStorage.getItem("token");
-
 function Chat() {
+    console.log(localStorage.getItem("tokenDoctor"))
+    const tokenD = localStorage.getItem("tokenDoctor")
     const [chatActive, setChatActive] = useState("group");
     const [user, setUser] = useState('');
 
     const [listRoom, setListRoom] = useState([]);
 
     const getUser = async() => {
-        const res = await DietisianService.getUserLogin(token);
+        // console.log(tokenD);
+        const res = await DietisianService.getUserLogin(tokenD);
         if(res.status == 200){
             setUser(res.data.data.username);
+            getRooms(res.data.data.username); 
         } else {
             if (res.data.message == "user not found"){
-                const res2 = await DoctorService.getUserLogin(token);
+                const res2 = await DoctorService.getUserLogin(tokenD);
                 
                 if (res2.status == 200){
                     setUser(res2.data.data.username);
+                    getRooms(res2.data.data.username); 
                 }
             }
         }
     }
 
-    const getRooms = async() => {
-        const result = await ChatService.getRooms(user);
+    const getRooms = async(userss) => {
+        const result = await ChatService.getRooms(userss);
         setListRoom([...result.data]);
     }
 
@@ -51,7 +54,7 @@ function Chat() {
     useEffect(() => {
         setListRoom([]);
         getUser();
-        getRooms();
+        // getRooms();
     }, [])
 
     return (

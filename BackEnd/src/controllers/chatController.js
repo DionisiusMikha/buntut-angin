@@ -48,6 +48,7 @@ module.exports = {
     },
     getRooms: async function (req, res){
         const { username } = req.query;
+        console.log(username) 
         try {
             //ambil room klo username yg dimasukkan ada
             const room = await db.Room.findAll()

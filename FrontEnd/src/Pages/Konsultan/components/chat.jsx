@@ -10,11 +10,11 @@ import DoctorService from '../../../Services/konsultan/doctor';
 import ChatService from '../../../Services/Chat/chat';
 import { Link } from 'react-router-dom';
 
-const socket = io.connect("http://localhost:6969");
-
-const token = localStorage.getItem("token");
 
 function Chat() {
+    const socket = io.connect("http://localhost:6969");
+    
+    const token = localStorage.getItem("tokenDoctor");
     const room_id = window.location.pathname.split("/")[3];
     const [chatActive, setChatActive] = useState("group");
     const [user, setUser] = useState('');
@@ -24,7 +24,7 @@ function Chat() {
 
     const [listRoom, setListRoom] = useState([]);
 
-    const { register, watch } = useForm();
+    const { register, watch, reset } = useForm();
 
     const joinRoom = () => {
         if (room !== "") {
@@ -52,19 +52,26 @@ function Chat() {
                 value: watch("input_message")
             });
             setMessageList((list) => [...list, showMsg]);
+            reset({
+                input_message: "",
+            });
         }
     };
 
     const getUser = async() => {
         const res = await DietisianService.getUserLogin(token);
         if(res.status == 200){
+            console.log(res.data.data.username);
             setUser(res.data.data.username);
+            getRooms(res.data.data.username);
         } else {
             if (res.data.message == "user not found"){
                 const res2 = await DoctorService.getUserLogin(token);
                 
                 if (res2.status == 200){
+                    console.log(res2.data.data.username);
                     setUser(res2.data.data.username);
+                    getRooms(res2.data.data.username);
                 }
             }
         }
@@ -90,8 +97,8 @@ function Chat() {
         setMessageList([...result.data]);
     }
 
-    const getRooms = async() => {
-        const result = await ChatService.getRooms(user);
+    const getRooms = async(userss) => {
+        const result = await ChatService.getRooms(userss);
         setListRoom([...result.data]);
     }
 
@@ -193,9 +200,11 @@ function Chat() {
                         <hr className="text-rose-800 border-2 border-rose-800 opacity-30"/>
                         <div className="w-full h-5/6 flex flex-col overflow-y-auto gap-y-4 mt-8">
                             {listRoom.map((item, idx) => (
-                                <Link key={idx} className="w-full h-20 flex items-center" to={`/konsultan/chat/${item.room_id}`}>
+                                <Link key={idx} className="w-full h-20 flex items-center" to={`/konsultan/chat/${item.room_id}`}onClick={()=>{
+                                    setRoom(item.room_id);
+                                }}>
                                     <div className="w-1/6 h-full flex items-center">
-                                        <img src="" className="w-12 h-12 border border-black rounded-full"/>
+                                        <img src={acc} className="w-12 h-12 border border-black rounded-full"/>
                                     </div>
                                     <div className="w-5/6 h-full flex items-center justify-start pb-1">
                                         <p className="w-full text-start text-lg font-medium">{splitUser(item)}</p>
