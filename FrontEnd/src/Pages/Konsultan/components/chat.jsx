@@ -169,21 +169,16 @@ function Chat() {
                                         )
                                     }
                                 })}
-                                {/* {messageList.map((msg, index) => (
-                                    msg.value && msg.value !== "" ? (
-                                        <div key={index}>
-                                            <p>{msg.value}</p>
-                                        </div>
-                                    ) : (
-                                        <div key={index}></div>
-                                    )
-                                ))} */}
                             </div>
                             <div className="w-full h-12 flex justify-center items-center bg-gray-200 rounded-xl mt-4">
                                 <button className="w-1/12 h-full flex items-center justify-center">
                                     <img src={senyum} className="h-1/2" />
                                 </button>
-                                <input type="text" className="w-10/12 h-full bg-transparent border-none outline-none text-lg" placeholder="Write here..." {...register("input_message")}/>
+                                <input type="text" className="w-10/12 h-full bg-transparent border-none outline-none text-lg" placeholder="Write here..." {...register("input_message")} onKeyUp={(e)=>{
+                                    if(e.key === "Enter"){
+                                        sendMessage();
+                                    }
+                                }}/>
                                 <button onClick={sendMessage} className="w-1/12 h-full flex items-center justify-center">
                                     <img src={pesawat} className="h-1/2" />
                                 </button>
