@@ -98,7 +98,6 @@ function Chat() {
                                     </div>
                                     <div className="w-5/6 h-full flex items-center justify-start pb-1">
                                         <p className="w-full text-start text-lg font-medium">{splitUser(item)}</p>
-                                        {/* <p className="w-full text-sm truncate">{item}</p> */}
                                     </div>
                                 </Link>
                             ))}

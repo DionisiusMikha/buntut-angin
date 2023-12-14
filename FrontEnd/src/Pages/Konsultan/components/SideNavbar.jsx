@@ -95,7 +95,9 @@ function SideNavbar({hovered}){
                             {jam < 10 ? "0" + jam : jam}:{menit < 10 ? "0" + menit : menit}
                         </div>
                     </div>
-                    <Link className='bg-rose-300 border-black border rounded-xl w-2/3 py-3 mt-9 text-xl font-semibold -rotate-6 flex flex-col justify-center items-center hover:bg-rose-400 hover:-rotate-2' to={`/login`}>
+                    <Link className='bg-rose-300 border-black border rounded-xl w-2/3 py-3 mt-9 text-xl font-semibold -rotate-6 flex flex-col justify-center items-center hover:bg-rose-400 hover:-rotate-2' to={`/login`} onClick={()=>{
+                        localStorage.removeItem(tokenDoctor);
+                    }}>
                         Log Out
                     </Link>
                 </div>

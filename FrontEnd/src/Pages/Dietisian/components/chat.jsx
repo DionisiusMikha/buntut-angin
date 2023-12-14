@@ -4,7 +4,7 @@ import acc from '/icon/user.png';
 import senyum from '/icon/smile.png';
 import pesawat from '/icon/plane.png';
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import DietisianService from "../../../Services/Dietisian/dietisian";
 import DoctorService from '../../../Services/konsultan/doctor';
 import ChatService from '../../../Services/Chat/chat';
@@ -19,10 +19,17 @@ function Chat() {
     const [userDisplay, setUserDisplay] = useState('');
     const [messageList, setMessageList] = useState([]);
     const [room, setRoom] = useState(room_id);
+    const chatRef = useRef(null);
 
     const [listRoom, setListRoom] = useState([]);
 
     const { register, watch, reset } = useForm();
+
+    function scrollToBottom() {
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
+    };
 
     const joinRoom = () => {
         if (room !== "") {
@@ -123,6 +130,10 @@ function Chat() {
     }, [socket]);
 
     useEffect(() => {
+        scrollToBottom();
+    }, [messageList])
+
+    useEffect(() => {
         setUserDisplay('');
         setListRoom([]);
         getChat();
@@ -145,7 +156,7 @@ function Chat() {
                                     <p className="text-lg font-medium"></p>
                                 )}
                             </div>
-                            <div className="w-full h-5/6 flex flex-col pt-8 gap-y-1.5 overflow-y-auto px-4">
+                            <div className="w-full h-5/6 flex flex-col pt-8 gap-y-1.5 overflow-y-auto px-4" ref={ chatRef }>
                                 {messageList.map((item, idx) => {
                                     if(item.username == user){
                                         return (

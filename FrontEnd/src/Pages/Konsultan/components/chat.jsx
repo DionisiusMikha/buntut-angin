@@ -4,7 +4,7 @@ import acc from '/icon/user.png';
 import senyum from '/icon/smile.png';
 import pesawat from '/icon/plane.png';
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import DietisianService from "../../../Services/Dietisian/dietisian";
 import DoctorService from '../../../Services/konsultan/doctor';
 import ChatService from '../../../Services/Chat/chat';
@@ -15,8 +15,9 @@ import { useDispatch, useSelector } from "react-redux"
 function Chat() {
     const socket = io.connect("http://localhost:6969");
     
-    // const token = localStorage.getItem("tokenDoctor");
-    const tokenD = useSelector((state) => state.login.doctor)
+    const tokenDoctor = localStorage.getItem("tokenDoctor");
+    const chatRef = useRef(null);
+    // const tokenD = useSelector((state) => state.login.doctor)
     const room_id = window.location.pathname.split("/")[3];
     const [chatActive, setChatActive] = useState("group");
     const [user, setUser] = useState('');
@@ -61,7 +62,7 @@ function Chat() {
     };
 
     const getUser = async() => {
-        const res2 = await DoctorService.getUserLogin(tokenD);
+        const res2 = await DoctorService.getUserLogin(tokenDoctor);
         if (res2.status == 200){
             setUser(res2.data.data.username);
             getRooms(res2.data.data.username); 
@@ -107,6 +108,16 @@ function Chat() {
         return temp[0];
     }
 
+    function scrollToBottom() {
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messageList])
+
     useEffect(() => {
         socket.on("receiveMessage", (data) => {
             setMessageList((list) => [...list, data]);
@@ -142,7 +153,7 @@ function Chat() {
                                     <p className="text-lg font-medium"></p>
                                 )}
                             </div>
-                            <div className="w-full h-5/6 flex flex-col pt-8 gap-y-1.5 overflow-y-auto px-4">
+                            <div className="w-full h-5/6 flex flex-col pt-8 gap-y-1.5 overflow-y-auto px-4" ref={ chatRef }>
                                 {messageList.map((item, idx) => {
                                     if(item.username == user){
                                         return (

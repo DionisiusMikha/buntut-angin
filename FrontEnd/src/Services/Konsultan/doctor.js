@@ -10,11 +10,9 @@ function loginUser(username, password){
         password: password
     })
     .then((response) => {
-        console.log(response);
         return response;
     })
     .catch((error) => {
-        console.log(error);
         if (error.response) {
             return error={
                 data : error.response.data,
@@ -35,11 +33,9 @@ function editUser(user_id, data){
         display_name: data.display_name,
     })
     .then((response) => {
-        console.log(response);
         return response;
     })
     .catch((error) => {
-        console.log(error);
         if (error.response) {
             return error={
                 data : error.response.data,
@@ -55,7 +51,6 @@ function viewJadwal(id){
         return response;
     })
     .catch((error) => {
-        console.log(error);
         if (error.response) {
             return error={
                 data : error.response.data,

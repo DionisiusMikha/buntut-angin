@@ -9,14 +9,16 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux"
 
 function Chat() {
-    const tokenD = useSelector((state) => state.login.doctor)
+    // const tokenD = useSelector((state) => state.login.doctor)
+    const tokenDoctor = localStorage.getItem('tokenDoctor')
+    console.log(tokenDoctor)
     const [chatActive, setChatActive] = useState("group");
     const [user, setUser] = useState('');
 
     const [listRoom, setListRoom] = useState([]);
 
     const getUser = async() => {
-        const res2 = await DoctorService.getUserLogin(tokenD);
+        const res2 = await DoctorService.getUserLogin(tokenDoctor);
         if (res2.status == 200){
             setUser(res2.data.data.username);
             getRooms(res2.data.data.username);

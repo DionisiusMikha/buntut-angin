@@ -10,6 +10,7 @@ function Home() {
     const fetchJadwal = async() => {
         // console.log(localStorage.getItem("tokenDoctor"))
         const token = localStorage.getItem("tokenDoctor")
+        console.log(token)
         
         const user = await doctorService.getUserLogin(token);
         // console.log(user)
