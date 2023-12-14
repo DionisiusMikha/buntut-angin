@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import iconUser from "/icon/user.png";
 import DietisianService from "../../../Services/Dietisian/dietisian";
+import WeightLose from "../script/WeightLose";
 
 function Home() {
     const [user, setUser] = useState ({});
@@ -27,8 +28,17 @@ function Home() {
     }
 
     useEffect(() => {
+        let state = false;
+
+        if(!state){
+            WeightLose();
+        }
         cariUser();
-    }, [])
+
+        return () => {
+            state = true;
+        };
+    }, []);
 
     return (
         <>
@@ -39,17 +49,34 @@ function Home() {
                             <h1 className="text-4xl">Daily Report</h1>
                         </div>
                     </div>
-                    <div className="w-full h-1/4 px-8 pt-10 flex gap-x-8">
-                        <div className="w-1/2 h-full bg-white rounded-3xl py-6 px-8">
+                    <div className="w-full h-auto px-8 pt-10 flex gap-x-8">
+                        <div className="w-1/2 h-full mb-10 bg-white rounded-3xl py-6 px-8">
                             <h1 className="text-2xl font-medium">Weight Loss</h1>
+                            <div className="max-w-sm w-ful">
+                        <div className="flex justify-between items-start w-full">
                         </div>
-                        <div className="w-1/2 h-full bg-white rounded-3xl py-6 px-8">
+                        <div className="py-6" id="pie-chart"></div>
+                        <div className="grid grid-cols-1 items-center border-gray-200 border-t  justify-between">
+                            <div className="flex justify-between items-center pt-5">
+                            <a
+                                href="/dietisian/report"
+                                className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 -500  hover:bg-gray-100 -700 -700  px-3 py-2">
+                                More
+                                <svg className="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+                                </svg>
+                            </a>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                        <div className="w-1/2 h-auto bg-white rounded-3xl py-6 px-8 mb-10">
                             <h1 className="text-2xl font-medium">Consult</h1>
                         </div>
                     </div>
                 </div>
                 {/* profile */}
-                <div className="w-4/12 bg-green-200 py-10 px-3">
+                <div className="w-4/12 bg-green-200 py-10 px-3 h-full">
                     <div className="flex flex-row justify-between items-center mx-8">
                         <div className="text-3xl font-semibold">PROFILE</div>
                         <button className="border border-gray-500 rounded-full p-2" onClick={()=>{
