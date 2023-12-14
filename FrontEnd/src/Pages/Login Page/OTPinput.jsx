@@ -42,7 +42,7 @@ export default function OTPInput() {
     if (enteredOTP === otp) {
       alert("OTP is correct");
       window.location.href = "/resetpassword";
-    } else if(enteredOTP == null ) {
+    } else {
       alert("OTP is incorrect");
       alert(enteredOTP);
     }

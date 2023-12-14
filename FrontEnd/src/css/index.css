@@ -19,6 +19,11 @@
   --tw-content: '';
 }
 
+/* hide the scrollbar using tailwind */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /*
 1. Use a consistent sensible line-height in all browsers.
 2. Prevent adjustments of font size after orientation changes in iOS.

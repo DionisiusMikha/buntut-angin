@@ -17,8 +17,6 @@ const ResetPassword = () => {
         })
     }
 
-
-
     return (
         <>
             <div className="bg-cover bg-center h-screen bg-gray-50">
