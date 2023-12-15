@@ -24,6 +24,15 @@ io.on("connection", (socket) => {
         console.log("Socket.IO connected!");
     });
 
+    socket.on("addNewUser", (userId) => {
+        !onlineUsers.some((o) => o.userId === userId) && 
+            onlineUsers.push({
+                userId,
+                socketId: socket.id
+            })
+        io.emit("getOnlineUsers", onlineUsers);
+    })
+
     socket.on("joinRoom", (data) => {
         socket.join(data);
     });
