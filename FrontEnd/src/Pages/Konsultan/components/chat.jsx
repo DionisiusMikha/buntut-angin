@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+import { io } from "socket.io-client";
 import axios from 'axios';
 import acc from '/icon/user.png';
 import senyum from '/icon/smile.png';
@@ -11,10 +11,9 @@ import ChatService from '../../../Services/Chat/chat';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux"
 
-
-const socket = io.connect("http://localhost:6969");
+// const socket = io.connect("http://localhost:6969");
 function Chat() {
-    
+    const [socket, setSocket] = useState(null);
     const tokenDoctor = localStorage.getItem("tokenDoctor");
     const chatRef = useRef(null);
     // const tokenD = useSelector((state) => state.login.doctor)
@@ -30,9 +29,9 @@ function Chat() {
     const { register, watch, reset } = useForm();
 
     const joinRoom = () => {
-        if (room !== "") {
-          socket.emit("joinRoom", room);
-        }
+        // if (room !== "") {
+        //   socket.emit("joinRoom", room);
+        // }
     };
 
     const sendMessage = async () => {
@@ -120,15 +119,28 @@ function Chat() {
     }, [messageList])
 
     useEffect(() => {
+        if (socket == null) return;
+        // console.log(socket)
+        socket.emit("nyambung", () => {})
         socket.on("receiveMessage", (data) => {
             setMessageList((list) => [...list, data]);
-            getChat();
+        //     getChat();
         });
 
         return () => {
             socket.off('receiveMessage');
-        };
+        //     socket.off('connect ');
+            };
     }, [socket]);
+
+    useEffect(() => {
+        const newSocket = io("http://localhost:6969");
+        setSocket(newSocket);
+        
+        return () => {
+            newSocket.disconnect();
+        }
+    }, []);
 
     useEffect(() => {
         setUser('');
