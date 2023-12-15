@@ -85,7 +85,6 @@ function Chat() {
     }
 
     const getChat = async() => {
-        console.log("masok");
         const result = await ChatService.getChat(room_id);
         setMessageList([...result.data]);
     }
@@ -120,16 +119,13 @@ function Chat() {
 
     useEffect(() => {
         if (socket == null) return;
-        // console.log(socket)
         socket.emit("nyambung", () => {})
         socket.on("receiveMessage", (data) => {
             setMessageList((list) => [...list, data]);
-        //     getChat();
         });
 
         return () => {
             socket.off('receiveMessage');
-        //     socket.off('connect ');
             };
     }, [socket]);
 

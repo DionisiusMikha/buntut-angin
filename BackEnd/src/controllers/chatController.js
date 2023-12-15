@@ -47,21 +47,33 @@ module.exports = {
         return res.status(200).json(username);
     },
     getRooms: async function (req, res){
-        const { username } = req.query;
-        // console.log(username) 
+        const { username, search } = req.query;
         try {
-            //ambil room klo username yg dimasukkan ada
             const room = await db.Room.findAll()
             let ruang = [];
             for(let i = 0; i < room.length; i++){
                 if(room[i].username.includes(username)){
                     let user = JSON.parse(room[i].username);
+                    let anotherUser = "";
+                    if(user[0] == username){
+                        anotherUser = user[1];
+                    } else {
+                        anotherUser = user[0];
+                    }
                     ruang.push({
                         room_id: room[i].room_id,
                         name: room[i].name,
-                        username: user
+                        username: user,
+                        anotherUser: anotherUser
                     });
                 }
+            }
+
+            // search
+            if(search != ""){
+                ruang = ruang.filter((item) => {
+                    return item.anotherUser.toLowerCase().includes(search.toLowerCase());
+                });
             }
             return res.status(200).send(ruang);
         } catch (error) {
@@ -97,5 +109,18 @@ module.exports = {
                 }
             }
         })
+    },
+    getAnotherUsername: async function (req, res){
+        const { username, roomId } = req.query;
+        const room = await db.Room.findByPk(roomId);
+        console.log(room.dataValues.username);
+        let user = JSON.parse(room.dataValues.username);
+        let anotherUser = "";
+        if(user[0] == username){
+            anotherUser = user[1];
+        } else {
+            anotherUser = user[0];
+        }
+        return res.status(200).json(anotherUser);
     }
 }
