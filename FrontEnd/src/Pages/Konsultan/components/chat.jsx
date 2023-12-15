@@ -149,7 +149,7 @@ function Chat() {
         getUser();
         getChat();
         getUserDisplay();
-        joinRoom();
+        // joinRoom();
     }, [room])
 
     return (

@@ -10,9 +10,10 @@ import DoctorService from '../../../Services/konsultan/doctor';
 import ChatService from '../../../Services/Chat/chat';
 import { Link } from 'react-router-dom';
 
-const socket = io.connect("http://localhost:6969");
+// const socket = io.connect("http://localhost:6969");
 
 function Chat() {
+    const [socket, setSocket] = useState(null);
     const token = localStorage.getItem("token");
     const room_id = window.location.pathname.split("/")[3];
     const [chatActive, setChatActive] = useState("group");
@@ -88,6 +89,15 @@ function Chat() {
         }
     }
 
+    useEffect(() => {
+        const newSocket = io("http://localhost:6969");
+        setSocket(newSocket);
+        
+        return () => {
+            newSocket.disconnect();
+        }
+    }, []);
+
     const getChat = async() => {
         console.log("masok");
         const result = await ChatService.getChat(room_id);
@@ -113,6 +123,8 @@ function Chat() {
     }
 
     useEffect(() => {
+        if (socket == null) return;
+        socket.emit("nyambung", () => {})
         socket.on("receiveMessage", (data) => {
             setMessageList((list) => [...list, data]);
             getChat();
@@ -133,7 +145,7 @@ function Chat() {
         getUser();
         getChat();
         getUserDisplay();
-        joinRoom();
+        // joinRoom();
     }, [room])
 
     return (
