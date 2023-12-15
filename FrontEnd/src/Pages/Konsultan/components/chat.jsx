@@ -1,46 +1,45 @@
-import { io } from "socket.io-client";
+import io from 'socket.io-client';
 import axios from 'axios';
 import acc from '/icon/user.png';
 import senyum from '/icon/smile.png';
 import pesawat from '/icon/plane.png';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect, useRef } from "react";
-import DietisianService from "../../../Services/Dietisian/dietisian";
 import DoctorService from '../../../Services/konsultan/doctor';
 import ChatService from '../../../Services/Chat/chat';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux"
 
-// const socket = io.connect("http://localhost:6969");
 function Chat() {
     const [socket, setSocket] = useState(null);
-    const tokenDoctor = localStorage.getItem("tokenDoctor");
-    const chatRef = useRef(null);
-    // const tokenD = useSelector((state) => state.login.doctor)
-    const room_id = window.location.pathname.split("/")[3];
-    const [chatActive, setChatActive] = useState("group");
+    const [search, setSearch] = useState("");
+    const token = localStorage.getItem("tokenDoctor");
+    console.log(token);
     const [user, setUser] = useState('');
+    const [userLogin, setUserLogin] = useState({});
     const [userDisplay, setUserDisplay] = useState('');
     const [messageList, setMessageList] = useState([]);
-    const [room, setRoom] = useState(room_id);
-
+    const [onlineUsers, setOnlineUsers] = useState([]);
+    const [roomId, setRoomId] = useState(window.location.pathname.split("/")[3]);
+    const [room, setRoom] = useState({});
+    const chatRef = useRef(null);
+    const [loaded, setLoaded] = useState(false);
+    
     const [listRoom, setListRoom] = useState([]);
-
+    
     const { register, watch, reset } = useForm();
-
-    const joinRoom = () => {
-        // if (room !== "") {
-        //   socket.emit("joinRoom", room);
-        // }
+    
+    function scrollToBottom() {
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
     };
 
     const sendMessage = async () => {
         if (watch("input_message") !== "") {
             const messageData = {
-                room: room_id,
+                room: roomId,
                 message: watch("input_message")
             };
-            // console.log(user);
             const showMsg = {
                 username: user,
                 room_id: room,
@@ -48,13 +47,13 @@ function Chat() {
             }
     
             await socket.emit("sendMessage", messageData);
-            
             await axios.post(`http://localhost:3000/api/chats/message`, {
                 username: user,
                 room_id: room,
                 value: watch("input_message")
             });
             setMessageList((list) => [...list, showMsg]);
+            
             reset({
                 input_message: "",
             });
@@ -62,72 +61,25 @@ function Chat() {
     };
 
     const getUser = async() => {
-        const res2 = await DoctorService.getUserLogin(tokenDoctor);
-        if (res2.status == 200){
-            setUser(res2.data.data.username);
-            getRooms(res2.data.data.username); 
+        if(token){
+            const res = await DoctorService.getUserLogin(token);
+            if (res.status == 200){
+                console.log(res.data.data.username);
+                setLoaded(true);
+                setUserLogin(res.data.data);
+                getAllRooms(res.data.data.username, search);
+                getThisRoom(res.data.data.username);
+            } else {
+                console.log(res.data.message);
+            }
+        } else {
+            navigate("/login");
         }
     }
-
-    const getUserDisplay = async() => {
-        const res = await ChatService.getUsername(room);
-        if(res.data.name != ""){
-            return setUserDisplay(res.data.name);    
-        }
-
-        const temp = res.data.username.split(",");
-        
-        if(temp[1] === user){
-            return setUserDisplay(temp[0]);
-        }else{
-            return setUserDisplay(temp[1]);
-        }
-    }
-
-    const getChat = async() => {
-        const result = await ChatService.getChat(room_id);
-        setMessageList([...result.data]);
-    }
-
-    const getRooms = async(userss) => {
-        const result = await ChatService.getRooms(userss);
-        setListRoom([...result.data]);
-    }
-
-    const splitUser = (item) => {
-        if(item.name != ""){
-            return item.name;    
-        }
-        
-        const temp = item.username.split(",");
-        if(temp[0] == user){
-            return temp[1];
-        }
-
-        return temp[0];
-    }
-
-    function scrollToBottom() {
-        if (chatRef.current) {
-            chatRef.current.scrollTop = chatRef.current.scrollHeight;
-        }
-    };
 
     useEffect(() => {
-        scrollToBottom();
-    }, [messageList])
-
-    useEffect(() => {
-        if (socket == null) return;
-        socket.emit("nyambung", () => {})
-        socket.on("receiveMessage", (data) => {
-            setMessageList((list) => [...list, data]);
-        });
-
-        return () => {
-            socket.off('receiveMessage');
-            };
-    }, [socket]);
+        getUser();
+    }, [search]);
 
     useEffect(() => {
         const newSocket = io("http://localhost:6969");
@@ -138,15 +90,58 @@ function Chat() {
         }
     }, []);
 
+    const getChat = async() => {
+        const result = await ChatService.getChat(roomId);
+        setMessageList([...result.data]);
+    }
+
+    const getAllRooms = async(userss, search) => {
+        const result = await ChatService.getRooms(userss, search);
+        if (result.status == 200){
+            setListRoom(result.data);
+        }
+    }
+
     useEffect(() => {
-        setUser('');
-        setUserDisplay('');
+        if (socket == null || !loaded) return;
+        socket.emit("addNewUser", user);
+        socket.on("getOnlineUsers", (res) => {
+            setOnlineUsers(res);
+        });
+
+        return () => {
+            socket.off("getOnlineUsers");
+        }
+    }, [socket, loaded]);
+
+    useEffect(() => {
+        if (socket == null) return;
+        socket.emit("nyambung", () => {})
+        socket.on("receiveMessage", (data) => {
+            setMessageList((list) => [...list, data]);
+            getChat();
+        });
+
+        return () => {
+            socket.off('receiveMessage');
+        };
+    }, [socket]);
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messageList])
+
+    useEffect(() => {
         setListRoom([]);
         getUser();
         getChat();
-        getUserDisplay();
-        // joinRoom();
-    }, [room])
+        getThisRoom();
+    }, [roomId])
+
+    const getThisRoom = async (username) => {
+        const result = await ChatService.getRoomByRoomId(roomId, username);
+        setRoom(result.data);
+    }
 
     return (
         <>
@@ -156,11 +151,7 @@ function Chat() {
                         <div className="w-full h-full flex flex-col justify-start px-14 py-12">
                             <div className="h-12 flex items-center gap-x-4">
                                 <img src={acc} className="w-12 h-full border-2 border-black rounded-full"/>
-                                {userDisplay ? (
-                                    <p className="text-lg font-medium">{userDisplay}</p>
-                                ) : (
-                                    <p className="text-lg font-medium"></p>
-                                )}
+                                <p className='px-5 font-semibold text-xl'>{room.anotherUser}</p>
                             </div>
                             <div className="w-full h-5/6 flex flex-col pt-8 gap-y-1.5 overflow-y-auto px-4" ref={ chatRef }>
                                 {messageList.map((item, idx) => {
@@ -198,24 +189,22 @@ function Chat() {
                 <div className="w-4/12 h-full flex flex-col py-10 px-8">
                     <div className="w-full h-full bg-white rounded-3xl py-10 px-10">
                         <div className="w-full h-12">
-                            <input type="search" className="w-full h-full bg-gray-200 rounded-2xl px-3" placeholder=" Search" />
+                            <input type="search" className="w-full h-full bg-gray-200 rounded-2xl px-3" placeholder=" Search" onChange={(e)=>{
+                                setSearch(e.target.value);
+                            }}/>
                         </div>
-                        <div className="w-full h-12 flex justify-around items-center">
-                            <button className={`text-xl text-rose-800 ${chatActive === "group" ? "underline" : "" }`} onClick={() => setChatActive("group")}>Group</button>
-                            <button className={`text-xl text-rose-800 ${chatActive === "doctor" ? "underline" : "" }`} onClick={() => setChatActive("doctor")}>Doctor</button>
-                        </div>
-                        <hr className="text-rose-800 border-2 border-rose-800 opacity-30"/>
-                        <div className="w-full h-5/6 flex flex-col overflow-y-auto gap-y-4 mt-8">
+                        <hr className="text-rose-800 border-2 border-rose-800 opacity-30 my-5"/>
+                        <div className="w-full h-5/6 flex flex-col overflow-y-auto">
                             {listRoom.map((item, idx) => (
                                 <Link key={idx} className="w-full h-20 flex items-center" to={`/konsultan/chat/${item.room_id}`}onClick={()=>{
-                                    setRoom(item.room_id);
+                                    setRoomId(item.room_id)
+                                    setUserDisplay(item.anotherUser);
                                 }}>
                                     <div className="w-1/6 h-full flex items-center">
                                         <img src={acc} className="w-12 h-12 border border-black rounded-full"/>
                                     </div>
                                     <div className="w-5/6 h-full flex items-center justify-start pb-1">
-                                        <p className="w-full text-start text-lg font-medium">{splitUser(item)}</p>
-                                        {/* <p className="w-full text-sm truncate">{item}</p> */}
+                                    <p className="w-full text-start text-lg font-medium ms-5">{item.anotherUser}</p>
                                     </div>
                                 </Link>
                             ))}

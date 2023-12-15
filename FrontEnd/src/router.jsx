@@ -100,12 +100,12 @@ const Router = createBrowserRouter([
       },
       {
         path: "chat",
-        element: <ChatsDietisian/>
+        element: <BlankChatDietisian/>
       },
-      // {
-      //   path: "chat/:room_id",
-      //   element: <ChatDietisian/>
-      // },
+      {
+        path: "chat/:room_id",
+        element: <ChatDietisian/>
+      },
       {
         path : "profile",
         element : <ProfileDietisian/>,
@@ -136,14 +136,14 @@ const Router = createBrowserRouter([
         path: "settings",
         element: <SettingsKonsultan/>
       },
-      // {
-      //   path: "chat",
-      //   element: <ChatsDietisian/>
-      // },
-      // {
-      //   path: "chat/:room_id",
-      //   element: <ChatKonsultan/>
-      // }
+      {
+        path: "chat",
+        element: <BlankChatKonsultan/>
+      },
+      {
+        path: "chat/:room_id",
+        element: <ChatKonsultan/>
+      }
     ]
   },
   {

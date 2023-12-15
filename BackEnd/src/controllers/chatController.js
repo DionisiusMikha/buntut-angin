@@ -122,5 +122,24 @@ module.exports = {
             anotherUser = user[0];
         }
         return res.status(200).json(anotherUser);
+    },
+    getRoomById : async function (req, res){
+        const {username} = req.query;
+        const { id } = req.params;
+        const room = await db.Room.findByPk(id);
+        let user = JSON.parse(room.dataValues.username);
+        console.log(username);
+        let anotherUser = "";
+        if(user[0] == username){
+            anotherUser = user[1];
+        } else {
+            anotherUser = user[0];
+        }
+        return res.status(200).json({
+            room_id: room.room_id,
+            name: room.name,
+            username: user,
+            anotherUser: anotherUser
+        });
     }
 }

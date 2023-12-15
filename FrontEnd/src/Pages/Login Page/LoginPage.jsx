@@ -20,8 +20,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { getDietisian, getDoctor } from '../../Redux/loginSlice';
 
 const LoginPage = () => {
-    console.log("token" + localStorage.getItem('token'))
-    console.log("tokenDoctor" + localStorage.getItem('tokenDoctor'))
+    // console.log("token" + localStorage.getItem('token'))
+    // console.log("tokenDoctor" + localStorage.getItem('tokenDoctor'))
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const schema = Joi.object({
@@ -60,7 +60,7 @@ const LoginPage = () => {
                     const res2 = await DoctorService.loginUser(data.username, data.password);
                     if (res2.status == 200){
                         try {
-                            console.log(res2.data)
+                            // console.log(res2.data)
                             dispatch(getDoctor(res2.data.token))
                             localStorage.setItem("tokenDoctor", res2.data.token);
                             navigate("/konsultan/home");

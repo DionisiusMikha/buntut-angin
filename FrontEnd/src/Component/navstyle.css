@@ -2555,6 +2555,11 @@ html {
   margin-right: 1rem;
 }
 
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
 .-me-40 {
   margin-inline-end: -10rem;
 }

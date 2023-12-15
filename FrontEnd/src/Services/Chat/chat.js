@@ -27,10 +27,18 @@ function anotherUsername(username, roomId){
     });
 }
 
+function getRoomByRoomId(roomId, username){
+    return client.get(`/room/${roomId}`, {
+        params: {
+            username: username
+        }
+    });
+}
 
 export default {
     getChat,
     getUsername,
     getRooms,
     anotherUsername,
+    getRoomByRoomId,
 }

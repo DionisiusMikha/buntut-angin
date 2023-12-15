@@ -24,10 +24,10 @@ io.on("connection", (socket) => {
         console.log("Socket.IO connected!");
     });
 
-    socket.on("addNewUser", (userId) => {
-        !onlineUsers.some((o) => o.userId === userId) && 
+    socket.on("addNewUser", (username) => {
+        !onlineUsers.some((o) => o.username === username) && 
             onlineUsers.push({
-                userId,
+                username,
                 socketId: socket.id
             })
         io.emit("getOnlineUsers", onlineUsers);
