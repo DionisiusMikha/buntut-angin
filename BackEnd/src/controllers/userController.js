@@ -341,7 +341,12 @@ module.exports = {
             res.status(404).json(result);
         }
         else {
-            return res.status(200).sendFile(path.join(__dirname, `${checkUser.dataValues.profile_picture}`));
+            // const result = {
+            //     "picture" : `/assets/${checkUser.dataValues.username}.png`
+            // }
+            // res.status(200).json(result);
+            // return res.status(200).sendFile(`/assets/${checkUser.dataValues.username}.png`);
+            return res.status(200).sendFile(path.join(__dirname,'..', '..', `${checkUser.dataValues.profile_picture}`));
         }
     },
     getAllResep: async function(req, res){
