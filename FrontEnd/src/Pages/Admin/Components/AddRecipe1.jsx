@@ -22,7 +22,6 @@ function AddRecipe1(props){
     });
 
     const change = async data => {
-        // ambil path img nya
         const formData = new FormData();
         formData.append("file", data.image[0]);
         const res = await adminService.uploadImage(formData, data.name);

@@ -2555,6 +2555,11 @@ html {
   margin-bottom: 1.5rem;
 }
 
+.mx-9 {
+  margin-left: 2.25rem;
+  margin-right: 2.25rem;
+}
+
 .-me-40 {
   margin-inline-end: -10rem;
 }
@@ -2920,6 +2925,14 @@ html {
   min-height: 100vh;
 }
 
+.min-h-\[calc\(100vh-3rem\)\] {
+  min-height: calc(100vh - 3rem);
+}
+
+.min-h-\[calc\(100vh-5rem\)\] {
+  min-height: calc(100vh - 5rem);
+}
+
 .w-1\/12 {
   width: 8.333333%;
 }
@@ -3077,6 +3090,10 @@ html {
   width: 100vw;
 }
 
+.w-4\/5 {
+  width: 80%;
+}
+
 .max-w-3xl {
   max-width: 48rem;
 }
@@ -3137,6 +3154,10 @@ html {
 
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .flex-row {
@@ -3527,6 +3548,11 @@ html {
   background-color: rgb(250 204 21 / var(--tw-bg-opacity));
 }
 
+.bg-red-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
+}
+
 .bg-\[url\(\'\/img\/bg-buah\.png\'\)\] {
   background-image: url('/img/bg-buah.png');
 }
@@ -3591,6 +3617,10 @@ html {
 
 .p-5 {
   padding: 1.25rem;
+}
+
+.p-7 {
+  padding: 1.75rem;
 }
 
 .px-1 {
@@ -4273,6 +4303,11 @@ button:focus-visible {
 .hover\:bg-rose-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(251 113 133 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-green-400:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-gradient-to-r:hover {

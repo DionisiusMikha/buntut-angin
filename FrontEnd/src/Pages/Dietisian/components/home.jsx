@@ -111,11 +111,21 @@ function Home() {
                         <img src={menu} width="30px" alt="" />
                         </button>
                     </div>
+
                     {/* profile detail */}
                     <div className="w-32 flex flex-col justify-center items-center m-auto pt-10">
-                        {user.profile_picture ? <img src={`http://localhost:3000${user.profile_picture}`} alt="ADA" /> : <img src={iconUser} alt="KOSONG" />}
+                        {user.profile_picture ? <img src={`http://localhost:3000${user.profile_picture}`} alt="ADA" style={{
+                            width: "120px",
+                            height: "120px",
+                            borderRadius: "50%",    
+                        }}/> : <img src={iconUser} alt="KOSONG" />}
                     </div>
                     <div className="text-center text-xl font-semibold py-3 uppercase">{user.display_name}</div>
+                    <div className="mx-8 flex items-center justify-center">
+                        <button className="rounded-full bg-blue-200 py-2 px-4 text-xl font-semibold" onClick={()=>{
+                            navigate("/dietisian/subs");
+                        }}>Explore Premium</button>
+                    </div>
                     <div className="mx-8">
                         <hr className="border border-gray-300 w-full my-6"/>
                         <div className="flex flex-row justify-center items-center">
@@ -134,6 +144,7 @@ function Home() {
                         </div>
                         <hr className="border border-gray-300 w-full my-6"/>
                     </div>
+
                 </div>
             </div>
         </>
