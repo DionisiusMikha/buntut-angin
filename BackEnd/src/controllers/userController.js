@@ -1,3 +1,4 @@
+require("dotenv").config();
 const db = require("../models/index");
 const axios = require("axios")
 const joi = require("joi").extend(require('@joi/date'));
@@ -6,18 +7,26 @@ const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 
-require("dotenv").config();
-// const { CoreApi } = require('midtrans-client');
-
-// const coreApi = new CoreApi({
-//     isProduction: false,
-//     serverKey: "SB-Mid-server-9Ta-9rQFBi44HhEyv_gVjJPc",
-//     clientKey: "SB-Mid-client-Ff5N9IqHFWe3JfeZ"
-// });
 const path = require("path");
 
-const upload = multer({
-    dest : "../../Uploads/User",
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./uploads")
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + "." + file.mimetype.split("/")[1]
+        cb(null, file.fieldname + '-' + uniqueSuffix)
+    }, 
+    fileFilter : function(req, file, cb){
+        if(file.mimetype != "image/png" || file.mimetype != "image/jpeg"){
+          return cb(new Error("Wrong file type"), null)
+        }
+        cb(null, true)
+      },
+}) 
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 3000000 },
 })
 
 const { Op } = db.Sequelize
@@ -230,8 +239,7 @@ module.exports = {
     },
     editProfilePicture: async function(req, res){
         const idUser = req.params.id_user;
-
-        const uploadFile = upload.single("profile_picture");
+        const uploadFile = upload.single("file");
         uploadFile(req, res, async function (err){
             if (err instanceof multer.MulterError){
                 return res.status(400).send({msg: "File too large"});
@@ -250,19 +258,21 @@ module.exports = {
             else {
                 try{
                     const updateUser = await db.User.update({
-                        profile_picture : `../../assets/${checkUser.dataValues.username}.png`
+                        profile_picture : `/assets/${checkUser.dataValues.username}.png`
                     }, {
                         where: {
                             id: idUser
                         }
                     })
+                    const hasil = await db.User.findByPk(idUser)
+                    console.log(hasil.dataValues)
                     fs.renameSync(
-                        `../../Uploads/User/${req.file.filename}`,
+                        `./uploads/${req.file.filename}`,
                         `./assets/${checkUser.dataValues.username}.png`
                     );
                     const result = {
                         "message" : "Data updated",
-                        "profile_picture" : `../../assets/${checkUser.dataValues.username}.png`
+                        "profile_picture" : `/assets/${checkUser.dataValues.username}.png`
                     }
                     res.status(200).json(result);
                 }

@@ -2545,19 +2545,14 @@ html {
   margin-bottom: 1rem;
 }
 
-.my-6 {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.mx-4 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
+}
+
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .-me-40 {
@@ -2684,6 +2679,10 @@ html {
   margin-inline-start: 0.75rem;
 }
 
+.ms-5 {
+  margin-inline-start: 1.25rem;
+}
+
 .ms-7 {
   margin-inline-start: 1.75rem;
 }
@@ -2762,10 +2761,6 @@ html {
 
 .mt-\[85px\] {
   margin-top: 85px;
-}
-
-.ms-5 {
-  margin-inline-start: 1.25rem;
 }
 
 .block {
@@ -3243,20 +3238,12 @@ html {
   row-gap: 0.5rem;
 }
 
-.gap-y-4 {
-  row-gap: 1rem;
-}
-
 .gap-y-6 {
   row-gap: 1.5rem;
 }
 
 .gap-y-8 {
   row-gap: 2rem;
-}
-
-.gap-y-3 {
-  row-gap: 0.75rem;
 }
 
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
@@ -3304,12 +3291,6 @@ html {
 
 .overflow-y-auto {
   overflow-y: auto;
-}
-
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .rounded {
@@ -3378,10 +3359,6 @@ html {
 
 .border-t {
   border-top-width: 1px;
-}
-
-.border-r-2 {
-  border-right-width: 2px;
 }
 
 .border-solid {
@@ -3548,11 +3525,6 @@ html {
 .bg-yellow-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(250 204 21 / var(--tw-bg-opacity));
-}
-
-.bg-purple-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(233 213 255 / var(--tw-bg-opacity));
 }
 
 .bg-\[url\(\'\/img\/bg-buah\.png\'\)\] {

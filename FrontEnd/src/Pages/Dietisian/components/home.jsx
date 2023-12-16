@@ -67,7 +67,7 @@ function Home() {
                                     className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 -blue-500  hover:bg-gray-100 ray-700 -gray-700 y-700 px-3 py-2">
                                     More 
                                     <svg className="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
                                     </svg>
                                     </a>
                                 </div>
@@ -113,7 +113,7 @@ function Home() {
                     </div>
                     {/* profile detail */}
                     <div className="w-32 flex flex-col justify-center items-center m-auto pt-10">
-                        {user.profile_picture ? <img src={user.profile_picture} alt="ADA" /> : <img src={iconUser} alt="KOSONG" />}
+                        {user.profile_picture ? <img src={`http://localhost:3000${user.profile_picture}`} alt="ADA" /> : <img src={iconUser} alt="KOSONG" />}
                     </div>
                     <div className="text-center text-xl font-semibold py-3 uppercase">{user.display_name}</div>
                     <div className="mx-8">

@@ -63,31 +63,17 @@ const Profile = () => {
     }
   }
 
-  const fetchProfilePic = async() => {
-    await axios.get(`http://localhost:3000/api/users/profile-picture/${user_id}`, {
-      responseType: 'arraybuffer'
-    }).then(response => {
-        const blob = new Blob([response.data], { type: response.headers['content-type'] });
-
-        const imageUrl = URL.createObjectURL(blob);
-
-        document.getElementById("profileImage").src = imageUrl;
-    }).catch(error => {
-        console.error("Error fetching image:", error);
-    });
-  }
-
   const showDialog = () => {
     setIsDialogOpen(true);
   };
 
   const closeDialog = () => {
     setIsDialogOpen(false);
+    cariUser();
   };
 
   useEffect(() => {
     cariUser();
-    fetchProfilePic();
   }, [])
 
   const handleClick = () => setShow(!show)
@@ -104,7 +90,13 @@ const Profile = () => {
       <form className="overflow-scroll bg-white rounded-2xl w-full min-h-[calc(100vh-9rem)] drop-shadow-xl px-10 py-10" onSubmit={handleSubmit(submit)}>
         {/* photo profile */}
         <div className="bg-white drop-shadow-lg rounded-lg py-5 px-10 flex flex-row items-center">
-          {user.profile_picture ? <img id="profileImage" alt="ADA" className="w-24"/> : <img src={iconUser} alt="KOSONG" className="h-24"/>}
+          {user.profile_picture ? <img
+          src={`http://localhost:3000${user.profile_picture}`} style={{
+            width: "100px",
+            height: "100px",          
+            borderRadius: "50%",
+          }}
+          alt="ADA" className="w-24"/> : <img src={iconUser} alt="KOSONG" className="h-24"/>}
           <button className="bg-white rounded-full p-4 drop-shadow-md h-16 w-16 -ms-10 mt-[85px] p-auto" onClick={showDialog}>
             <Icon as={LuPenLine} boxSize={6} w={7} h={7}/>
           </button>
@@ -254,7 +246,7 @@ const Profile = () => {
           </div>
         </div>
       </form>
-      <Dialog isOpen={isDialogOpen} onClose={closeDialog} userId={userId-1}/>
+      <Dialog isOpen={isDialogOpen} onClose={closeDialog} userId={userId}/>
     </div>
   )
 }

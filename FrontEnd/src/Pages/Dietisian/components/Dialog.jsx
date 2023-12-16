@@ -6,20 +6,25 @@ import { useForm } from 'react-hook-form';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton } from '@chakra-ui/react';
 
 const Dialog = ({ isOpen, onClose, userId }) => {
+    console.log(userId)
     const { register, watch } = useForm();
     
     const updateProfilePicture = async () => {
         const formData = new FormData();
-        formData.append('profile_picture', watch('profile_picture'));
-
+        formData.append('file', watch('profile_picture')[0]);
+        
         try {
             const response = await DietisianService.uploadProfilePicture(formData, userId);
     
             console.log('Response:', response.data);
+            if (response.status === 200) {
+                onClose();
+                window.location.reload();
+            }
         } catch (error) {
             console.error('Error updating profile picture:', error);
         }
-    }    
+    }
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
