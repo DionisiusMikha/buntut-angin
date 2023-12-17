@@ -352,7 +352,11 @@ module.exports = {
     getAllResep: async function(req, res){
         const {limit, search, page} = req.query; 
         
-        const getResep = await db.Recipes.findAll();
+        const getResep = await db.Recipes.findAll({
+            order : [
+                ['suka', 'DESC']
+            ],
+        });
 
         let resep = []
         for (let i = 0; i < getResep.length; i++){
@@ -411,17 +415,6 @@ module.exports = {
             // })
         }
 
-        // sort by name
-        resep.sort((a, b) => {
-            if (a.name < b.name){
-                return -1
-            }
-            if (a.name > b.name){
-                return 1
-            }
-            return 0
-        })
-        
         // pagination
         if (page !== undefined && page !== ""){
             const offset = (page - 1) * limit;
@@ -781,6 +774,25 @@ module.exports = {
             return res.status(404).json({msg: "User not found"});
         }
         return res.status(200).json(user);
+    }, 
+    updateLike : async function(req, res){
+        const id = req.params.id;
+        const resep = await db.Recipes.findOne({
+            where: {
+                id: id
+            }
+        });
+        if (!resep){
+            return res.status(404).json({msg: "Recipe not found"});
+        }
+        const updateRecipe = await db.Recipes.update({
+            suka: parseInt(resep.dataValues.suka) + 1
+        }, {
+            where: {
+                id: id
+            }
+        })
+        return res.status(200).json({msg: "Recipe updated"});
     }
     
 

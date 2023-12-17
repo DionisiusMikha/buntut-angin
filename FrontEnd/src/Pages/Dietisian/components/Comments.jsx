@@ -4,10 +4,8 @@ import iconUser from "/icon/user.png";
 
 export default function Comments({comment}) {
     const [user, setUser] = useState({});
-    console.log(comment.user_id);
     const cariUser = async() =>{
         const res = await dietisianService.getUserByID(comment.user_id);
-        console.log(res.data);
         setUser(res.data);
     }
 

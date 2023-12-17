@@ -11,9 +11,13 @@ import { addRecipe, addIngredients,addSteps } from "../../../Redux/recipesSlice"
 import DialogComment from "./DialogComment";
 import dietisianService from "../../../Services/Dietisian/dietisian";
 import Comments from "./Comments";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
+import { Icon } from '@chakra-ui/react'
 
 function DetailRecipes(){
     const [comments, setComments] = useState([]);
+    const [isLike, setIsLike] = useState(false);
     const [bahan , setBahan] = useState([]);
     const [steps , setSteps] = useState([]);
     const [recipe, setRecipe] = useState({});
@@ -82,6 +86,15 @@ function DetailRecipes(){
         cariData();
     };
 
+    const tambahLike = async () => {
+        const res = await dietisianService.updateLike(id);
+        cariData();
+        setInterval(() => {
+            setIsLike(false)
+        }, 500)
+    }
+
+
     const url = "http://localhost:3000" + recipe.image;
     const navigate = useNavigate();
 
@@ -91,26 +104,30 @@ function DetailRecipes(){
                 {/* semi navbar */}
                 <div className="flex flex-row justify-between pb-6">
                     <div className="text-4xl font-semibold">Detail Recipes</div>
-                    <div>
-                        <button className="bg-blue-300 px-6 py-2 rounded-xl font-semibold text-xl me-5" onClick={()=>{
-                            navigate(`/admin/recipes/${id}/edit`);
-                            try{
-                                dispatch(addRecipe(recipe))
-                                dispatch(addIngredients(bahan))
-                                dispatch(addSteps(steps))
-                            } catch(e) {
-                                alert(e.message);
-                            }
-                        }}>edit</button>
-                        <button className="bg-red-300 px-6 py-2 rounded-xl font-semibold text-xl me-5" onClick={()=>{
-                            navigate(-1);
-                        }}>back</button>
-                    </div>
+                    <button className="bg-red-300 px-6 py-2 rounded-xl font-semibold text-xl me-5" onClick={()=>{
+                        navigate(-1);
+                    }}>back</button>
                 </div>
                 {/* DETAIL */}
                 <div className="bg-orange-100 rounded-xl px-10 py-10 flex flex-row justify-between w-11/12">
                     <div className="w-5/6 flex flex-col justify-center">
-                        <div className="text-5xl font-semibold">{recipe.name}</div>
+                        <div className="flex flex-row items-center">
+                            <div className="text-5xl font-semibold">{recipe.name}</div>
+                            {isLike == false ? 
+                                <Icon className="mx-14" style={{
+                                    width: "35px",
+                                    height: "35px",
+                                }} as={FaRegHeart} onClick={()=>{
+                                    setIsLike(true);
+                                    tambahLike();
+                                }}/>
+                            :
+                                <Icon className="mx-14" color='red.500' style={{
+                                    width: "35px",
+                                    height: "35px",
+                                }} as={FaHeart}/>
+                            }
+                        </div>
                         <div className="text-3xl py-8 leading-relaxed">{recipe.desc}</div>
                         <div className="bg-white p-3 rounded-xl flex flex-row items-center w-1/3 justify-center mt-10">
                             <div className="flex flex-row items-center">

@@ -143,6 +143,10 @@ function getUserByID(id){
     return client.get(`/getUserByID/${id}`)
 }
 
+function updateLike(id){
+    return client.put(`/updateLike/${id}`)
+}
+
 export default {
     getAllUsers,
     registerUser,
@@ -157,4 +161,5 @@ export default {
     sendEmail,
     addRatingComment,
     getUserByID,
+    updateLike,
 }
