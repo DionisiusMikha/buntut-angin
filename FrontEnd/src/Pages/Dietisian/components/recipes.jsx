@@ -78,9 +78,12 @@ function ListRecipes (){
                     <div className='text-3xl font-semibold'>{topRecipe1.name}</div>
                     <div className='flex flex-row items-center'>
                         <div className='text-lg font-medium'>{topRecipe1.description}</div>
-                        <img src={`http://localhost:3000${topRecipe1.image}`} alt="" style={{
-                            width: "375px",
-                        }} />
+                        <img src={`http://localhost:3000${topRecipe1.image}`} alt="" 
+                        style={{
+                            borderRadius: "50%",
+                            height: "250px",
+                            width: "250px",
+                        }}/>
                     </div>
                     <div className="bg-white p-3 rounded-xl flex flex-row items-center w-fit justify-center mt-10 px-4">
                         <div className="flex flex-row items-center">
@@ -103,7 +106,11 @@ function ListRecipes (){
                         navigate(`/dietisian/recipes/${topRecipe2.recipe_id}`)
                     }}>
                         <div className='flex flex-row items-center'>
-                            <img src={`http://localhost:3000${topRecipe2.image}`} alt="" className='-ms-24 me-5' width={"200px"} />
+                            <img src={`http://localhost:3000${topRecipe2.image}`} alt="" className='-ms-24 me-5' style={{
+                                    borderRadius: "50%",
+                                    height: "180px",
+                                    width: "180px",
+                                }}/>
                             <div>
                                 <div className='text-3xl font-semibold'>{topRecipe2.name}</div>
                                 <div className='text-lg font-medium'>{topRecipe2.description}</div>
@@ -128,7 +135,11 @@ function ListRecipes (){
                         navigate(`/dietisian/recipes/${topRecipe3.recipe_id}`)
                     }}>
                         <div className='flex flex-row items-center'>
-                                <img src={`http://localhost:3000${topRecipe3.image}`} alt="" className='-ms-24 me-5' width={"200px"}/>
+                                <img src={`http://localhost:3000${topRecipe3.image}`} alt="" className='-ms-24 me-5' style={{
+                                    borderRadius: "50%",
+                                    height: "180px",
+                                    width: "180px",
+                                }}/>
                                 <div>
                                     <div className='text-3xl font-semibold'>{topRecipe3.name}</div>
                                     <div className='text-lg font-medium'>{topRecipe3.description}</div>
@@ -154,7 +165,6 @@ function ListRecipes (){
             <div className="text-4xl text-center font-semibold">Try Another Recipes</div>
             <div className='grid grid-cols-2 gap-x-24 gap-y-10'>
                 {recipes.map((recipe, index)=>{
-                    // console.log(recipe)
                     return(
                         <>
                             {index > 2 && <Card recipe={recipe} index={index} key={index} />}

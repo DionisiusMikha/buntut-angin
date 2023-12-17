@@ -35,7 +35,7 @@ export default function Comments({comment}) {
                 </div>
                 <div className="text-black">
                     <div className="font-semibold text-xl">@{user.username}</div>
-                    <div className="text-lg">{comment.comment}</div>
+                    {comment.comment == "" ? <p className="text-gray-500 text-md">no comment</p> : comment.comment}
                 </div>
             </div>
         </>
