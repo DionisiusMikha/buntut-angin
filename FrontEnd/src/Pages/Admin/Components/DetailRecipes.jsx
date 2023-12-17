@@ -9,6 +9,7 @@ import comment from "/icon/comment.png";
 import adminService from "../../../Services/Admin/admin"
 import { useDispatch, useSelector } from "react-redux"
 import { addRecipe, addIngredients,addSteps } from "../../../Redux/recipesSlice";
+import Comments from "./Comments";
 
 function DetailRecipes() {
     const [comments, setComments] = useState([]);
@@ -39,10 +40,10 @@ function DetailRecipes() {
         }
         setBahan(bahan2)
 
-        if (res.data.comments == null){
+        if (res.data[0].comments == null){
             setComments([]);
         } else {
-            let com = JSON.parse(res.data.comments)
+            let com = JSON.parse(res.data[0].comments)
             setComments(com);
         }
     }
@@ -160,21 +161,12 @@ function DetailRecipes() {
             {/* Comment */}
             <div className="bg-white w-11/12 drop-shadow-xl mb-5 p-10 rounded-xl">
                 <div className="text-5xl font-semibold">Comments</div>
-                <div>
-                    {comments.length == 0 && <div className="text-2xl font-semibold text-center py-10">THERE IS NO COMMENT ABOUT THIS FOOD</div>}
-                    {comments.map((c)=>{
+                <div className="py-5">
+                    {comments.length == 0 && <div className="text-2xl font-semibold text-center py-5">THERE IS NO COMMENT ABOUT THIS FOOD</div>}
+                    
+                    {comments.map((c, idx)=>{
                         return (
-                            <>
-                                <div className="py-3 flex flex-row">
-                                    <div className="">
-                                        <img src="" alt="a" width={"30px"}/>
-                                    </div>
-                                    <div className="text-black">
-                                        <div className="font-semibold text-xl">@{c.username}</div>
-                                        <div className="text-lg">{c.comment}</div>
-                                    </div>
-                                </div>
-                            </>
+                            <Comments key={idx} comment={c}></Comments>
                         )
                     })}
                 </div>

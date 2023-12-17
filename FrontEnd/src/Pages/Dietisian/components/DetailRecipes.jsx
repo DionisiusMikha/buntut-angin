@@ -41,12 +41,11 @@ function DetailRecipes(){
             })
         }
         setBahan(bahan2)
-        console.log(res.data[0].comments)
+
         if (res.data[0].comments == null){
             setComments([]);
         } else {
             let com = JSON.parse(res.data[0].comments)
-            console.log(com)
             setComments(com);
         }
     }
