@@ -378,6 +378,14 @@ module.exports = {
                 steps.push(getSteps[j].desc)
             }
 
+            let com = "";
+            let jumlah = 0;
+            if (getResep[i].dataValues.comment != null) {
+                com = JSON.parse(getResep[i].dataValues.comment)
+                jumlah = com.length;
+            }
+
+
             resep.push({
                 recipe_id: getResep[i].dataValues.id,
                 name: getResep[i].dataValues.name,
@@ -385,6 +393,8 @@ module.exports = {
                 description: getResep[i].dataValues.description,
                 like : getResep[i].dataValues.suka,
                 rating : getResep[i].dataValues.rating,
+                comment : com,
+                jumlah : jumlah,
                 ingredients,
                 steps
             })

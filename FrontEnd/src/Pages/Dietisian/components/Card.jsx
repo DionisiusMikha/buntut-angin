@@ -31,7 +31,7 @@ function Card({recipe, index}) {
                         </div>
                         <div className="flex flex-row items-center">
                             <img src={comment} alt="" width={"30px"} />
-                            <span className="text-2xl font-semibold px-2">{recipe.length}</span>
+                            <span className="text-2xl font-semibold px-2">{recipe.jumlah}</span>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ function Card({recipe, index}) {
                         </div>
                         <div className="flex flex-row items-center">
                             <img src={comment} alt="" width={"30px"} />
-                            <span className="text-2xl font-semibold px-2">{recipe.length}</span>
+                            <span className="text-2xl font-semibold px-2">{recipe.jumlah}</span>
                         </div>
                     </div>
                 </div>
