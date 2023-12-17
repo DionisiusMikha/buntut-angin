@@ -665,7 +665,6 @@ module.exports = {
     changeStatusSubscription : async function (req, res){
         const id = req.params.id;
         const status = req.body.status;
-        console.log(id)
         if (status == "Success"){
             const updateSubs = await db.Subscription.update({
                 status: 1
@@ -710,6 +709,79 @@ module.exports = {
             return res.status(200).json(result);    
         }
     },
+    ratingComment : async function (req, res){
+        const {rating, comment, userId, recipeId} = req.body;
+        const checkUser = await db.User.findByPk(userId);
+        if (!checkUser){
+            const result = {
+                "message" : "User not found"
+            }
+            return res.status(404).json(result);
+        }
+        else {
+            const checkRecipe = await db.Recipes.findOne({
+                where: {
+                    id: recipeId
+                }
+            })
+            if (!checkRecipe){
+                const result = {
+                    "message" : "Recipe not found"
+                }
+                return res.status(404).json(result);
+            }
+            else {
+                let com = [];
+                if (checkRecipe.dataValues.comments != null){
+                    com = JSON.parse(checkRecipe.dataValues.comments)
+                }
+                com.push({
+                    "rating" : rating,
+                    "user_id" : userId,
+                    "comment" : comment
+                })
+
+                let ratingBaru = 0;
+                if (checkRecipe.dataValues.rating == null){
+                    ratingBaru = rating;
+                } else {
+                    ratingBaru = 0;
+                    for (let i = 0; i < com.length; i++){
+                        ratingBaru += parseInt(com[i].rating);
+                    }
+                    ratingBaru = ratingBaru / com.length;
+                }
+                const updateRecipe = await db.Recipes.update({
+                    rating: ratingBaru,
+                    comments: JSON.stringify(com)
+                }, {
+                    where: {
+                        id: recipeId
+                    }
+                })
+                let ressad = await db.Recipes.findOne({
+                    where: {
+                        id: recipeId
+                    }
+                })
+                const result = {
+                    "message" : "Recipe updated",
+                    "rating" : ratingBaru,
+                    "comment" : com
+                }
+                return res.status(200).json(result);
+            }
+        }
+        
+    },
+    getUserByID: async function(req, res){
+        const id = req.params.id;
+        const user = await db.User.findByPk(id);
+        if (!user){
+            return res.status(404).json({msg: "User not found"});
+        }
+        return res.status(200).json(user);
+    }
     
 
     // sendEmail({ recipient_email, OTP }) {

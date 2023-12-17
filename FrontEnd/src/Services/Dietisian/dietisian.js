@@ -129,6 +129,20 @@ function sendEmail(email){
     })
 }
 
+function addRatingComment(recipeId, userId, rating, comment){
+    return client.post("/addRatingComment", {
+        recipeId : recipeId,
+        userId : userId,
+        rating : rating,
+        comment : comment
+    })
+}
+
+function getUserByID(id){
+    console.log(id)
+    return client.get(`/getUserByID/${id}`)
+}
+
 export default {
     getAllUsers,
     registerUser,
@@ -141,4 +155,6 @@ export default {
     changeStatusSubscription,
     getSomeRecipes,
     sendEmail,
+    addRatingComment,
+    getUserByID,
 }

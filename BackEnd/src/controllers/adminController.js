@@ -373,6 +373,7 @@ module.exports = {
             desc: getRecipe.description,
             like : getRecipe.suka,
             rating : getRecipe.rating,
+            comments : getRecipe.comments,
             calories : getRecipe.calories,
             carbo : getRecipe.carbo,
             protein : getRecipe.protein,

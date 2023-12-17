@@ -108,7 +108,7 @@ module.exports = {
 
         if (checkUser == null){
             const result = {
-                "message" : "Doctor not found"
+                "message" : "User not found"
             }
             return res.status(404).json(result);
         }

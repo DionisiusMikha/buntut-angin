@@ -1,4 +1,3 @@
-import { MdOutlineKey } from "react-icons/md";
 import { LuPenLine } from "react-icons/lu";
 import { useState, useEffect } from "react";
 import { FaHome } from "react-icons/fa";
@@ -10,7 +9,6 @@ import iconUser from "/icon/user.png";
 import { useForm } from 'react-hook-form'
 import {useNavigate} from "react-router-dom";
 import Dialog from "./Dialog";
-import axios from "axios";
 import DietisianService from "../../../Services/Dietisian/dietisian";
 
 const Profile = () => {
@@ -96,7 +94,7 @@ const Profile = () => {
             height: "100px",          
             borderRadius: "50%",
           }}
-          alt="ADA" className="w-24"/> : <img src={iconUser} alt="KOSONG" className="h-24"/>}
+          alt="profile" className="w-24"/> : <img src={iconUser} alt="profile" className="h-24"/>}
           <button className="bg-white rounded-full p-4 drop-shadow-md h-16 w-16 -ms-10 mt-[85px] p-auto" onClick={showDialog}>
             <Icon as={LuPenLine} boxSize={6} w={7} h={7}/>
           </button>

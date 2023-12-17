@@ -4,12 +4,14 @@ import like from "/icon/like.png";
 import comment from "/icon/comment.png";
 
 function Card({recipe, index}) {
-    console.log(recipe)
+    // console.log(recipe)
     const navigate = useNavigate();
     return (
         <>
             {index %2 == 0 && 
-            <div className='bg-yellow-200 rounded-3xl py-5 px-5 mt-3 items-center flex'>
+            <div className='bg-green-200 rounded-3xl py-5 px-5 mt-3 items-center flex' onClick={()=>{
+                navigate(`/dietisian/recipes/${recipe.recipe_id}`)
+            }}>
             <div className='flex flex-row items-center'>
                 <img src={`http://localhost:3000${recipe.image}`} alt="" className='-ms-24 me-5'
                 style={{
@@ -38,9 +40,11 @@ function Card({recipe, index}) {
             </div>
             <div>    
             </div>
-        </div>}
+            </div>}
             {index %2 == 1 && 
-            <div className='bg-yellow-200 rounded-3xl py-5 px-5 mt-3 items-center flex'>
+            <div className='bg-rose-200 rounded-3xl py-5 px-5 mt-3 items-center flex' onClick={()=>{
+                navigate(`/dietisian/recipes/${recipe.recipe_id}`)
+            }}>
             <div className='flex flex-row items-center'>
                 <div>
                     <div className='text-3xl font-semibold'>{recipe.name}</div>
@@ -56,7 +60,7 @@ function Card({recipe, index}) {
                         </div>
                         <div className="flex flex-row items-center">
                             <img src={comment} alt="" width={"30px"} />
-                            <span className="text-2xl font-semibold px-2">{recipe.jumlahd}</span>
+                            <span className="text-2xl font-semibold px-2">{recipe.jumlah}</span>
                         </div>
                     </div>
                 </div>
@@ -69,7 +73,7 @@ function Card({recipe, index}) {
             </div>
             <div>    
             </div>
-        </div>}
+            </div>}
         </>
     )
 }

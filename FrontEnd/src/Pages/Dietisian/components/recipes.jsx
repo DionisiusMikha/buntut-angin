@@ -19,6 +19,7 @@ function ListRecipes (){
     const [comments1, setComments1] = useState([]);
     const [comments2, setComments2] = useState([]);
     const [comments3, setComments3] = useState([]);
+    const [userLogin, setUserLogin] = useState({});
     const navigate = useNavigate();
 
     const getTop3 = async () =>{
@@ -55,6 +56,7 @@ function ListRecipes (){
         getAllRecipes()
         getTop3()
     }, [limit, search])
+
     return(
         <>
            <div className='px-10 py-10 w-full'>
@@ -70,7 +72,9 @@ function ListRecipes (){
             {/* top 3 */}
             <div className='flex flex-row items-center justify-between my-10'>
                 {/* kiri */}
-                <div className='bg-orange-200 w-1/2 rounded-3xl py-5 px-5 me-14 flex flex-col justify-center h-[34rem]'>
+                <div className='bg-orange-200 w-1/2 rounded-3xl py-5 px-5 me-14 flex flex-col justify-center h-[34rem]' onClick={()=>{
+                    navigate(`/dietisian/recipes/${topRecipe1.recipe_id}`)
+                }}>
                     <div className='text-3xl font-semibold'>{topRecipe1.name}</div>
                     <div className='flex flex-row items-center'>
                         <div className='text-lg font-medium'>{topRecipe1.description}</div>
@@ -95,7 +99,9 @@ function ListRecipes (){
                 </div>
                 {/* kanan */}
                 <div className='flex flex-col w-1/2 ms-14 h-[34rem]'>
-                    <div className='h-1/2 bg-blue-200 w-full rounded-3xl py-5 px-5 mb-3 items-center flex'>
+                    <div className='h-1/2 bg-blue-200 w-full rounded-3xl py-5 px-5 mb-3 items-center flex' onClick={()=>{
+                        navigate(`/dietisian/recipes/${topRecipe2.recipe_id}`)
+                    }}>
                         <div className='flex flex-row items-center'>
                             <img src={`http://localhost:3000${topRecipe2.image}`} alt="" className='-ms-24 me-5' width={"200px"} />
                             <div>
@@ -118,29 +124,29 @@ function ListRecipes (){
                             </div>
                         </div>
                     </div>
-                    <div className='h-1/2 w-full bg-yellow-200 rounded-3xl py-5 px-5 mt-3 items-center flex'>
-                    <div className='flex flex-row items-center'>
-                            <img src={`http://localhost:3000${topRecipe3.image}`} alt="" className='-ms-24 me-5' width={"200px"}/>
-                            <div>
-                                <div className='text-3xl font-semibold'>{topRecipe3.name}</div>
-                                <div className='text-lg font-medium'>{topRecipe3.description}</div>
-                                <div className="bg-white p-3 rounded-xl flex flex-row items-center w-fit justify-center px-4 mt-5">
-                                    <div className="flex flex-row items-center">
-                                        <img src={like} alt="" width={"30px"} />
-                                        <span className="text-2xl font-semibold px-2">{topRecipe3.like}</span>
-                                    </div>
-                                    <div className="flex flex-row items-center mx-7">
-                                        <img src={rate} alt="" width={"30px"} />
-                                        <span className="text-2xl font-semibold px-2">{topRecipe3.rating}</span>
-                                    </div>
-                                    <div className="flex flex-row items-center">
-                                        <img src={comment} alt="" width={"30px"} />
-                                        <span className="text-2xl font-semibold px-2">{comments3.length}</span>
+                    <div className='h-1/2 w-full bg-yellow-200 rounded-3xl py-5 px-5 mt-3 items-center flex' onClick={()=>{
+                        navigate(`/dietisian/recipes/${topRecipe3.recipe_id}`)
+                    }}>
+                        <div className='flex flex-row items-center'>
+                                <img src={`http://localhost:3000${topRecipe3.image}`} alt="" className='-ms-24 me-5' width={"200px"}/>
+                                <div>
+                                    <div className='text-3xl font-semibold'>{topRecipe3.name}</div>
+                                    <div className='text-lg font-medium'>{topRecipe3.description}</div>
+                                    <div className="bg-white p-3 rounded-xl flex flex-row items-center w-fit justify-center px-4 mt-5">
+                                        <div className="flex flex-row items-center">
+                                            <img src={like} alt="" width={"30px"} />
+                                            <span className="text-2xl font-semibold px-2">{topRecipe3.like}</span>
+                                        </div>
+                                        <div className="flex flex-row items-center mx-7">
+                                            <img src={rate} alt="" width={"30px"} />
+                                            <span className="text-2xl font-semibold px-2">{topRecipe3.rating}</span>
+                                        </div>
+                                        <div className="flex flex-row items-center">
+                                            <img src={comment} alt="" width={"30px"} />
+                                            <span className="text-2xl font-semibold px-2">{comments3.length}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div>    
                         </div>
                     </div>
                 </div>
@@ -148,7 +154,7 @@ function ListRecipes (){
             <div className="text-4xl text-center font-semibold">Try Another Recipes</div>
             <div className='grid grid-cols-2 gap-24'>
                 {recipes.map((recipe, index)=>{
-                    console.log(recipe)
+                    // console.log(recipe)
                     return(
                         <>
                             {index > 2 && <Card recipe={recipe} index={index} key={index} />}
