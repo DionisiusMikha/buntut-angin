@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import doctorService from '../../../Services/Konsultan/doctor';
+import doctorService from '../../../Services/konsultan/doctor';
 import acc from '/icon/acc.png';
 import menu from "/icon/menu.png";
 import {useNavigate} from "react-router-dom";
@@ -24,10 +24,7 @@ function PatientList() {
         <>
            <div className="mx-10 my-10">
                 <div className="flex flex-row justify-between">
-                    <div className="text-4xl font-semibold mb-6">All User</div>
-                    <button className="bg-blue-300 rounded-xl px-4 mb-4 text-xl font-semibold" onClick={()=>{
-                        navigate(`/admin/patient-list/add`);
-                    }}>Add New User</button>
+                    <div className="text-4xl font-semibold mb-6">All Dietisian</div>
                 </div>
                 <div className="flex flex-row justify-between items-center">
                     <div className="rounded-lg py-2 px-4 mb-4 text-xl font-semibold flex items-center justify-center">
@@ -66,9 +63,7 @@ function PatientList() {
                                 </div>
                                 <div className='w-4/12 flex justify-end items-center gap-x-3'>
                                     <img src={menu} className="w-5 h-5" onClick={()=>{
-                                        localStorage.setItem("userRole", user.role);
-                                        localStorage.setItem("userId", user.id);
-                                        navigate(`/admin/patient-list/detail`)
+                                        navigate(`/konsultan/patient-list/${user.id}`)
                                     }}/>
                                 </div>
                             </div>

@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react"
 import {useNavigate} from "react-router-dom"
-import adminService from "../../../Services/Admin/admin"
+import dietisianService from "../../../Services/Dietisian/dietisian";
 import iconUser from "/icon/user.png";
 import { Input, InputGroup, InputLeftElement, Icon } from '@chakra-ui/react'
 import { PhoneIcon, EmailIcon } from '@chakra-ui/icons'
 import { FaHome } from "react-icons/fa";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 
-function Profile(){
+function DetailPatient(){
     const [users, setUsers] = useState({});
     const [dob, setdob] = useState("");
     const navigate = useNavigate();
-    const userId = localStorage.getItem("userId")
-    const role = localStorage.getItem("userRole")
+    const userId = window.location.pathname.split("/")[3];
 
     const cariUser = async () => {
-      const res = await adminService.getUserById(role, userId);
-      // console.log(res.data)
+      const res = await dietisianService.getUserByID(userId);
+      console.log(res.data)
       if( res.status == 200 ){
         setUsers(res.data)
         
@@ -54,12 +53,9 @@ function Profile(){
             </div> */}
             <div className="flex flex-col justify-center">
               <div className="text-3xl font-bold px-10">{users.display_name}</div>
-              {role ==  "Dietisian" && 
-              <div>
-                <div className="text-xl px-10">Weight : {users.weight} Kg</div>
-                <div className="text-xl px-10">Height : {users.height} Cm</div>
-                <div className="text-xl px-10">Age : {users.age} y.o.</div>
-              </div>}
+              <div className="text-xl px-10">Weight : {users.weight} Kg</div>
+              <div className="text-xl px-10">Height : {users.height} Cm</div>
+              <div className="text-xl px-10">Age : {users.age} y.o.</div>
             </div>
           </div>
           {/* detail profile */}
@@ -122,4 +118,4 @@ function Profile(){
     )
 }
 
-export default Profile;
+export default DetailPatient;

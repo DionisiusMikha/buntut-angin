@@ -31,6 +31,7 @@ import ChatKonsultan from './Pages/Konsultan/components/chat';
 import BlankChatKonsultan from './Pages/Konsultan/components/blankChat';
 import PatientListKonsultan from './Pages/Konsultan/components/patientList';
 import SettingsKonsultan from './Pages/Konsultan/components/settings';
+import DetailPatientKonsultan from './Pages/Konsultan/components/DetailPatient';
 
 // Admin
 import AdminHomepage from './Pages/Admin/Homepage';
@@ -136,6 +137,10 @@ const Router = createBrowserRouter([
       {
         path: "patient-list",
         element: <PatientListKonsultan/>
+      },
+      {
+        path: "patient-list/:id",
+        element: <DetailPatientKonsultan/>
       },
       {
         path: "settings",

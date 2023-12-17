@@ -152,7 +152,7 @@ function ListRecipes (){
                 </div>
             </div>
             <div className="text-4xl text-center font-semibold">Try Another Recipes</div>
-            <div className='grid grid-cols-2 gap-24'>
+            <div className='grid grid-cols-2 gap-x-24 gap-y-10'>
                 {recipes.map((recipe, index)=>{
                     // console.log(recipe)
                     return(
