@@ -384,9 +384,21 @@ module.exports = {
                 image  :getResep[i].dataValues.image_url,
                 description: getResep[i].dataValues.description,
                 like : getResep[i].dataValues.suka,
+                rating : getResep[i].dataValues.rating,
                 ingredients,
                 steps
             })
+
+            // result.push({
+            //     recipe_id: getResep[i].dataValues.id,
+            //     name: getResep[i].dataValues.name,
+            //     image  :getResep[i].dataValues.image_url,
+            //     description: getResep[i].dataValues.description,
+            //     like : getResep[i].dataValues.suka,
+            //     rating : getResep[i].dataValues.rating,
+            //     ingredients,
+            //     steps
+            // })
         }
 
         // sort by name
@@ -688,6 +700,7 @@ module.exports = {
             return res.status(200).json(result);    
         }
     },
+    
 
     // sendEmail({ recipient_email, OTP }) {
     //     return new Promise((resolve, reject) => {

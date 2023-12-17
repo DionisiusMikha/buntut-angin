@@ -107,6 +107,15 @@ function getAllRecipes(page, limit, search){
         }
     })
 }
+function getSomeRecipes(page, limit, search){
+    return client.get("/some-resep", {
+        params : {
+            limit : limit, 
+            search : search,
+            page : page
+        }
+    })
+}
 
 function changeStatusSubscription(id, status){
     return client.post(`/changeStatusSubscription/${id}`, {
@@ -130,5 +139,6 @@ export default {
     getUserLogin,
     getAllRecipes,
     changeStatusSubscription,
-    sendEmail
+    getSomeRecipes,
+    sendEmail,
 }

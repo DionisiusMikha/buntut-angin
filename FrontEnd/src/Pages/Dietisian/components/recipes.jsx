@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import Card from "./Card";
 import { useLoaderData, useNavigate } from "react-router-dom"
 import adminService from '../../../Services/Admin/admin';
+import dietisianService from '../../../Services/Dietisian/dietisian';
 import kuro from '/img/kuro.png';
 import rate from "/icon/rate.png";
 import like from "/icon/like.png";
@@ -10,6 +11,7 @@ import comment from "/icon/comment.png";
 function ListRecipes (){
     const [limit, setLimit] = useState(10);
     const [search, setSearch] = useState('');
+    const [page, setPage] = useState(1);
     const [recipes, setRecipes] = useState([]);
     const [topRecipe1, setTopRecipe1] = useState([]);
     const [topRecipe2, setTopRecipe2] = useState([]);
@@ -45,7 +47,7 @@ function ListRecipes (){
     }
 
     const getAllRecipes = async () =>{
-        const allRecipes = await adminService.getAllRecipes(limit, search);
+        const allRecipes = await dietisianService.getAllRecipes(page, limit, search)
         setRecipes(allRecipes.data)
     }
 
@@ -144,6 +146,16 @@ function ListRecipes (){
                 </div>
             </div>
             <div className="text-4xl text-center font-semibold">Try Another Recipes</div>
+            <div className='grid grid-cols-2 gap-24'>
+                {recipes.map((recipe, index)=>{
+                    console.log(recipe)
+                    return(
+                        <>
+                            {index > 2 && <Card recipe={recipe} index={index} key={index} />}
+                        </>
+                    )
+                })}
+            </div>
            </div>
         </>
     )
