@@ -350,12 +350,21 @@ module.exports = {
         }
     },
     getAllResep: async function(req, res){
-        const {limit, search, page} = req.query; 
+        const {search, page} = req.query;
+        let offsetValue;
+
+        if(page == 1){
+            offsetValue = 0;
+        } else if(page == 2){
+            offsetValue = (page - 1) * 6;
+        } else{
+            offsetValue = ((page - 1) * 6) + 4;
+        }
         
         const getResep = await db.Recipes.findAll({
-            order : [
-                ['suka', 'DESC']
-            ],
+            order : [['suka', 'DESC']],
+            limit: page == 1 ? 6 : 10,
+            offset: offsetValue
         });
 
         let resep = []
@@ -416,22 +425,22 @@ module.exports = {
         }
 
         // pagination
-        if (page !== undefined && page !== ""){
-            const offset = (page - 1) * limit;
-            resep = resep.slice(offset, offset + limit)
-        }
+        // if (page !== undefined && page !== ""){
+        //     const offset = (page - 1) * limit;
+        //     resep = resep.slice(offset, offset + limit)
+        // }
 
         // limit
-        if (limit !== undefined && limit !== ""){
-            resep = resep.slice(0, limit)
-        }
+        // if (limit !== undefined && limit !== ""){
+        //     resep = resep.slice(0, limit)
+        // }
         
         // search by name
-        if (search !== undefined && search !== ""){
-            resep = resep.filter(item => {
-                return item.name.toLowerCase().includes(search.toLowerCase())
-            })
-        }
+        // if (search !== undefined && search !== ""){
+        //     resep = resep.filter(item => {
+        //         return item.name.toLowerCase().includes(search.toLowerCase())
+        //     })
+        // }
 
         return res.status(200).json(resep);
     },
