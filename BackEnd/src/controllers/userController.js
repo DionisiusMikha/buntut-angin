@@ -364,7 +364,7 @@ module.exports = {
         const getResep = await db.Recipes.findAll({
             order : [['suka', 'DESC']],
             limit: page == 1 ? 6 : 10,
-            offset: offsetValue
+            offset: offsetValue + 3
         });
 
         let resep = []
@@ -752,6 +752,7 @@ module.exports = {
                         ratingBaru += parseInt(com[i].rating);
                     }
                     ratingBaru = ratingBaru / com.length;
+                    ratingBaru = ratingBaru.toFixed(2);
                 }
                 const updateRecipe = await db.Recipes.update({
                     rating: ratingBaru,
