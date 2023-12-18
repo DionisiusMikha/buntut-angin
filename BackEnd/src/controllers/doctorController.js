@@ -549,7 +549,7 @@ module.exports = {
                 },
                 {
                     where: {
-                        user_id: id
+                        id: id
                     }
                 }
             )

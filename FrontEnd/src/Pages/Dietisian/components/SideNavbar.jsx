@@ -4,6 +4,7 @@ import navbar1 from '/icon/navbar1.png'
 import navbar2 from '/icon/navbar2.png'
 import navbar3 from '/icon/navbar3.png'
 import navbar4 from '/icon/navbar4.png'
+import navbar5 from '/icon/navbar5.png'
 import { Link, NavLink } from "react-router-dom";
 
 function SideNavbar(){
@@ -68,10 +69,18 @@ function SideNavbar(){
                     </NavLink>
                 </div>
                 <div className='w-1/2 h-8'>
-                    <NavLink className='w-full h-full flex justify-start items-center hover:scale-90' to={`/dietisian/chat`} style={(state) => {
+                    <NavLink className='w-full h-full flex justify-start items-center hover:scale-90' to={`/dietisian/konsultasi`} style={(state) => {
                         return state.isActive ? style : {backgroundColor:"transparent"}
                     }}>
                         <img src={navbar4} alt="" className='w-7'/>
+                        <p className='text-xl text-black font-semibold ms-2'>Konsultasi</p>
+                    </NavLink>
+                </div>
+                <div className='w-1/2 h-8'>
+                    <NavLink className='w-full h-full flex justify-start items-center hover:scale-90' to={`/dietisian/chat`} style={(state) => {
+                        return state.isActive ? style : {backgroundColor:"transparent"}
+                    }}>
+                        <img src={navbar5} alt="" className='w-7'/>
                         <p className='text-xl text-black font-semibold ms-2'>Chat</p>
                     </NavLink>
                 </div>

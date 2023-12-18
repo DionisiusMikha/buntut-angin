@@ -479,6 +479,15 @@ module.exports = {
         }
         res.status(200).json(result);
     },
+    getAllKonsultan: async function(req, res){
+        try {
+            const result = await db.Doctor.findAll();
+
+            return res.status(200).send(result);
+        } catch (error) {
+            return res.status(200).send(error);
+        }
+    },
     janjian: async function(req, res){
         const username = req.params.username;
         const { tanggal, jam, nama_dokter } = req.body;
@@ -815,7 +824,6 @@ module.exports = {
         })
         return res.status(200).json({msg: "Recipe updated"});
     },
-
     verifyToken: async function(req, res){
         const token = req.params.token;
         const user = jwt.verify(token, PRIVATE_KEY);
@@ -845,7 +853,6 @@ module.exports = {
             return res.status(200).json(result);
         }
     },
-
     verifyEmail: async function(req, res){
         const {email} = req.body;
         const checkUser = await db.User.findOne({
@@ -886,6 +893,22 @@ module.exports = {
                 "message" : "Email sent"
             }
             return res.status(200).json(result);
+        }
+    },
+    ajukanKonsultasi: async function(req, res){
+        const { doctor_id, user_id, tanggal, jam } = req.body;
+        try {
+            const result = await db.Consultation.create({
+                doctor_id,
+                user_id,
+                tanggal, 
+                jam,
+                status: 0
+            })
+
+            return res.status(201).send({message: "created"})
+        } catch (error) {
+            return res.status(400).send(error)
         }
     }
 }

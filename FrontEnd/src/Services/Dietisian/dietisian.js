@@ -107,6 +107,7 @@ function getAllRecipes(page, limit, search){
         }
     })
 }
+
 function getSomeRecipes(page, limit, search){
     return client.get("/some-resep", {
         params : {
@@ -147,8 +148,36 @@ function updateLike(id){
     return client.put(`/updateLike/${id}`)
 }
 
+function getAllKonsultan(){
+    return client.get("/get-all-konsultan")
+}
+
+function ajukanKonsultasi(doctor_id, user_id, tanggal, jam){
+    return client.post("/pengajuan-konsultasi", {
+        doctor_id: doctor_id,
+        user_id: user_id,
+        tanggal: tanggal, 
+        jam: jam,
+    })
+    .then((response) => {
+        console.log(response);
+        return response;
+    })
+    .catch((error) => {
+        console.log(error);
+        if (error.response) {
+            return error={
+                data : error.response.data,
+                status : error.response.status
+            };
+        } 
+    });
+}
+
+
 export default {
     getAllUsers,
+    getAllKonsultan,
     registerUser,
     loginUser,
     editUser,
@@ -162,4 +191,5 @@ export default {
     addRatingComment,
     getUserByID,
     updateLike,
+    ajukanKonsultasi
 }

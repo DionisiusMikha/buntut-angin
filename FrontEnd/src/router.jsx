@@ -23,6 +23,7 @@ import ChatsDietisian from './Pages/Dietisian/components/ChatHome';
 import BlankChatDietisian from './Pages/Dietisian/components/blankChat';
 import ProfileDietisian from "./Pages/Dietisian/components/Profile";
 import SubscriptionsDietisian from "./Pages/Dietisian/components/Subscriptions";
+import Konsultasi from './Pages/Dietisian/components/konsultasi';
 
 // Konsultan
 import KonsultanHomepage from './Pages/Konsultan/Homepage';
@@ -116,6 +117,10 @@ const Router = createBrowserRouter([
       {
         path: "chat/:room_id",
         element: <ChatDietisian/>
+      },
+      {
+        path: "konsultasi",
+        element: <Konsultasi/>
       },
       {
         path : "profile",
