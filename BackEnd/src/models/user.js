@@ -26,7 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     age: DataTypes.INTEGER,
     weight: DataTypes.INTEGER,
     height: DataTypes.INTEGER,
-    genders: DataTypes.STRING
+    genders: DataTypes.STRING,
+    is_verif: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
   }, {
     sequelize,
     modelName: 'User',

@@ -48,6 +48,9 @@ module.exports = {
       genders: {
         type: Sequelize.STRING
       },
+      is_verified: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -10,6 +10,7 @@ import SendEmail from "./Pages/Login Page/SendEmail";
 import OTPinput from "./Pages/Login Page/OTPinput";
 import ResetPassword from "./Pages/Login Page/ResetPassword";
 import Recovered from "./Pages/Login Page/Recovered";
+import VerifyEmail from "./Pages/Login Page/VerifyEmail";
 
 // Dietisian
 import DietisianHomepage from "./Pages/Dietisian/Homepage"
@@ -75,6 +76,10 @@ const Router = createBrowserRouter([
   {
     path: "/recovered",
     element: <Recovered />,
+  },
+  {
+    path: "/verifyemail",
+    element: <VerifyEmail />,
   },
   {
     path: "/loading",

@@ -6,6 +6,16 @@ const multer = require("multer");
 const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+    }
+})
 
 const path = require("path");
 
@@ -101,6 +111,7 @@ module.exports = {
             age : umur,
             address: address,
             phone_number: phone_number,
+            email_verif_token: crypto.randomBytes(64).toString('hex'),
         })
 
         const result = {
@@ -364,7 +375,7 @@ module.exports = {
         const getResep = await db.Recipes.findAll({
             order : [['suka', 'DESC']],
             limit: page == 1 ? 6 : 10,
-            offset: offsetValue
+            offset: offsetValue + 3
         });
 
         let resep = []
@@ -752,6 +763,7 @@ module.exports = {
                         ratingBaru += parseInt(com[i].rating);
                     }
                     ratingBaru = ratingBaru / com.length;
+                    ratingBaru = ratingBaru.toFixed(2);
                 }
                 const updateRecipe = await db.Recipes.update({
                     rating: ratingBaru,
@@ -802,58 +814,78 @@ module.exports = {
             }
         })
         return res.status(200).json({msg: "Recipe updated"});
-    }
-    
+    },
 
-    // sendEmail({ recipient_email, OTP }) {
-    //     return new Promise((resolve, reject) => {
-    //       var transporter = nodemailer.createTransport({
-    //         service: "gmail",
-    //         auth: {
-    //           user: process.env.MY_EMAIL,
-    //           pass: process.env.MY_PASSWORD,
-    //         },
-    //       });
-    //       const mail_configs = {
-    //         from: process.env.MY_EMAIL,
-    //         to: recipient_email,
-    //         subject: "Life Lose PASSWORD RECOVERY",
-    //         html: `<!DOCTYPE html>
-    //               <html lang="en" >
-    //               <head>
-    //                 <meta charset="UTF-8">
-    //                 <title>CodePen - OTP Email Template</title>
-    //               </head>
-    //               <body>
-    //               <!-- partial:index.partial.html -->
-    //               <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
-    //                 <div style="margin:50px auto;width:70%;padding:20px 0">
-    //                   <div style="border-bottom:1px solid #eee">
-    //                     <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Life Lose</a>
-    //                   </div>
-    //                   <p style="font-size:1.1em">Hi,</p>
-    //                   <p>Thank you for choosing Life Lose. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
-    //                   <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${OTP}</h2>
-    //                   <p style="font-size:0.9em;">Regards,<br />Life Lose</p>
-    //                   <hr style="border:none;border-top:1px solid #eee" />
-    //                   <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-    //                     <p>Life Lose Inc</p>
-    //                     <p>Ngagel jaya utara</p>
-    //                     <p>Surabaya</p>
-    //                   </div>
-    //                 </div>
-    //               </div>
-    //               <!-- partial -->
-    //               </body>
-    //               </html>`,
-    //             };
-    //       transporter.sendMail(mail_configs, function (error, info) {
-    //         if (error) {
-    //           console.log(error);
-    //           return reject({ message: `An error has occured` });
-    //         }
-    //         return resolve({ message: "Email sent succesfuly" });
-    //       });
-    //     });
-    // }
+    verifyToken: async function(req, res){
+        const token = req.params.token;
+        const user = jwt.verify(token, PRIVATE_KEY);
+        const checkUser = await db.User.findOne({
+            where: {
+                email: user.email
+            }
+        })
+        if (!checkUser){
+            const result = {
+                "message" : "User not found"
+            }
+            return res.status(404).json(result);
+        }
+        else {
+            const updateUser = await db.User.update({
+                is_verif: true
+            }, {
+                where: {
+                    email: user.email
+                }
+            })
+            const result = {
+                "message" : "User verified"
+            }
+            console.log(updateUser)
+            return res.status(200).json(result);
+        }
+    },
+
+    verifyEmail: async function(req, res){
+        const {email} = req.body;
+        const checkUser = await db.User.findOne({
+            where: {
+                email: email
+            }
+        })
+        if (!checkUser){
+            const result = {
+                "message" : "User not found"
+            }
+            return res.status(404).json(result);
+        }
+        else {
+            const token = jwt.sign({
+                email: email
+            }, PRIVATE_KEY, {
+                expiresIn: 86400
+            });
+
+            const mailOptions = {
+                from: process.env.EMAIL,
+                to: email,
+                subject: 'Verify Email',
+                html: `<p>Click <a href="http://localhost:3000/verify/${token}">here</a> to verify your email</p>`
+            }
+
+            transporter.sendMail(mailOptions, function(err, info){
+                if (err){
+                    console.log(err);
+                }
+                else {
+                    console.log('Email sent: ' + info.response);
+                }
+            })
+
+            const result = {
+                "message" : "Email sent"
+            }
+            return res.status(200).json(result);
+        }
+    }
 }
