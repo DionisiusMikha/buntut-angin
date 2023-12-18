@@ -1,6 +1,5 @@
 // Dialog.jsx
 import React from 'react';
-import axios from 'axios';
 import DietisianService from '../../../Services/Dietisian/dietisian';
 import { useForm } from 'react-hook-form';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton } from '@chakra-ui/react';

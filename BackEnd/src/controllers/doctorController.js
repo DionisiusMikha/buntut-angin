@@ -516,20 +516,47 @@ module.exports = {
     },
     viewJadwal: async function (req, res){
         try {
-            const { id } = req.params;
-            const jadwal = await db.sequelize.query(
-                `SELECT c.*, u.display_name FROM Consultations c
-                 JOIN Users u ON c.user_id = u.id
-                 WHERE c.doctor_id = :id`,
-                {
-                  replacements: { id },
-                  type: db.sequelize.QueryTypes.SELECT
-                }
-            );
+            const { id, currentdate } = req.params;
+            const tanggalObjek = new Date(currentdate);
+            const date = tanggalObjek.toISOString().split('T')[0];
 
-            return res.status(200).send(jadwal);
+           try {
+                const jadwal = await db.sequelize.query(
+                    `SELECT c.*, u.display_name FROM Consultations c
+                    JOIN Users u ON c.user_id = u.id
+                    WHERE c.doctor_id = :id AND c.tanggal = :date`,
+                    {
+                    replacements: { id, date },
+                    type: db.sequelize.QueryTypes.SELECT
+                    }
+                );
+
+                return res.status(200).send(jadwal);
+           } catch (error) {
+                return res.status(400).send(error);
+           }
         } catch (error) {
             return res.status(400).send(error);
+        }
+    },
+    changeStatus: async function (req, res){
+        const { id, status } = req.body;
+
+        try {
+            const result = await db.Consultation.update(
+                {
+                    status: status
+                },
+                {
+                    where: {
+                        user_id: id
+                    }
+                }
+            )
+
+            return res.status(200).send({message: "updated"});
+        } catch (error) {
+            return res.status(200).send(error);
         }
     }
 }

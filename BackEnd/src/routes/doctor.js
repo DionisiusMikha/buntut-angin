@@ -12,11 +12,12 @@ router.post("/login", doctorController.loginDoctor);
 router.post("/recipes", doctorController.addRecipe);
 router.post("/viewUser", doctorController.viewUser);
 router.post("/rekomendasiMenu", doctorController.rekomendasiMenu);
-router.get("/get-jadwal/:id", doctorController.viewJadwal);
+router.get("/get-jadwal/:id/:currentdate", doctorController.viewJadwal);
 router.get("/getLoginUser", doctorController.getLoginUser);
 router.get("/users", doctorController.getAllUsers);
 router.get("/", doctorController.getAllDoctor);
 router.post("/schedule/:username", doctorController.aturJadwal);
 router.put("/edit/:id_user", doctorController.editDoctor);
+router.put("/edit-status", doctorController.changeStatus);
 
 module.exports = router;

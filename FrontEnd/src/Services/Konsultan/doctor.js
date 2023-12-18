@@ -45,8 +45,8 @@ function editUser(user_id, data){
     });
 }
 
-function viewJadwal(id){
-    return client.get(`/get-jadwal/${id}`)
+function viewJadwal(id, date){
+    return client.get(`/get-jadwal/${id}/${date}`)
     .then((response) => {
         return response;
     })
@@ -87,11 +87,30 @@ function getAllUsers(limit, filter, search){
     });
 }
 
+function changeStatus(id, status){
+    return client.put(`/edit-status`, {
+        id: id,
+        status: status
+    })
+    .then((response) => {
+        return response;
+    })
+    .catch((error) => {
+        if (error.response) {
+            return error={
+                data : error.response.data,
+                status : error.response.status
+            };
+        } 
+    });
+}
+
 export default {
     getAllDoctor,
     getUserLogin,
     getAllUsers,
     editUser,
     loginUser,
-    viewJadwal
+    viewJadwal,
+    changeStatus
 }

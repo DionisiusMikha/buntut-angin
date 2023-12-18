@@ -63,7 +63,7 @@ function DetailPatient(){
             {/* display name */}
             <div className="flex flex-col">
               <div>Display Name : </div>
-              <Input size='md' value={users.display_name}  />
+              <Input size='md' value={users.display_name} />
             </div>
             {/* username */}
             <div className="flex flex-col mt-4">

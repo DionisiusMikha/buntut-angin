@@ -48,6 +48,9 @@ function ListRecipes (){
     }
 
     const next = () => {
+        if(recipes.length == 0){
+            return ;
+        }
         setPage(page + 1);
     }
 
