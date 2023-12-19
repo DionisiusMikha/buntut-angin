@@ -174,6 +174,26 @@ function ajukanKonsultasi(doctor_id, user_id, tanggal, jam){
     });
 }
 
+function changePassword(email, password){
+    return client.put("/change-password", {
+        email : email,
+        password : password
+    })
+}
+
+function verifyEmail(email , verificationCode){
+    return client.put("/verify-email", {
+        email : email,
+        verificationCode : verificationCode
+    })
+}
+
+function sendVerificationEmail(email){
+    return client.put("/send-verification-email", {
+        email : email
+    })
+}
+
 
 export default {
     getAllUsers,
@@ -191,5 +211,8 @@ export default {
     addRatingComment,
     getUserByID,
     updateLike,
-    ajukanKonsultasi
+    ajukanKonsultasi,
+    changePassword,
+    verifyEmail,
+    sendVerificationEmail
 }

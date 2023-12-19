@@ -139,6 +139,20 @@ module.exports = {
             }
         })
 
+        const checkEmail = await db.User.findOne({
+            where: {
+                username: username,
+                is_email_verified: true
+            }
+        })
+
+        if (!checkEmail){
+            const result = {
+                "message" : "Email not verified"
+            }
+            return res.status(400).json(result);
+        }
+
         if (!checkUser){
             return res.status(404).json({
                 message: "user not found"
@@ -860,6 +874,33 @@ module.exports = {
           return res.status(500).json({ message: 'Internal Server Error' });
         }
       },
+      
+        verifyEmail: async function (req, res) {
+            const { email, verificationCode } = req.body;
+
+            try {
+            const result = await db.User.findOne({
+                where: {
+                email: email,
+                email_verification_code: verificationCode,
+                },
+            });
+        
+            if (!result) {
+                return res.status(400).json({ message: 'Invalid verification code' });
+            }
+
+            await db.User.update(
+                { is_email_verified: true },
+                { where: { email: email } }
+            );
+
+            res.status(200).json({ message: 'Email verified successfully' });
+            } catch (err) {
+            console.error('Error verifying email:', err);
+            return res.status(500).json({ message: 'Internal Server Error' });
+            }
+        },
       changePassword: async function (req, res) {
         const { email, newPassword } = req.body;
 
@@ -882,33 +923,6 @@ module.exports = {
           res.status(200).json({ message: 'Password reset successfully' });
         } catch (err) {
           console.error('Error resetting password:', err);
-          return res.status(500).json({ message: 'Internal Server Error' });
-        }
-      },
-
-      verifyEmail: async function (req, res) {
-        const { email, verificationCode } = req.body;
-
-        try {
-          const result = await db.User.findOne({
-            where: {
-              email: email,
-              email_verification_code: verificationCode,
-            },
-          });
-    
-          if (!result) {
-            return res.status(400).json({ message: 'Invalid verification code' });
-          }
-
-          await db.User.update(
-            { is_email_verified: true },
-            { where: { email: email } }
-          );
-
-          res.status(200).json({ message: 'Email verified successfully' });
-        } catch (err) {
-          console.error('Error verifying email:', err);
           return res.status(500).json({ message: 'Internal Server Error' });
         }
       },
