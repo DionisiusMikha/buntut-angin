@@ -23,5 +23,6 @@ router.put("/updateLike/:id", userController.updateLike);
 router.put("/send-verification-email", userController.sendVerificationEmail);
 router.put("/verify-email", userController.verifyEmail);
 router.put("/change-password", userController.changePassword);
+router.get("/get-all-email", userController.getAllEmail);
 
 module.exports = router;

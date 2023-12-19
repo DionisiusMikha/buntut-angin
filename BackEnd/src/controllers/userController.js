@@ -941,5 +941,12 @@ module.exports = {
         } catch (error) {
             return res.status(400).send(error)
         }
-    }
+    },
+
+    getAllEmail: async function(req, res){
+        const result = await db.User.findAll({
+            attributes: ['email']
+        });
+        return res.status(200).json(result);
+    },
 }

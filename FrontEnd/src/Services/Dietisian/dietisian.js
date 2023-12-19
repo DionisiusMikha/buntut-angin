@@ -174,10 +174,10 @@ function ajukanKonsultasi(doctor_id, user_id, tanggal, jam){
     });
 }
 
-function changePassword(email, password){
+function changePassword(email, newPassword){
     return client.put("/change-password", {
         email : email,
-        password : password
+        newPassword : newPassword
     })
 }
 

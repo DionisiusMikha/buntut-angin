@@ -7,6 +7,7 @@ import hide from '/icon/hide.png'
 import iconGoogle from '/icon/google icon.png'
 import iconFacebook from '/icon/facebook icon.png'
 import iconApple from '/icon/apple icon.png'
+import { Alert } from '@mui/material';
 
 import DietisianService from '../../Services/Dietisian/dietisian';
 import DoctorService from '../../Services/konsultan/doctor';
@@ -20,8 +21,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { getDietisian, getDoctor } from '../../Redux/loginSlice';
 
 const LoginPage = () => {
-    // console.log("token" + localStorage.getItem('token'))
-    // console.log("tokenDoctor" + localStorage.getItem('tokenDoctor'))
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const schema = Joi.object({
@@ -44,7 +43,10 @@ const LoginPage = () => {
     const submit = async data => {
         if (data.username == "lifelose" && data.password == "2024dionkurus"){
             navigate("/admin/home")
-        } else {
+        
+        }
+        
+         else {
             const res = await DietisianService.loginUser(data.username, data.password);
             
             if(res.status == 200){
@@ -55,7 +57,12 @@ const LoginPage = () => {
                 } catch (error) {
                     console.log(error)   
                 }
-            } else {
+            }
+            else if(res.status == 400){
+                alert(res.data.message + "locating to verify email")
+                window.location.href = "/VerifyEmail"
+            }
+            else {
                 if (res.data.message == "user not found"){
                     const res2 = await DoctorService.loginUser(data.username, data.password);
                     if (res2.status == 200){
