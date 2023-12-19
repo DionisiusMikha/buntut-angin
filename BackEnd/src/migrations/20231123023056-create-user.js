@@ -48,7 +48,10 @@ module.exports = {
       genders: {
         type: Sequelize.STRING
       },
-      is_verified: {
+      email_verification_code: {
+        type: Sequelize.STRING
+      },
+      is_email_verified: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {

@@ -61,7 +61,7 @@ export default function OTPInput() {
   }, [disable]);
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-gray-50">
+    <div className="flex justify-center items-center w-screen h-screen bg-[#f3f3fd]">
       <div className="bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
         <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
           <div className="flex flex-col items-center justify-center text-center space-y-2">

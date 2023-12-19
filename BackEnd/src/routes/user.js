@@ -20,8 +20,7 @@ router.post("/janjian/:username", userController.janjian);
 router.post("/subscription/:username", userController.subscription);
 router.post("/changeStatusSubscription/:id", userController.changeStatusSubscription);
 router.put("/updateLike/:id", userController.updateLike);
-router.post("/verify-email", userController.verifyEmail);
-router.get("/verify/:token", userController.verifyToken);
-
+router.put("/send-verification-email", userController.sendVerificationEmail);
+router.put("/verify-email", userController.verifyEmail);
 
 module.exports = router;
