@@ -860,6 +860,31 @@ module.exports = {
           return res.status(500).json({ message: 'Internal Server Error' });
         }
       },
+      changePassword: async function (req, res) {
+        const { email, newPassword } = req.body;
+
+        try {
+          const result = await db.User.findOne({
+            where: {
+              email: email,
+            },
+          });
+    
+          if (!result) {
+            return res.status(400).json({ message: 'Email not found' });
+          }
+    
+          await db.User.update(
+            { password: newPassword },
+            { where: { email: email } }
+          );
+    
+          res.status(200).json({ message: 'Password reset successfully' });
+        } catch (err) {
+          console.error('Error resetting password:', err);
+          return res.status(500).json({ message: 'Internal Server Error' });
+        }
+      },
 
       verifyEmail: async function (req, res) {
         const { email, verificationCode } = req.body;
