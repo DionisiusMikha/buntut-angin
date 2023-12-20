@@ -5,10 +5,6 @@ function getChat(room_id){
     return client.get(`/get-message/${room_id}`);
 }
 
-function getUsername(room_id){
-    return client.get(`/get-username/${room_id}`);
-}
-
 function getRooms(username, search){
     return client.get(`/get-rooms`, {
         params: {
@@ -18,27 +14,35 @@ function getRooms(username, search){
     });
 }
 
-function anotherUsername(username, roomId){
-    return client.get(`/anotherUsername`, {
+function getRoomsUser(username, search){
+    return client.get(`/get-rooms-user`, {
         params: {
             username: username,
-            roomId: roomId
+            search: search
         }
     });
 }
 
-function getRoomByRoomId(roomId, username){
-    return client.get(`/room/${roomId}`, {
-        params: {
-            username: username
-        }
+function getRoomByRoomId(roomId){
+    return client.get(`/room/${roomId}`);
+}
+
+function addRoom(user, doctor){
+    return client.post(`/rooms`, {
+        user: user,
+        doctor: doctor
     });
+}
+
+function searchUser(username, doctor){
+    return client.get(`/user/${username}/${doctor}`);
 }
 
 export default {
     getChat,
-    getUsername,
     getRooms,
-    anotherUsername,
+    getRoomsUser,
+    addRoom,
     getRoomByRoomId,
+    searchUser
 }

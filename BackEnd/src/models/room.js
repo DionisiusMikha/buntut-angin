@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: false,
       primaryKey: true,
     },
-    name: DataTypes.STRING,
-    username: DataTypes.STRING
+    username_user: DataTypes.STRING,
+    username_doctor: DataTypes.STRING
   }, {
     sequelize,
     timestamps: false,

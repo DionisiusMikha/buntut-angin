@@ -271,11 +271,11 @@ module.exports = {
         }
     },
     viewUser: async function(req, res){
-        const display_name = req.body.display_name;
+        const search = req.body.search;
         const cariUser = await db.User.findAll({
             where: {
                 display_name: {
-                    [Op.like]: '%'+display_name+'%'
+                    [Op.like]: '%'+search+'%'
                 }
             }
         })

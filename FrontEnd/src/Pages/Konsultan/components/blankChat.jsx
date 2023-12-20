@@ -17,9 +17,7 @@ function Chat() {
 
     const getUser = async() => {
         const res2 = await DoctorService.getUserLogin(token);
-        console.log(token + " ini adalah token dokter");
         if (res2.status == 200){
-            console.log(res2.data.data.username);
             setUser(res2.data.data.username);
             getRooms(res2.data.data.username, search);
         }
@@ -27,21 +25,9 @@ function Chat() {
 
     const getRooms = async(username) => {
         const result = await ChatService.getRooms(username, search);
+        console.log(result.data);
         if (result.status == 200){
             setListRoom(result.data);
-        }
-    }
-
-    const splitUser = (item) => {
-        if(item.name != ""){
-            return item.name;    
-        }
-        
-        const temp = item.username.split(",");
-        if(temp[0] === user){
-            return temp[1];
-        }else{
-            return temp[0];
         }
     }
 
@@ -60,7 +46,7 @@ function Chat() {
                 <div className="w-8/12 h-full flex py-10 px-8">
                     <div className="w-full h-full flex flex-col bg-white rounded-3xl ">
                         <div className="w-full h-full flex flex-col items-center justify-center text-3xl font-semibold">
-                            Start New Conversation
+                            Choose Conversation
                         </div>
                     </div>
                 </div>
@@ -74,12 +60,12 @@ function Chat() {
                         <hr className="text-rose-800 border-2 border-rose-800 opacity-30 my-5"/>
                         <div className="w-full h-5/6 flex flex-col overflow-y-auto">
                             {listRoom.map((item, idx) => (
-                                <Link key={idx} className="w-full h-20 flex items-center" to={`/dietisian/chat/${item.room_id}`}>
+                                <Link key={idx} className="w-full h-20 flex items-center" to={`/konsultan/chat/${item.room_id}`}>
                                     <div className="w-1/6 h-full flex items-center">
                                         <img src={acc} className="w-12 h-12 border border-black rounded-full"/>
                                     </div>
                                     <div className="w-5/6 h-full flex items-center justify-start pb-1">
-                                        <p className="w-full text-start text-lg font-medium ms-5">{item.anotherUser}</p>
+                                        <p className="w-full text-start text-lg font-medium ms-5">{item.username_user}</p>
                                     </div>
                                 </Link>
                             ))}

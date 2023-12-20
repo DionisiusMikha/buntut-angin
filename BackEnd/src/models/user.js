@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     height: DataTypes.INTEGER,
     genders: DataTypes.STRING,
     is_verif: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.INTEGER(1),
       defaultValue: false
     },
   }, {

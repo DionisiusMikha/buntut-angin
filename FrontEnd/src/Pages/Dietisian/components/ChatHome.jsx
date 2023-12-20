@@ -10,50 +10,19 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
 function ChatHome(){
-    const [userLogin, setUserLogin] = useState({});
-    const [loaded, setLoaded] = useState(false);
-    const [socket, setSocket] = useState(null);
-    const [listRoom, setListRoom] = useState([]);
-    const [room, setRoom] = useState("");
     const [search, setSearch] = useState("");
-    const [onlineUsers, setOnlineUsers] = useState([]);
-    const [userDisplay, setUserDisplay] = useState('');
+    const token = localStorage.getItem("token");
+    const [user, setUser] = useState('');
     const [messageList, setMessageList] = useState([]);
-    const navigate = useNavigate();
+    const [roomId, setRoomId] = useState(window.location.pathname.split("/")[3]);
+    const [room, setRoom] = useState({});
     const chatRef = useRef(null);
+    const [loaded, setLoaded] = useState(false);
+    
+    const [listRoom, setListRoom] = useState([]);
+    
     const { register, watch, reset } = useForm();
-
-    useEffect(() => {
-        const newSocket = io("http://localhost:6969");
-        setSocket(newSocket);
-        
-        return () => {
-            newSocket.disconnect();
-        }
-    }, []);
-
-    const cariUser = async () =>{
-        const token = localStorage.getItem("token");
-        if(token){
-            const res = await DietisianService.getUserLogin(token);
-            if (res.status == 200){
-                setLoaded(true);
-                setUserLogin(res.data.data);
-                getRoomsChat(res.data.data.username, search);
-            }
-        } else {
-            navigate("/login");
-        }
-    }
-
-
-    const getRoomsChat = async (username, search) =>{
-        const result = await ChatService.getRooms(username, search);
-        if (result.status == 200){
-            setListRoom(result.data);
-        }
-    }
-
+    
     function scrollToBottom() {
         if (chatRef.current) {
             chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -62,24 +31,18 @@ function ChatHome(){
 
     const sendMessage = async () => {
         if (watch("input_message") !== "") {
-            const messageData = {
-                room: room,
-                message: watch("input_message")
-            };
-            console.log(userLogin.username);
-            const showMsg = {
-                username: userLogin.username,
-                room_id: room,
-                value: watch("input_message")
-            }
-    
-            await socket.emit("sendMessage", messageData);
             await axios.post(`http://localhost:3000/api/chats/message`, {
-                username: userLogin.username,
-                room_id: room,
+                username: user,
+                room_id: room.room_id,
                 value: watch("input_message")
             });
-            setMessageList((list) => [...list, showMsg]);
+            const msg = {
+                id: messageList.length + 1,
+                username: user,
+                room_id: roomId,
+                value: watch("input_message")
+            }
+            setMessageList([...messageList, msg]);
             
             reset({
                 input_message: "",
@@ -87,25 +50,56 @@ function ChatHome(){
         }
     };
 
+    const getUser = async() => {
+        if(token){
+            const res = await DietisianService.getUserLogin(token);
+            if (res.status == 200){
+                setLoaded(true);
+                setUser(res.data.data.username);
+                getAllRooms(res.data.data.username, search);
+            } else {
+                console.log(res.data.message);
+            }
+        } else {
+            navigate("/login");
+        }
+    }
+
     useEffect(() => {
-        cariUser();
+        getUser();
     }, [search]);
 
-    useEffect(() => {
-        if (socket == null || !loaded) return;
-        socket.emit("addNewUser", userLogin.username);
-        socket.on("getOnlineUsers", (res) => {
-            setOnlineUsers(res);
-        });
+    const getChat = async() => {
+        const result = await ChatService.getChat(roomId);
+        setMessageList([...result.data]);
+    }
 
-        return () => {
-            socket.off("getOnlineUsers");
+    const getAllRooms = async(userss, search) => {
+        const result = await ChatService.getRoomsUser(userss, search);
+        if (result.status == 200){
+            setListRoom(result.data);
         }
-    }, [socket, loaded]);
+    }
+
+    const getRoomById = async() => {
+        const result = await ChatService.getRoomByRoomId(roomId);
+        setRoom({...result.data});
+    }
 
     useEffect(() => {
         scrollToBottom();
     }, [messageList])
+
+    useEffect(() => {
+        setListRoom([]);
+        getRoomById()
+        getUser();
+        const chatInterval = setInterval(() => {
+            getChat();
+        }, 100);
+        
+        return () => clearInterval(chatInterval);
+    }, [roomId])
 
     return (<>
         <div className='px-10 py-10 h-full flex flex-row'>
@@ -116,7 +110,7 @@ function ChatHome(){
                 {room != "" && <div className="w-full h-full flex flex-col text-2xl font-semibold p-5">
                     <div className='flex flex-row items-center'>
                         <img src={acc} className="w-12 h-full border-2 border-black rounded-full"/>
-                        <p className='px-5'>{userDisplay}</p>
+                        <p className='px-5'>{room.username_doctor}</p>
                     </div>
                     <hr className='border-2 my-3 border-rose-800 opacity-30'/>
                     <div className="w-full h-5/6 flex flex-col pt-8 gap-y-1.5 overflow-y-auto px-4" ref={ chatRef }>
@@ -169,7 +163,7 @@ function ChatHome(){
                                     <img src={acc} className="w-12 h-12 border border-black rounded-full"/>
                                 </div>
                                 <div className="w-5/6 h-full flex items-center justify-start pb-1">
-                                    <p className="w-full text-start text-lg font-medium ms-5">{room.anotherUser}</p>
+                                    <p className="w-full text-start text-lg font-medium ms-5">{room.username_doctor}</p>
                                 </div>
                             </button>
                         )

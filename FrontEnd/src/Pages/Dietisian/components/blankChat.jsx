@@ -1,9 +1,6 @@
 import acc from '/icon/user.png';
-import senyum from '/icon/smile.png';
-import pesawat from '/icon/plane.png';
 import { useState, useEffect } from "react";
 import DietisianService from "../../../Services/Dietisian/dietisian";
-import DoctorService from '../../../Services/konsultan/doctor';
 import ChatService from '../../../Services/Chat/chat';
 import { Link } from 'react-router-dom';
 
@@ -16,39 +13,18 @@ function Chat() {
     const [listRoom, setListRoom] = useState([]);
 
     const getUser = async() => {
-        const res = await DietisianService.getUserLogin(token);
-        if(res.status == 200){
-            setUser(res.data.data.username);
-            getRooms(res.data.data.username, search); 
-        } else {
-            if (res.data.message == "user not found"){
-                const res2 = await DoctorService.getUserLogin(token);
-                
-                if (res2.status == 200){
-                    setUser(res2.data.data.username);
-                    getRooms(res2.data.data.username, search);
-                }
-            }
+        const res2 = await DietisianService.getUserLogin(token);
+        if (res2.status == 200){
+            setUser(res2.data.data.username);
+            getRooms(res2.data.data.username, search);
         }
     }
 
     const getRooms = async(username) => {
-        const result = await ChatService.getRooms(username, search);
+        const result = await ChatService.getRoomsUser(username, search);
+        console.log(result.data);
         if (result.status == 200){
             setListRoom(result.data);
-        }
-    }
-
-    const splitUser = (item) => {
-        if(item.name != ""){
-            return item.name;    
-        }
-        
-        const temp = item.username.split(",");
-        if(temp[0] === user){
-            return temp[1];
-        }else{
-            return temp[0];
         }
     }
 
@@ -86,7 +62,7 @@ function Chat() {
                                         <img src={acc} className="w-12 h-12 border border-black rounded-full"/>
                                     </div>
                                     <div className="w-5/6 h-full flex items-center justify-start pb-1">
-                                        <p className="w-full text-start text-lg font-medium ms-5">{item.anotherUser}</p>
+                                        <p className="w-full text-start text-lg font-medium ms-5">{item.username_doctor}</p>
                                     </div>
                                 </Link>
                             ))}
