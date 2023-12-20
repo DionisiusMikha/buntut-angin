@@ -5,7 +5,7 @@ import Try from "./Pages/Try/try";
 // Dashboard
 import LandingPage from "./Pages/Landing Page/LandingPages";
 import Login from "./Pages/Login Page/LoginPage";
-import Register from "./Pages/Register Page/RegisterPage";
+import Register from "./Pages/Register Page/RegisterPageDietisian";
 import SendEmail from "./Pages/Login Page/SendEmail";
 import OTPinput from "./Pages/Login Page/OTPinput";
 import ResetPassword from "./Pages/Login Page/ResetPassword";

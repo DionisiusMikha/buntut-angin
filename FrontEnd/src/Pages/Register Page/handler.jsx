@@ -4,6 +4,7 @@ import { redirect } from 'react-router-dom';
 const register = async (data) => {
     try {
         const res = await DietisianService.registerUser(data);
+        console.log(res);
     } catch (error) {
         throw error
     }
