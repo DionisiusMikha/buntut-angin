@@ -44,9 +44,7 @@ const LoginPage = () => {
         if (data.username == "lifelose" && data.password == "2024dionkurus"){
             navigate("/admin/home")
         
-        }
-        
-         else {
+        } else {
             const res = await DietisianService.loginUser(data.username, data.password);
             
             if(res.status == 200){
@@ -59,15 +57,14 @@ const LoginPage = () => {
                 }
             }
             else if(res.status == 400){
-                alert(res.data.message + "locating to verify email")
-                window.location.href = "/VerifyEmail"
+                alert(res.data.message + " locating to verify email")
+                navigate("/verifyemail");
             }
             else {
-                if (res.data.message == "user not found"){
+                if (res.status == 404){
                     const res2 = await DoctorService.loginUser(data.username, data.password);
                     if (res2.status == 200){
                         try {
-                            // console.log(res2.data)
                             dispatch(getDoctor(res2.data.token))
                             localStorage.setItem("tokenDoctor", res2.data.token);
                             navigate("/konsultan/home");

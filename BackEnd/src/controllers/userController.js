@@ -116,7 +116,6 @@ module.exports = {
             phone_number: phone_number,
             email_verification_code: null,
             is_email_verified: false,
-            genders : gender,
         })
 
         const result = {
@@ -147,11 +146,17 @@ module.exports = {
             }
         })
 
-        if (!checkEmail){
+        if (!checkEmail && checkUser){
             const result = {
                 "message" : "Email not verified"
             }
             return res.status(400).json(result);
+        }
+
+        if (!checkUser){
+            return res.status(404).json({
+                message: "user not found"
+            });
         }
 
         if (!checkUser){

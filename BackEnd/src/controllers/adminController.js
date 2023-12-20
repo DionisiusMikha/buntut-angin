@@ -650,5 +650,5 @@ module.exports = {
             "message" : "success",
             "data" : result
         })
-    }
+    },
 }
