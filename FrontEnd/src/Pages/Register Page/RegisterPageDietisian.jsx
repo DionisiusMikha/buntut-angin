@@ -43,7 +43,13 @@ const RegisterPage = () => {
         }),
         height: Joi.number().required().messages({
             "number.empty" : "height tidak boleh kosong"
-        })
+        }),
+        address: Joi.string().required().messages({
+            "string.empty" : "address tidak boleh kosong"
+        }),
+        phone_number: Joi.string().required().messages({
+            "string.empty" : "phone number tidak boleh kosong"
+        }),
     })
 
     const {register, handleSubmit, reset, formState: { errors }  } = useForm({
@@ -52,6 +58,8 @@ const RegisterPage = () => {
     const bg = "url('img/background-login-register.png')";
 
     const submit = async data => {
+        console.log("tes");
+        console.log(data);
         await handler.register(data);
     }
 
@@ -163,6 +171,27 @@ const RegisterPage = () => {
                                 <img src={hide} alt="" className='mx-3' width="30px"/> : 
                                 <img src={view} alt="" className='mx-3' width="30px"/>}
                             </div>
+                        </div>
+                        {/* address */}
+                        <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
+                            <input type="text" placeholder={`${errors.address ? errors?.address?.message : "Enter Your address" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.address ? 'placeholder-red-500' : ''}`} {...register("address")}/>
+                            <div onClick={
+                                ()=>{
+                                    if(see1 == "password"){
+                                        setSee1("text");
+                                    } else {
+                                        setSee1("password");
+                                    }
+                                }
+                            }>
+                                {see1 === "password" ? 
+                                <img src={hide} alt="" className='mx-3' width="30px"/> : 
+                                <img src={view} alt="" className='mx-3' width="30px"/>}
+                            </div>
+                        </div>
+                        {/* phoneNumber */}
+                        <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
+                            <input type="text" placeholder={`${errors.phone_number ? errors?.phone_number?.message : "Enter Your Phone Number" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.phone_number ? 'placeholder-red-500' : ''}`} {...register("phone_number")}/>
                         </div>
                         {/* weight height */}
                         <div className='flex flex-row justify-between'>

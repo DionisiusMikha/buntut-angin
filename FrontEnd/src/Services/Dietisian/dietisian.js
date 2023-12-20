@@ -8,7 +8,7 @@ function registerUser(data){
         username: data.username,
         email: data.email,
         display_name: data.displayName,
-        date_of_birth: data.birthdate,
+        birthdate: data.birthdate,
         password: data.password,
         gender : data.gender,
         phone_number : data.phone_number,

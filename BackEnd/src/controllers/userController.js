@@ -116,6 +116,7 @@ module.exports = {
             phone_number: phone_number,
             email_verification_code: null,
             is_email_verified: false,
+            genders : gender,
         })
 
         const result = {
