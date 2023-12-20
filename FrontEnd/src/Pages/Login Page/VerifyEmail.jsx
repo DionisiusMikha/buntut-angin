@@ -1,85 +1,58 @@
-// import DietisianService from "../../Services/DietisianService";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import DietisianService from "../../Services/Dietisian/dietisian";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useNavigate } from "react-router-dom";
+import Joi from "joi";
 
 function verifyEmail() {
-    const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
-
-    function verifyOTP() {
-        const enteredOTP = parseInt(OTPinput.join(""));
-        if (enteredOTP === otp) {
-          alert("OTP is correct");
-          window.location.href = "/resetpassword";
-        } else {
-          alert("OTP is incorrect");
-          alert(enteredOTP);
-        }
-      }
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+  const schema = Joi.object({
+    email: Joi.string().required().messages({
+      "string.empty": "email tidak boleh kosong",
+    }),
+  });
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: joiResolver(schema),
+  });
+  const onSubmit = async (data) => {
+    const res = await DietisianService.sendVerificationEmail(data.email);
+    if (res.status == 200) {
+      alert(res.data.message + data.email);
+      navigate("/verifycode", { state: { email: data.email } });
+    }
+  }
     return (
-        <div className="flex justify-center items-center w-screen h-screen bg-[#f3f3fd]">
-        <div className="bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-          <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
-            <div className="flex flex-col items-center justify-center text-center space-y-2">
-              <div className="font-semibold text-3xl">
-                <p>Email Verification</p>
-              </div>
-              <div className="flex flex-row text-sm font-medium text-gray-400">
-                <p>We have sent a code to your email {email}</p>
-              </div>
-            </div>
-  
-            <div>
-              <form>
-                <div className="flex flex-col space-y-16">
-                  <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-                  {Array.from({ length: 4 }, (_, index) => (
-                    <div key={index} className="w-16 h-16">
-                      <input
-                        maxLength="1"
-                        className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-green-600"
-                        type="text"
-                        id="OTPinput"
-                        value={OTPinput[index]}
-                        onChange={(e) => {
-                          const newOTPinput = [...OTPinput];
-                          newOTPinput[index] = e.target.value;
-                          setOTPinput(newOTPinput);
-                          e.target.value = e.target.value.slice(-1);
-                        }}
-                      />
-                    </div>
-                  ))}
-                  </div>
-  
-                  <div className="flex flex-col space-y-5">
-                    <div>
-                      <a
-                        onClick={() => verifyOTP()}
-                        className="flex flex-row cursor-pointer items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-green-600 border-none text-white text-sm shadow-sm"
-                      >
-                        Verify Account
-                      </a>
-                    </div>
-  
-                    <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                      <p>Didn't receive code?</p>{" "}
-                      <a
-                        className="flex flex-row items-center"
-                        style={{
-                          color: disable ? "gray" : "green",
-                          cursor: disable ? "none" : "pointer",
-                          textDecorationLine: disable ? "none" : "underline",
-                        }}
-                        onClick={() => resendOTP()}
-                      >
-                        {disable ? `Resend OTP in ${timerCount}s` : "Resend OTP"}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
+      <div className="bg-cover bg-center h-screen bg-[#f3f3fd]">
+      <div className="grid grid-cols-3 gap-6 h-[calc(100vh-9rem)]">
+          <div className='flex flex-col justify-end h-full mt-32'>
           </div>
-        </div>
+
+          <form className='bg-white ml-16 p-10 mt-60 shadow-xl mx-auto w-full max-w-lg rounded-2xl'
+          onSubmit={handleSubmit(onSubmit)}
+          >
+              <div className='font-bold text-4xl'>Verify Email</div>
+              <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-20 items-center'>
+                  <input
+                      type='text'
+                      placeholder='Email'
+                      className='w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 '
+                      {...register("email")}
+                  />
+              </div>
+              <div className='h-32'>
+                  <button className='w-full text-center font-semibold bg-green-500 rounded-2xl mt-16 py-3 text-white hover:bg-green-600'>
+                      <a>
+                      send mail
+                      </a>
+                  </button>
+              </div>
+          </form>
       </div>
+  </div>
     );
 }
 

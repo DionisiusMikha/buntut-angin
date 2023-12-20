@@ -165,6 +165,7 @@ const LoginPage = () => {
                     </form>
                 </div>
             </div>
+            {error != "" && <Alert severity="error">{error}</Alert>}
         </>
     );
 };
