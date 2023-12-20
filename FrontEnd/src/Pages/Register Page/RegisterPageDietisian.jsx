@@ -1,118 +1,248 @@
 import React from 'react';
 import Navbar from '../../Component/Navbar'
 import gambar from '/img/gbr-login-register.png'
-import email from '/img/Logo-kecil.png'
-import iconGoogle from '/icon/google icon.png'
-import iconFacebook from '/icon/facebook icon.png'
-import iconApple from '/icon/apple icon.png'
+import no from '/icon/no.png'
+import view from '/icon/view.png'
+import hide from '/icon/hide.png'
+import yes from '/icon/yes.png'
 
+import DietisianService from '../../Services/Dietisian/dietisian';
 import { useForm } from 'react-hook-form'
-import DietisianService from '../../Services/Dietisian/Dietisian';
 import Joi from 'joi'
 import { joiResolver } from "@hookform/resolvers/joi"
 import { useState } from 'react';
 
+import handler from './handler';
+
 const RegisterPage = () => {
     const schema = Joi.object({
-        username: Joi.string().required().messages({
-            "string.empty":"username tidak boleh kosong"
+        email: Joi.string().required().messages({
+            "string.empty":"Email tidak boleh kosong"
         }),
-        display_name: Joi.string().required().messages({
+        username: Joi.string().required().messages({
+            "string.empty":"Username tidak boleh kosong"
+        }),
+        displayName: Joi.string().required().messages({
             "string.empty":"display name tidak boleh kosong"
         }),
         password: Joi.string().required().messages({
             "string.empty":"password tidak boleh kosong"
         }),
+        confirmPassword: Joi.string().required().valid(Joi.ref('password')).messages({
+            "string.empty":"Confirm password tidak boleh kosong",
+            "any.only": "Confirm password tidak sama"
+        }),
+        birthdate: Joi.date().required().messages({
+            "date.empty" : "birthdate tidak boleh kosong"
+        }),
+        gender: Joi.string().required().messages({
+            "string.empty" : "gender tidak boleh kosong"
+        }),
+        weight: Joi.number().required().messages({
+            "number.empty" : "weight tidak boleh kosong"
+        }),
+        height: Joi.number().required().messages({
+            "number.empty" : "height tidak boleh kosong"
+        }),
+        address: Joi.string().required().messages({
+            "string.empty" : "address tidak boleh kosong"
+        }),
+        phone_number: Joi.string().required().messages({
+            "string.empty" : "phone number tidak boleh kosong"
+        }),
     })
-    // halaman Register kurang username, display_name, date_of_birth, confirm_password, role, phone_number, address
+
     const {register, handleSubmit, reset, formState: { errors }  } = useForm({
         resolver: joiResolver(schema)
     });
     const bg = "url('img/background-login-register.png')";
 
-    const submit = data => {
+    const submit = async data => {
+        console.log("tes");
         console.log(data);
+        await handler.register(data);
+    }
+
+    const handleTimeout = () => {
+        setErrorsTimeout(setTimeout(() => {
+          reset();
+          setErrorsTimeout(null);
+        }, 2000));
+    };
+
+    const [see, setSee] = useState("password");
+    const [see1, setSee1] = useState("password");
+    const [cekDob, setCekDob] = useState(false);
+    const [cekGender, setGender] = useState(false);
+    const [cekHeight, setHeight] = useState(false);
+    const [cekWeight, setWeight] = useState(false);
+    const [error, setError] = useState("");
+
+    const resetEmail = () => {
+        reset({email : "",})
+    }
+    const resetUsername = () => {
+        reset({username : "",})
+    }
+    const resetPhoneNumber = () => {
+        reset({phoneNumber : "",})
+    }
+    const resetAddress = () => {
+        reset({address : "",})
+    }
+    const resetName = () => {
+        reset({displayName : "",})
     }
 
     return (
         <>
-            <div className="bg-cover bg-center h-screen" style={{backgroundImage: bg}}>
-                <Navbar />
-                <div className="grid grid-cols-3 gap-6 h-[calc(100vh-9rem)]">
-                    <div className='mx-20 mt-48'> {/* kata2 */}
-                        <div className='font-bold text-5xl'>Register to to</div>
+            <div className="bg-cover bg-center bg-gray-400 h-screen flex flex-col" style={{backgroundImage: bg}}>
+                <Navbar/>
+                <div className="grid grid-cols-3 gap-6 h-full">
+                    <div className='w-full h-full flex flex-col items-start justify-center ps-24 pb-24'>
+                        <div className='font-bold text-5xl'>Register to</div>
                         <div className='font-bold text-5xl'>get your nutriens</div>
 
                         <div className='font-semibold text-2xl mt-24'>if you already have an account</div>
                         <div className='font-semibold text-2xl'>you can <span className='underline text-green-500'><a href="/login">Login here!</a></span></div>
                     </div>
-                    <div className='flex flex-col justify-end h-full'> {/* GAMBAR */}
+                    <div className='w-full h-full flex justify-center items-end'> 
                         <img src={gambar} alt="" className='w-full'/>
                     </div>
-                    <form onSubmit={handleSubmit(submit)} className='mt-12 w-10/12'> {/* Register */}
+                    <form onSubmit={handleSubmit(submit)} className='mt-16 w-10/12'> 
                         <div className='font-bold text-4xl'>Welcome New User</div>
-                        <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-10 items-center'>
-                            <img src={email} alt="" className='' width="40px"/>
-                            <input type="text" placeholder="Enter Your Email"  className="input input-ghost w-full max-w-s items-center bg-transparent border-none outline-none" {...register("email")}/>
-                            <img src={email} alt="" className='' width="40px"/>
-                        </div>
-                        <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
-                            <img src={email} alt="" className='' width="40px"/>
-                            <input
-                                type="text"
-                                placeholder="Enter Your Password"
-                                className="input input-ghost w-full max-w-s items-center bg-transparent border-none outline-none"
-                                {...register("ps")}
-                            />
-                            <img src={email} alt="" className='' width="40px"/>
-                        </div>
-                        <div className='flex flex-row  mt-5 items-center'>
-                            <div className='w-1/3 px-2 py-2 bg-gray-200 rounded-xl me-5'>
-                                <input type="text" placeholder="Age"  className="input input-ghost items-center w-full" {...register("age")}/>
+                        {/* EMAIL */}
+                        <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-10 items-center'>
+                            <input type="text" placeholder={`${errors.email ? errors?.email?.message : "Enter Your Email" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.email ? 'placeholder-red-500' : ''}`} {...register("email")}/>
+                            <div onClick={()=>{
+                                resetEmail()
+                            }}>
+                                <img src={no} alt="" className='mx-3' width="30px"/>
                             </div>
-                            <div className='w-2/3 px-2 py-2 bg-gray-200 rounded-xl '>
-                                {/* <input type="text" placeholder="Gender" className="input input-ghost items-center w-full" {...register("gender")}/> */}
-                                <select placeholder="Gender" className="input input-ghost items-center w-full bg-transparent border-none outline-none" {...register("gender")}>
+                        </div>
+                        {/* Username */}
+                        <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center'>
+                            <input type="text" placeholder={`${errors.username ? errors?.username?.message : "Enter Your Username" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.username ? 'placeholder-red-500' : ''}`} {...register("username")}/>
+                            <div onClick={()=>{
+                                resetUsername()
+                            }}>
+                                <img src={no} alt="" className='mx-3' width="30px"/>
+                            </div>  
+                        </div>
+                        {/* displayName */}
+                        <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center'>
+                            <input type="text" placeholder={`${errors.displayName ? errors?.displayName?.message : "Enter Your Name" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.displayName ? 'placeholder-red-500' : ''}`} {...register("displayName")}/>
+                            <div onClick={()=>{
+                                resetName()
+                            }}>
+                                <img src={no} alt="" className='mx-3' width="30px"/>
+                            </div>
+                        </div>
+                        {/* password */}
+                        <div className='flex flex-row  bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center'>
+                            <input type={see} placeholder={`${errors.password ? errors?.password?.message : "Enter Your Password" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.password ? 'placeholder-red-500' : ''}`} {...register("password")}/>
+                            <div onClick={
+                                ()=>{
+                                    if(see == "password"){
+                                        setSee("text");
+                                    } else {
+                                        setSee("password");
+                                    }
+                                }
+                            }>
+                                {see === "password" ? 
+                                <img src={hide} alt="" className='mx-3' width="30px"/> : 
+                                <img src={view} alt="" className='mx-3' width="30px"/>}
+                            </div>
+                        </div>
+                        {/* confirm password */}
+                        <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
+                            <input type={see1} placeholder={`${errors.confirmPassword ? errors?.confirmPassword?.message : "Enter Your Confirm Password" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.confirmPassword ? 'placeholder-red-500' : ''}`} {...register("confirmPassword")}/>
+                            <div onClick={
+                                ()=>{
+                                    if(see1 == "password"){
+                                        setSee1("text");
+                                    } else {
+                                        setSee1("password");
+                                    }
+                                }
+                            }>
+                                {see1 === "password" ? 
+                                <img src={hide} alt="" className='mx-3' width="30px"/> : 
+                                <img src={view} alt="" className='mx-3' width="30px"/>}
+                            </div>
+                        </div>
+                        {/* address */}
+                        <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
+                            <input type="text" placeholder={`${errors.address ? errors?.address?.message : "Enter Your address" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.address ? 'placeholder-red-500' : ''}`} {...register("address")}/>
+                            <div onClick={
+                                ()=>{
+                                    if(see1 == "password"){
+                                        setSee1("text");
+                                    } else {
+                                        setSee1("password");
+                                    }
+                                }
+                            }>
+                                {see1 === "password" ? 
+                                <img src={hide} alt="" className='mx-3' width="30px"/> : 
+                                <img src={view} alt="" className='mx-3' width="30px"/>}
+                            </div>
+                        </div>
+                        {/* phoneNumber */}
+                        <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-5 items-center'>
+                            <input type="text" placeholder={`${errors.phone_number ? errors?.phone_number?.message : "Enter Your Phone Number" }`}  className={`w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 ${errors.phone_number ? 'placeholder-red-500' : ''}`} {...register("phone_number")}/>
+                        </div>
+                        {/* weight height */}
+                        <div className='flex flex-row justify-between'>
+                            <div className='w-1/2 flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center me-2'>
+                                <input type="number" placeholder="weight"  className="w-full h-12 items-center bg-transparent border-none outline-none px-4" {...register("weight")}/>
+                            </div>
+                            <div className='w-1/2 flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center ms-2'>
+                                <input type="number" placeholder="height"  className="w-full h-12 items-center bg-transparent border-none outline-none px-4" {...register("height")}/>
+                            </div>
+                        </div>
+                        {/* birthdate and gender */}
+                        <div className='flex flex-row justify-between'>
+                            <div className='w-1/2 flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center me-2'>
+                                <input type="date" placeholder="Birthdate"  className="w-full h-12 items-center bg-transparent border-none outline-none px-4" {...register("birthdate")} onChange={(e)=>{
+                                    if(e.target.value != ""){
+                                        setCekDob(true)
+                                    } else {
+                                        setCekDob(false)
+                                    }
+                                }}/>
+                                {cekDob ? (
+                                    <div>
+                                        <img src={yes} alt="" className='mx-2' width="30px"/>
+                                    </div>
+                                ) : (
+                                    <img src={no} alt="" className='mx-2' width="30px"/>
+                                )}
+                            </div>
+                            <div className='w-1/2 flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-4 items-center ms-2'>
+                                <select className='w-full max-w-s items-center bg-transparent border-none outline-none me-2 px-4' {...register("gender")} onChange={(e)=>{
+                                    setGender(true)
+                                }}>
+                                    <option value="Gender" disabled hidden>Gender</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
                                 </select>
+                                {cekGender ? (
+                                    <div>
+                                        <img src={yes} alt="" className='mx-2' width="30px"/>
+                                    </div>
+                                ) : (
+                                    <img src={no} alt="" className='mx-2' width="30px"/>
+                                )}
                             </div>
                         </div>
-                        <div className='flex flex-row  mt-5 items-center'>
-                            <div className='w-1/2 px-2 py-2 bg-gray-200 rounded-xl me-5'>
-                                <input type="text" placeholder="Height"  className="input input-ghost items-center w-full" {...register("height")}/>
-                            </div>
-                            <div className='w-1/2 px-2 py-2 bg-gray-200 rounded-xl '>
-                                <input type="text" placeholder="Weight"  className="input input-ghost items-center w-full" {...register("weight")}/>
-                            </div>
-                        </div>
-                        <div className='text-right text-sm text-gray-500 my-4'>
-                            Having Problem?
-                        </div>
-                        <a href="/loading">
-                            <button className='w-full text-center bg-green-500 rounded-2xl my-14 py-3 text-white hover:bg-green-600'>
+                        <div className='h-32'>
+                            <button className='w-full text-center font-semibold bg-green-500 rounded-2xl mt-16 py-3 text-white hover:bg-green-600'>
                                 Register
                             </button>
-                        </a>
-                        <div className='flex flex-row justify-center items-center'>
-                            <div className='w-1/3'>
-                                <hr className='border-gray-300 border' />
-                            </div>
-                            <div className='w-1/3 text-center text-gray-500'>Or continue with</div>
-                            <div className='w-1/3'>
-                                <hr className='border-gray-300 border' />
-                            </div>
-                        </div>
-                        <div className='my-10 flex justify-between items-center'>
-                            <div className='w-1/4 py-3 rounded-lg bg-white items-center shadow-xl place-content-center'>
-                                <img src={iconGoogle} alt="" width="30px" className='mx-auto'/>
-                            </div>
-                            <div className='w-1/4 py-3 rounded-lg bg-white shadow-xl'>
-                                <img src={iconApple} alt="" width="30px" className='mx-auto'/>
-                            </div>
-                            <div className='w-1/4 py-3 rounded-lg bg-white shadow-xl'>
-                                <img src={iconFacebook} alt="" width="30px" className='mx-auto'/>
-                            </div>
+                            {error != "" && <span className="flex justify-center" style={{ color:"red" }}>{error}</span>}
                         </div>
                     </form>
                 </div>

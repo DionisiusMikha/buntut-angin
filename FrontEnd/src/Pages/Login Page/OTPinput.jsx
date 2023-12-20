@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function OTPInput() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);
@@ -40,8 +42,8 @@ export default function OTPInput() {
   function verifyOTP() {
     const enteredOTP = parseInt(OTPinput.join(""));
     if (enteredOTP === otp) {
-      alert("OTP is correct");
-      window.location.href = "/resetpassword";
+      alert("OTP is correct" + email);
+      navigate("/resetpassword", { state: { email: email } });
     } else {
       alert("OTP is incorrect");
       alert(enteredOTP);
@@ -61,7 +63,7 @@ export default function OTPInput() {
   }, [disable]);
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-gray-50">
+    <div className="flex justify-center items-center w-screen h-screen bg-[#f3f3fd]">
       <div className="bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
         <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
           <div className="flex flex-col items-center justify-center text-center space-y-2">

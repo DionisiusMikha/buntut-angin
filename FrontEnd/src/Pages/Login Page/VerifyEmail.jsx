@@ -1,50 +1,59 @@
-import { useContext, useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { Alert } from "@mui/material";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import DietisianService from "../../Services/Dietisian/dietisian";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useNavigate } from "react-router-dom";
+import Joi from "joi";
 
-const VerifyEmail = () => {
-    const { verifyEmail } = useContext(AuthContext);
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(true);
-    const [success, setSuccess] = useState(false);
-    const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-    
-    useEffect(() => {
-        const verify = async () => {
-        try {
-            await verifyEmail(searchParams.get("oobCode"));
-            setSuccess(true);
-            setLoading(false);
-        } catch (err) {
-            setError(err.message);
-            setLoading(false);
-        }
-        };
-        verify();
-    }, [searchParams, verifyEmail]);
-
-    
-    if (error) {
-        return <Alert severity="error">{error}</Alert>;
+function verifyEmail() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+  const schema = Joi.object({
+    email: Joi.string().required().messages({
+      "string.empty": "email tidak boleh kosong",
+    }),
+  });
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: joiResolver(schema),
+  });
+  const onSubmit = async (data) => {
+    const res = await DietisianService.sendVerificationEmail(data.email);
+    if (res.status == 200) {
+      alert(res.data.message + data.email);
+      navigate("/verifycode", { state: { email: data.email } });
     }
-    
-    if (success) {
-        return (
-        <Alert severity="success">
-            Email berhasil diverifikasi. Silahkan login kembali.
-        </Alert>
-        );
-    }
-    
-    return navigate("/");
-    };
+  }
+    return (
+      <div className="bg-cover bg-center h-screen bg-[#f3f3fd]">
+      <div className="grid grid-cols-3 gap-6 h-[calc(100vh-9rem)]">
+          <div className='flex flex-col justify-end h-full mt-32'>
+          </div>
 
-export default VerifyEmail;
+          <form className='bg-white ml-16 p-10 mt-60 shadow-xl mx-auto w-full max-w-lg rounded-2xl'
+          onSubmit={handleSubmit(onSubmit)}
+          >
+              <div className='font-bold text-4xl'>Verify Email</div>
+              <div className='flex flex-row bg-gray-200 rounded-xl px-2 py-2 mt-20 items-center'>
+                  <input
+                      type='text'
+                      placeholder='Email'
+                      className='w-full h-12 max-w-s items-center bg-transparent border-none outline-none px-4 '
+                      {...register("email")}
+                  />
+              </div>
+              <div className='h-32'>
+                  <button className='w-full text-center font-semibold bg-green-500 rounded-2xl mt-16 py-3 text-white hover:bg-green-600'>
+                      <a>
+                      send mail
+                      </a>
+                  </button>
+              </div>
+          </form>
+      </div>
+  </div>
+    );
+}
 
-
-
-
-
-
-
+export default verifyEmail

@@ -5,12 +5,13 @@ import Try from "./Pages/Try/try";
 // Dashboard
 import LandingPage from "./Pages/Landing Page/LandingPages";
 import Login from "./Pages/Login Page/LoginPage";
-import Register from "./Pages/Register Page/RegisterPage";
+import Register from "./Pages/Register Page/RegisterPageDietisian";
 import SendEmail from "./Pages/Login Page/SendEmail";
 import OTPinput from "./Pages/Login Page/OTPinput";
 import ResetPassword from "./Pages/Login Page/ResetPassword";
 import Recovered from "./Pages/Login Page/Recovered";
 import VerifyEmail from "./Pages/Login Page/VerifyEmail";
+import VerifyCode from "./Pages/Login Page/VerifyCode";
 
 // Dietisian
 import DietisianHomepage from "./Pages/Dietisian/Homepage"
@@ -81,6 +82,10 @@ const Router = createBrowserRouter([
   {
     path: "/verifyemail",
     element: <VerifyEmail />,
+  },
+  {
+    path: "/verifycode",
+    element: <VerifyCode />,
   },
   {
     path: "/loading",

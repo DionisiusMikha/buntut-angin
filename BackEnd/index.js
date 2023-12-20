@@ -4,7 +4,6 @@ const app = express();
 const cors = require("cors");
 const router = require("./src/routes/index");
 const nodemailer = require("nodemailer");
-require("dotenv").config();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

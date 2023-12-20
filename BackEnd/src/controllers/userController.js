@@ -7,15 +7,18 @@ const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-const crypto = require("crypto");
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD
-    }
-})
+      user: process.env.MY_EMAIL,
+      pass: process.env.MY_PASSWORD,
+    },
+});
+
+const generateVerificationCode = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+};
 
 const path = require("path");
 
@@ -111,7 +114,9 @@ module.exports = {
             age : umur,
             address: address,
             phone_number: phone_number,
-            email_verif_token: crypto.randomBytes(64).toString('hex'),
+            email_verification_code: null,
+            is_email_verified: false,
+            genders : gender,
         })
 
         const result = {
@@ -134,6 +139,20 @@ module.exports = {
                 username: username
             }
         })
+
+        const checkEmail = await db.User.findOne({
+            where: {
+                username: username,
+                is_email_verified: true
+            }
+        })
+
+        if (!checkEmail){
+            const result = {
+                "message" : "Email not verified"
+            }
+            return res.status(400).json(result);
+        }
 
         if (!checkUser){
             return res.status(404).json({
@@ -824,77 +843,90 @@ module.exports = {
         })
         return res.status(200).json({msg: "Recipe updated"});
     },
-    verifyToken: async function(req, res){
-        const token = req.params.token;
-        const user = jwt.verify(token, PRIVATE_KEY);
-        const checkUser = await db.User.findOne({
-            where: {
-                email: user.email
+    sendVerificationEmail: async function (req, res) {
+        const { email } = req.body;
+
+        try {
+          const verificationCode = generateVerificationCode();
+
+          await db.User.update(
+            { email_verification_code: verificationCode },
+            { where: { email: email } }
+          );
+    
+          const mailOptions = {
+            from: process.env.EMAIL,
+            to: email,
+            subject: 'Email Verification Code',
+            text: `Your verification code is: ${verificationCode}`,
+          };
+    
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error('Error sending email:', error);
+              return res.status(500).json({ message: 'Internal Server Error' });
             }
-        })
-        if (!checkUser){
-            const result = {
-                "message" : "User not found"
-            }
-            return res.status(404).json(result);
+    
+            console.log('Email sent:', info.response);
+            res.status(200).json({ message: 'Email sent successfully' });
+          });
+        } catch (err) {
+          console.error('Error sending verification email:', err);
+          return res.status(500).json({ message: 'Internal Server Error' });
         }
-        else {
-            const updateUser = await db.User.update({
-                is_verif: true
-            }, {
+      },
+      
+        verifyEmail: async function (req, res) {
+            const { email, verificationCode } = req.body;
+
+            try {
+            const result = await db.User.findOne({
                 where: {
-                    email: user.email
-                }
-            })
-            const result = {
-                "message" : "User verified"
-            }
-            console.log(updateUser)
-            return res.status(200).json(result);
-        }
-    },
-    verifyEmail: async function(req, res){
-        const {email} = req.body;
-        const checkUser = await db.User.findOne({
-            where: {
-                email: email
-            }
-        })
-        if (!checkUser){
-            const result = {
-                "message" : "User not found"
-            }
-            return res.status(404).json(result);
-        }
-        else {
-            const token = jwt.sign({
-                email: email
-            }, PRIVATE_KEY, {
-                expiresIn: 86400
+                email: email,
+                email_verification_code: verificationCode,
+                },
             });
-
-            const mailOptions = {
-                from: process.env.EMAIL,
-                to: email,
-                subject: 'Verify Email',
-                html: `<p>Click <a href="http://localhost:3000/verify/${token}">here</a> to verify your email</p>`
+        
+            if (!result) {
+                return res.status(400).json({ message: 'Invalid verification code' });
             }
 
-            transporter.sendMail(mailOptions, function(err, info){
-                if (err){
-                    console.log(err);
-                }
-                else {
-                    console.log('Email sent: ' + info.response);
-                }
-            })
+            await db.User.update(
+                { is_email_verified: true },
+                { where: { email: email } }
+            );
 
-            const result = {
-                "message" : "Email sent"
+            res.status(200).json({ message: 'Email verified successfully' });
+            } catch (err) {
+            console.error('Error verifying email:', err);
+            return res.status(500).json({ message: 'Internal Server Error' });
             }
-            return res.status(200).json(result);
+        },
+      changePassword: async function (req, res) {
+        const { email, newPassword } = req.body;
+
+        try {
+          const result = await db.User.findOne({
+            where: {
+              email: email,
+            },
+          });
+    
+          if (!result) {
+            return res.status(400).json({ message: 'Email not found' });
+          }
+    
+          await db.User.update(
+            { password: newPassword },
+            { where: { email: email } }
+          );
+    
+          res.status(200).json({ message: 'Password reset successfully' });
+        } catch (err) {
+          console.error('Error resetting password:', err);
+          return res.status(500).json({ message: 'Internal Server Error' });
         }
-    },
+      },
     ajukanKonsultasi: async function(req, res){
         const { doctor_id, user_id, tanggal, jam } = req.body;
         try {
@@ -910,5 +942,12 @@ module.exports = {
         } catch (error) {
             return res.status(400).send(error)
         }
-    }
+    },
+
+    getAllEmail: async function(req, res){
+        const result = await db.User.findAll({
+            attributes: ['email']
+        });
+        return res.status(200).json(result);
+    },
 }

@@ -8,9 +8,13 @@ function registerUser(data){
         username: data.username,
         email: data.email,
         display_name: data.displayName,
-        date_of_birth: data.birthdate,
+        birthdate: data.birthdate,
         password: data.password,
         gender : data.gender,
+        phone_number : data.phone_number,
+        address : data.address,
+        weight : data.weight,
+        height : data.height,
     })
     .then((response) => {
         return response;
@@ -174,6 +178,26 @@ function ajukanKonsultasi(doctor_id, user_id, tanggal, jam){
     });
 }
 
+function changePassword(email, newPassword){
+    return client.put("/change-password", {
+        email : email,
+        newPassword : newPassword
+    })
+}
+
+function verifyEmail(email , verificationCode){
+    return client.put("/verify-email", {
+        email : email,
+        verificationCode : verificationCode
+    })
+}
+
+function sendVerificationEmail(email){
+    return client.put("/send-verification-email", {
+        email : email
+    })
+}
+
 
 export default {
     getAllUsers,
@@ -191,5 +215,8 @@ export default {
     addRatingComment,
     getUserByID,
     updateLike,
-    ajukanKonsultasi
+    ajukanKonsultasi,
+    changePassword,
+    verifyEmail,
+    sendVerificationEmail
 }
