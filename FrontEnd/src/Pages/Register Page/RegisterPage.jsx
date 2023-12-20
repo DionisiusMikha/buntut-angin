@@ -1,10 +1,6 @@
 import React from 'react';
 import Navbar from '../../Component/Navbar'
 import gambar from '/img/gbr-login-register.png'
-import email from '/img/Logo-kecil.png'
-import iconGoogle from '/icon/google icon.png'
-import iconFacebook from '/icon/facebook icon.png'
-import iconApple from '/icon/apple icon.png'
 import no from '/icon/no.png'
 import view from '/icon/view.png'
 import hide from '/icon/hide.png'
@@ -93,7 +89,7 @@ const RegisterPage = () => {
                 <Navbar/>
                 <div className="grid grid-cols-3 gap-6 h-full">
                     <div className='w-full h-full flex flex-col items-start justify-center ps-24 pb-24'>
-                        <div className='font-bold text-5xl'>Register to to</div>
+                        <div className='font-bold text-5xl'>Register to</div>
                         <div className='font-bold text-5xl'>get your nutriens</div>
 
                         <div className='font-semibold text-2xl mt-24'>if you already have an account</div>
