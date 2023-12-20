@@ -46,10 +46,7 @@ function VerifyCode() {
         else if (res.status == 400){
             alert(res.data.message)
         }
-    }
-
-
-
+    } 
   return (
     <div className="bg-cover bg-center h-screen bg-[#f3f3fd]">
       <div className="grid grid-cols-3 gap-6 h-[calc(100vh-9rem)]">
