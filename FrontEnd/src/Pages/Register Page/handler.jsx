@@ -9,7 +9,9 @@ const register = async (data) => {
         throw error
     }
 
-    // return window.location = "/login";
+    {alert('Register Success')}
+
+    return window.location = "/login";
 }
 
 export default { register };

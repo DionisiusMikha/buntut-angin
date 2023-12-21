@@ -96,7 +96,7 @@ const RegisterPage = () => {
 
     return (
         <>
-            <div className="bg-cover bg-center bg-gray-400 h-screen flex flex-col" style={{backgroundImage: bg}}>
+            <div className="bg-cover bg-center bg-gray-400 min-h-screen flex flex-col" style={{backgroundImage: bg}}>
                 <Navbar/>
                 <div className="grid grid-cols-3 gap-6 h-full">
                     <div className='w-full h-full flex flex-col items-start justify-center ps-24 pb-24'>
