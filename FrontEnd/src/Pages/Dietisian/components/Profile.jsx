@@ -201,7 +201,6 @@ const Profile = () => {
                         message: "Please enter your new password"
                       }
                     })}
-                    disabled
                   />
                   <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>
