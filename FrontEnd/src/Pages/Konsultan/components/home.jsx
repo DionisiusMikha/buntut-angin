@@ -1,4 +1,4 @@
-import doctorService from '../../../Services/konsultan/doctor';
+import doctorService from '../../../Services/Konsultan/doctor';
 import { useState, useEffect } from 'react';
 import menu from "/icon/menu.png";
 import acc from '/icon/acc.png';
