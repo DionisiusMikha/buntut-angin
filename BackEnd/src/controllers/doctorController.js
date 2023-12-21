@@ -220,6 +220,21 @@ module.exports = {
         // })
     },
     uploadImage: async function(req, res){
+        // try {
+            uploadFile(req, res, async function (err) {
+                const uploadFile = upload.single("file")
+                
+                if (err instanceof multer.MulterError) {
+                    return res.status(400).send({ msg: "File too large" });
+                } else if (err) {
+                    return res.status(400).send({ msg: "File not supported" });
+                }
+                fs.renameSync(req.file.path, req.file.path.replace("uploads", "assets"))    
+                return res.status(200).json(req.file);
+            })
+        // } catch(error){
+        //     return res.status(500).send(error);
+        // }
         const uploadFile = upload.single("file")
         uploadFile(req, res, async function (err) {
             if (err instanceof multer.MulterError) {
