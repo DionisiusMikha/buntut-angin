@@ -59,6 +59,9 @@ const LoginPage = () => {
                 alert(res.data.message + " locating to verify email")
                 navigate("/verifyemail");
             }
+            else if (res.status == 401){
+                alert (res.data.message)
+            }
             else {
                 if (res.status == 404){
                     const res2 = await DoctorService.loginUser(data.username, data.password);

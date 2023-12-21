@@ -166,7 +166,7 @@ module.exports = {
             });
         }
         else {
-            if (checkUser.dataValues.password == password){
+            if (checkUser.dataValues.password == password && checkUser.dataValues.username == username){
                 const role = checkUser.dataValues.role;
 
                 const token = jwt.sign({
@@ -182,11 +182,11 @@ module.exports = {
                 }
                 return res.status(200).json(result);
             }
-            else {
+            else if (checkUser.dataValues.password != password){
                 const result = {
-                    "message" : "incorrect password"
+                    "message" : "Wrong password"
                 }
-                return res.status(400).json(result);
+                return res.status(401).json(result);
             }
         }
     },
@@ -954,6 +954,7 @@ module.exports = {
         });
         return res.status(200).json(result);
     },
+    
     visitorCount: async function(req, res){
         const ipAddress = ip.address();
         const visitDate = new Date().toISOString().slice(0, 10);

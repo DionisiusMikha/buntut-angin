@@ -11,9 +11,22 @@ import logo from '/img/Logo-kecil.png'
 import pin from '/icon/pin.png'
 import email from '/icon/email.png'
 import phone from '/icon/phone.png'
+import serviceUser from "../../Services/Dietisian/dietisian"
+import axios from 'axios';
 
 function LandingPages() {
     const bg = "url('img/background-landingPages.png')";
+
+    const getvisitorcount = async () => {
+        const response = await serviceUser.visitorCount();
+        console.log(response.data);
+    }
+    
+    React.useEffect(() => {
+        getvisitorcount();
+    }
+    , []);
+
 
     return <>
         <div className="bg-cover min-h-screen" style={{backgroundImage: bg}}>
