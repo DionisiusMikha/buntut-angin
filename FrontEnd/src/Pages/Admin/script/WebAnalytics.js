@@ -49,12 +49,12 @@ const loadWebAnalytics = function() {
         series: [
         {
             name: "New users",
-            data: [6500, 6418, 6456, 6526, 6356, 6456],
+            data: [180, 209, 90, 174, 102, 453],
             color: "#1A56DB",
         },
         ],
         xaxis: {
-        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        categories: ['15 december', '16 december', '17 december', '18 december', '19 december', '20 december', '21 december'],
         labels: {
             show: false,
         },
