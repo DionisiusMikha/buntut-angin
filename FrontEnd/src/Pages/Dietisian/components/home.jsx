@@ -49,11 +49,11 @@ function Home() {
                     <div className="w-full h-2/4 px-8 pt-10">
                         <div className="w-full h-full bg-white rounded-3xl py-10 px-12">
                             <h1 className="text-4xl">Daily Report</h1>
-                            <div className="max-w-3xl max-h-1 h-full w-full rounded-lg p-4 md:p-6">
+                            <div className="max-w-3xl max-h-1 h-full w-full rounded-lg">
                             <div className="flex justify-between pb-4 mb-4 border-b ">
                                 <div className="flex items-center">
                                 <div>
-                                    <h5 className="leading-none text-2xl font-bold text-gray-900 pb-1">Calories Per day</h5>
+                                    <h5 className="leading-none text-2xl font-normal text-gray-900 pb-1">Calories Per day</h5>
                                     <p className="text-sm font-normal text-gray-500 400">congrats you lose 780cal today!</p>
                                 </div>
                                 </div>
@@ -62,17 +62,9 @@ function Home() {
                             <div id="column-chart"></div>
                                 <div className="grid grid-cols-1 items-center border-gray-200 border-t y-700 justify-between">
                                 <div className="flex justify-between items-center pt-5">
-                                    <a
-                                    href="#"
-                                    className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 -blue-500  hover:bg-gray-100 ray-700 -gray-700 y-700 px-3 py-2">
-                                    More 
-                                    <svg className="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
-                                    </svg>
-                                    </a>
                                 </div>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <div className="w-full h-auto px-8 pt-10 flex gap-x-8">
