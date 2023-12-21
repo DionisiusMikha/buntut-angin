@@ -7,6 +7,7 @@ const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const ip = require('ip');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -879,9 +880,8 @@ module.exports = {
           console.error('Error sending verification email:', err);
           return res.status(500).json({ message: 'Internal Server Error' });
         }
-      },
-      
-        verifyEmail: async function (req, res) {
+    },
+    verifyEmail: async function (req, res) {
             const { email, verificationCode } = req.body;
 
             try {
@@ -906,8 +906,8 @@ module.exports = {
             console.error('Error verifying email:', err);
             return res.status(500).json({ message: 'Internal Server Error' });
             }
-        },
-      changePassword: async function (req, res) {
+    },
+    changePassword: async function (req, res) {
         const { email, newPassword } = req.body;
 
         try {
@@ -931,7 +931,7 @@ module.exports = {
           console.error('Error resetting password:', err);
           return res.status(500).json({ message: 'Internal Server Error' });
         }
-      },
+    },
     ajukanKonsultasi: async function(req, res){
         const { doctor_id, user_id, tanggal, jam } = req.body;
         try {
@@ -948,12 +948,33 @@ module.exports = {
             return res.status(400).send(error)
         }
     },
-
     getAllEmail: async function(req, res){
         const result = await db.User.findAll({
             attributes: ['email']
         });
         return res.status(200).json(result);
     },
-    
+    visitorCount: async function(req, res){
+        const ipAddress = ip.address();
+        const visitDate = new Date().toISOString().slice(0, 10);
+        
+        const newVisitor = await db.Visitor.create({
+            ip_address : ipAddress,
+            date: visitDate,
+        })
+
+        const visitorCount = await db.Visitor.count();
+
+        const updateVisitor = await db.Visitor.update({
+            count: visitorCount
+        },{
+            where: {
+                count: null
+            }
+        })
+        const result = {
+            "Visitor count" :  visitorCount
+        }
+        res.status(201).json(result);
+    }
 }
