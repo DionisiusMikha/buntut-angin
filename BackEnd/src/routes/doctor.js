@@ -19,6 +19,7 @@ router.get("/", doctorController.getAllDoctor);
 router.post("/schedule/:username", doctorController.aturJadwal);
 router.put("/edit/:id_user", doctorController.editDoctor);
 router.put("/edit-status", doctorController.changeStatus);
+router.post("/image", doctorController.uploadImage);
 
 // image
 router.post("/image/:name", doctorController.uploadImage);
