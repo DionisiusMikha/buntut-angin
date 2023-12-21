@@ -43,7 +43,7 @@ function Chat() {
                 <div className="w-8/12 h-full flex py-10 px-8">
                     <div className="w-full h-full flex flex-col bg-white rounded-3xl ">
                         <div className="w-full h-full flex flex-col items-center justify-center text-3xl font-semibold">
-                            Start New Conversation
+                            Wait for consultant to start conversation
                         </div>
                     </div>
                 </div>
