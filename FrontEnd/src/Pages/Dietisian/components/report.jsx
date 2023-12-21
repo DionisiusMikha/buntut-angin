@@ -62,11 +62,6 @@ function Report() {
 
                     </div>
                 </div>
-                <div className="w-4/12 h-full flex py-10 pe-12">
-                    <div className="w-full h-full bg-white rounded-3xl py-12 px-16">
-                        <h1 className="text-4xl">REMINDER</h1>
-                    </div>
-                </div>
             </div>
         </>
     )
