@@ -4,8 +4,24 @@ const multer = require("multer");
 const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
-const upload = multer({
-    dest : "./uploads",
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./uploads")
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + "." + file.mimetype.split("/")[1]
+        cb(null, file.fieldname + '-' + uniqueSuffix)
+    }, 
+    fileFilter : function(req, file, cb){
+        if(file.mimetype != "image/png" || file.mimetype != "image/jpeg"){
+          return cb(new Error("Wrong file type"), null)
+        }
+        cb(null, true)
+      },
+}) 
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 3000000 },
 })
 const { Op } = db.Sequelize; 
 
@@ -202,6 +218,18 @@ module.exports = {
                 }
             }
         // })
+    },
+    uploadImage: async function(req, res){
+        const uploadFile = upload.single("file")
+        uploadFile(req, res, async function (err) {
+            if (err instanceof multer.MulterError) {
+                return res.status(400).send({ msg: "File too large" });
+            } else if (err) {
+                return res.status(400).send({ msg: "File not supported" });
+            }
+            fs.renameSync(req.file.path, req.file.path.replace("uploads", "assets"))
+            res.status(200).json(req.file);
+        })
     },
     addRecipe: async function(req, res){
         const doctorId = req.body.doctor_id;

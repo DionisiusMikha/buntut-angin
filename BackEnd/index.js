@@ -69,52 +69,12 @@ function sendEmail({ recipient_email, OTP }) {
     });
   }
 
-  app.get('/visitor-count', async (req, res) => {
-    try {
-      const currentDate = new Date().toISOString().split('T')[0];
-  
-      // Dapatkan jumlah pengunjung hari ini
-      const visitor = await db.Visitor.findOne({
-        attributes: ['count'],
-        where: { date: currentDate },
-      });
-  
-      res.json({ count: visitor ? visitor.count : 0 });
-    } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  });
-
 
 app.get("/", (req, res) => {
     console.log(process.env.MY_EMAIL);
 });
 app.use("/assets", express.static("assets"));
 app.use("/api", router);
-app.use(async (req, res, next) => {
-  try {
-    const ip = req.ip;
-    const currentDate = new Date().toISOString().split('T')[0];
-
-    let visitor = await db.Visitor.findOne({
-      where: { date: currentDate },
-    });
-
-    if (!visitor) {
-      visitor = await db.Visitor.create({
-        date: currentDate,
-      });
-    }
-
-    await visitor.increment('count');
-
-    next();
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 
 app.post("/api/users/send_recovery_email", (req, res) => {
     sendEmail(req.body)

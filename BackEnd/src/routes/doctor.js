@@ -20,4 +20,7 @@ router.post("/schedule/:username", doctorController.aturJadwal);
 router.put("/edit/:id_user", doctorController.editDoctor);
 router.put("/edit-status", doctorController.changeStatus);
 
+// image
+router.post("/image/:name", doctorController.uploadImage);
+
 module.exports = router;

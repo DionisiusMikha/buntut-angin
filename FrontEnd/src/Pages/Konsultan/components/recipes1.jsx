@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { addRecipe } from "../../../Redux/recipesSlice";
 import { useState } from "react";
 import { Axios } from "axios";
-import adminService from "../../../Services/Admin/admin";
+import konsultanService from "../../../Services/Konsultan/doctor";
 
 function AddRecipe1(props){
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function AddRecipe1(props){
         // ambil path img nya
         const formData = new FormData();
         formData.append("file", data.image[0]);
-        const res = await adminService.uploadImage(formData, data.name);
+        const res = await konsultanService.uploadImage(formData, data.name);
         
         const path = "/assets/" + res.data.filename;
         const recipe = {

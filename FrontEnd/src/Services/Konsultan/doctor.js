@@ -105,6 +105,10 @@ function changeStatus(id, status){
     });
 }
 
+function uploadImage(image, name){
+    return client.post(`/image/${name}`, image);
+}
+
 export default {
     getAllDoctor,
     getUserLogin,
@@ -112,5 +116,6 @@ export default {
     editUser,
     loginUser,
     viewJadwal,
-    changeStatus
+    changeStatus,
+    uploadImage
 }
