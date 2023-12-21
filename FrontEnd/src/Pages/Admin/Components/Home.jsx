@@ -26,7 +26,7 @@ function Home() {
                         <div className="flex justify-between border-gray-200 border-b -700 pb-3">
                             <dl>
                             <dt className="text-base font-normal text-gray-500 -400 pb-1">Profit</dt>
-                            <dd className="leading-none text-3xl font-bold text-gray-900 ">$5,405</dd>
+                            <dd className="leading-none text-3xl font-bold text-gray-900 ">Rp. 170.000</dd>
                             </dl>
                             <div>
                             <span className="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md -900 -300">
