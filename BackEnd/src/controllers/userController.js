@@ -63,7 +63,7 @@ function convertTime(jam){
 }
 
 function dateToString(tanggal){
-    return (tanggal.toISOString().slice(0, 10).replace('T', ' '))
+    return (tanggal.toISOString().slice(0, 10).replace('T', ' '))
 }
 
 const checkUsername = async(username) => {

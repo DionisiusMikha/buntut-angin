@@ -79,7 +79,6 @@ module.exports = {
 
         const newRoom = await db.Room.create({
             room_id: `ROOM${room_id}`,
-            name: doctor,
             username_user: user,
             username_doctor: doctor
         });
