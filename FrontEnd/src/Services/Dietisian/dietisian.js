@@ -198,6 +198,10 @@ function sendVerificationEmail(email){
     })
 }
 
+function visitorCount(){
+    return client.get("/visitor-count")
+}
+
 
 export default {
     getAllUsers,
@@ -218,5 +222,6 @@ export default {
     ajukanKonsultasi,
     changePassword,
     verifyEmail,
-    sendVerificationEmail
+    sendVerificationEmail,
+    visitorCount
 }

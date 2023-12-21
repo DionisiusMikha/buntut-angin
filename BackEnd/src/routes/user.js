@@ -24,5 +24,6 @@ router.put("/send-verification-email", userController.sendVerificationEmail);
 router.put("/verify-email", userController.verifyEmail);
 router.put("/change-password", userController.changePassword);
 router.get("/get-all-email", userController.getAllEmail);
+router.get("/visitor-count", userController.visitorCount);
 
 module.exports = router;
