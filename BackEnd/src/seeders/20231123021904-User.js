@@ -30,7 +30,7 @@ module.exports = {
     }, 
     {
       display_name : "Calvin Harsono",
-      email : "calvin.harsono@gmail.com",
+      email : "calvinharsono07@gmail.com",
       username : "kelpin",
       password : "123",
       birthdate : "2003-01-23",
