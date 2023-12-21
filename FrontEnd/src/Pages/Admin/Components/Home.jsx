@@ -26,7 +26,7 @@ function Home() {
                         <div className="flex justify-between border-gray-200 border-b -700 pb-3">
                             <dl>
                             <dt className="text-base font-normal text-gray-500 -400 pb-1">Profit</dt>
-                            <dd className="leading-none text-3xl font-bold text-gray-900 ">$5,405</dd>
+                            <dd className="leading-none text-3xl font-bold text-gray-900 ">Rp. 170.000</dd>
                             </dl>
                             <div>
                             <span className="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md -900 -300">
@@ -103,7 +103,7 @@ function Home() {
                     <div className="max-w-xxxxl w-full h-fit bg-white rounded-lg shadow -800 p-4 md:p-6">
                         <div className="flex justify-between">
                             <div>
-                            <h5 className="leading-none text-3xl font-bold text-gray-900  pb-2">32.4k</h5>
+                            <h5 className="leading-none text-3xl font-bold text-gray-900  pb-2">1.208</h5>
                             <p className="text-base font-normal text-gray-500 -400">Users this week</p>
                             </div>
                             <div
@@ -116,36 +116,6 @@ function Home() {
                         </div>
                         <div id="area-chart"></div>
                         <div className="grid grid-cols-1 items-center border-gray-200 border-t justify-between h-1">
-                            <div className="flex justify-between items-center pt-5">
-                            <div id="lastDaysdropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 -700">
-                                <ul className="py-2 text-sm text-gray-700 -200" aria-labelledby="dropdownDefaultButton">
-                                    <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 -gray-600 -white">Yesterday</a>
-                                    </li>
-                                    <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 -gray-600 -white">Today</a>
-                                    </li>
-                                    <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 -gray-600 -white">Last 7 days</a>
-                                    </li>
-                                    <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 -gray-600 -white">Last 30 days</a>
-                                    </li>
-                                    <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 -gray-600 -white">Last 90 days</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <a
-                                href="#"
-                                className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 -blue-500  hover:bg-gray-100 -gray-700 -gray-700 -700 px-3 py-2">
-                                Analytics Report
-                                <svg className="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
-                                </svg>
-                            </a>
-                            </div>
-
                         </div>
 
                         </div>

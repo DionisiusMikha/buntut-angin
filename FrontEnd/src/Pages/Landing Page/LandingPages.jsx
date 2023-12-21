@@ -13,6 +13,7 @@ import email from '/icon/email.png'
 import phone from '/icon/phone.png'
 import serviceUser from "../../Services/Dietisian/dietisian"
 import axios from 'axios';
+import { useEffect } from 'react';
 
 function LandingPages() {
     const bg = "url('img/background-landingPages.png')";
@@ -21,11 +22,11 @@ function LandingPages() {
         const response = await serviceUser.visitorCount();
         console.log(response.data);
     }
-    
-    React.useEffect(() => {
+
+    useEffect(() => {
         getvisitorcount();
-    }
-    , []);
+    }, [])
+
 
 
     return <>
