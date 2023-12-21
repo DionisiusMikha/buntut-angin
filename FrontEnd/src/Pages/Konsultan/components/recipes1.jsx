@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { addRecipe } from "../../../Redux/recipesSlice";
 import { useState } from "react";
 import { Axios } from "axios";
-import konsultanService from "../../../Services/konsultan/doctor";
+import konsultanService from "../../../Services/Konsultan/doctor";
 
 function AddRecipe1(props){
     const dispatch = useDispatch();

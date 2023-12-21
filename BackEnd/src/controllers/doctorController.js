@@ -4,8 +4,24 @@ const multer = require("multer");
 const fs = require("fs");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
-const upload = multer({
-    dest : "./uploads",
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./uploads")
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + "." + file.mimetype.split("/")[1]
+        cb(null, file.fieldname + '-' + uniqueSuffix)
+    }, 
+    fileFilter : function(req, file, cb){
+        if(file.mimetype != "image/png" || file.mimetype != "image/jpeg"){
+          return cb(new Error("Wrong file type"), null)
+        }
+        cb(null, true)
+      },
+}) 
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 3000000 },
 })
 const { Op } = db.Sequelize; 
 
