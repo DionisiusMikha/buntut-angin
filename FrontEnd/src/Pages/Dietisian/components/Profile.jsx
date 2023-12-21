@@ -166,6 +166,7 @@ const Profile = () => {
             <div className="font-semibold text-xl">Current Password : </div>
             <InputGroup size='lg'>
               <Input
+                disabled
                 pr='4.5rem'
                 type={show2 ? 'text' : 'password'}
                 placeholder='Enter password'
@@ -201,7 +202,6 @@ const Profile = () => {
                         message: "Please enter your new password"
                       }
                     })}
-                    disabled
                   />
                   <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>
