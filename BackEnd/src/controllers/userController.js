@@ -368,7 +368,6 @@ module.exports = {
     },
     getProfilePicture: async function(req, res){
         const idUser = req.params.id_user;
-
         const checkUser = await db.User.findByPk(idUser)
         if (!checkUser){
             const result = {

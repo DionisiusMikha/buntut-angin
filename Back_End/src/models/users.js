@@ -8,7 +8,10 @@ const userSchema = mongoose.Schema({
     birthdate: Date,
     balance: Number,
     phone_number: String,
-    profile_picture: String,
+    profile_picture: {
+        type: String,
+        default: null
+    },
     address: String,
     age: Number,
     weight: Number,
