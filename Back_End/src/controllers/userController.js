@@ -17,24 +17,23 @@ function dateToString(tanggal) {
 }
 
 const path = require('path');
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "./uploads")
-    },
-    // filename: function (req, file, cb) {
-    //     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + "." + file.mimetype.split("/")[1]
-    //     cb(null, file.fieldname + '-' + uniqueSuffix)
-    // }, 
-    fileFilter : function(req, file, cb){
-        if(file.mimetype != "image/png" || file.mimetype != "image/jpg"){
-          return cb(new Error("Wrong file type"), null)
-        }
-        cb(null, true)
-    },
-}) 
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, "./uploads")
+//     },
+//     // filename: function (req, file, cb) {
+//     //     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + "." + file.mimetype.split("/")[1]
+//     //     cb(null, file.fieldname + '-' + uniqueSuffix)
+//     // }, 
+//     fileFilter : function(req, file, cb){
+//         if(file.mimetype != "image/png" || file.mimetype != "image/jpg"){
+//           return cb(new Error("Wrong file type"), null)
+//         }
+//         cb(null, true)
+//     },
+// }) 
 const upload = multer({ 
-    storage: storage,
-    limits: { fileSize: 3000000 },
+    dest: './uploads',
 })
 
 module.exports = {
