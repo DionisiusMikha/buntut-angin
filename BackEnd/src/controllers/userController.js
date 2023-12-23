@@ -954,7 +954,6 @@ module.exports = {
         });
         return res.status(200).json(result);
     },
-    
     visitorCount: async function(req, res){
         const ipAddress = ip.address();
         const visitDate = new Date().toISOString().slice(0, 10);

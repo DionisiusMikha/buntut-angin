@@ -1,9 +1,11 @@
+require("dotenv").config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const port = 3000;
 const router = require("./src/routes/index");
+const db = process.env.DB_DATABASE
 
 app.use(cors());
 app.use(express.urlencoded({extended:true}));
@@ -12,7 +14,7 @@ app.use(express.json());
 app.use("/api", router);
 app.listen(port, async() => {
     try{
-        await mongoose.connect('mongodb://127.0.0.1:27017/proyek_fpw')
+        await mongoose.connect(`mongodb://127.0.0.1:27017/${db}`)
         console.log('Database connected!');
     }
     catch(err){
