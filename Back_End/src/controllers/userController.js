@@ -107,6 +107,7 @@ module.exports = {
         else {
             if (checkUser.password == password){
                 const token = jwt.sign({
+                    id: checkUser._id,
                     username: username,
                 }, PRIVATE_KEY, {
                     expiresIn: 86400
@@ -211,7 +212,7 @@ module.exports = {
     },
     editProfilePicture: async function(req, res){
         const idUser = req.params.id_user;
-        const uploadFile = upload.single('file');
+        const uploadFile = upload.single("file");
         uploadFile(req, res, async function(err){
             if (err instanceof multer.MulterError){
                 return res.status(400).send({msg: "File too large"});
@@ -239,7 +240,7 @@ module.exports = {
                         }
                     })
                     fs.renameSync(
-                        `./upload/${req.file.filename}`,
+                        `./uploads/${req.file.filename}`,
                         `./assets/${checkUser.username}.png`
                     );
 
@@ -303,5 +304,6 @@ module.exports = {
         else {
             return res.status(200).json(cekUser);
         }
-    }
+    },
+
 }
