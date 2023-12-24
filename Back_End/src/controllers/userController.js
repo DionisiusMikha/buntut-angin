@@ -212,7 +212,7 @@ module.exports = {
     },
     editProfilePicture: async function(req, res){
         const idUser = req.params.id_user;
-        const uploadFile = upload.single("file");
+        const uploadFile = upload.single("profile_picture");
         uploadFile(req, res, async function(err){
             if (err instanceof multer.MulterError){
                 return res.status(400).send({msg: "File too large"});
@@ -245,7 +245,7 @@ module.exports = {
                     );
 
                     const result = {
-                        "message" : "Data updated!",
+                        "message" : "Profile picture updated!",
                         "profile_picture" : `/assets/${checkUser.username}.png`
                     }
                     res.status(200).json(result);
