@@ -21,13 +21,17 @@ function dateToString(tanggal) {
     return (tanggal.toISOString().slice(0, 10).replace('T', ' '))
 }
 
-const moment = require('moment')
+// const moment = require('moment')
+// function convertTime(jam){
+//     const format = 'HH:mm';
+//     const time = moment(jam, format);
 
-function convertTime(jam){
-    const format = 'HH:mm';
-    const time = moment(jam, format);
+//     return time.format(format);
+// }
 
-    return time.format(format);
+const convertTime = timeString => {
+    const [hours, minutes] = timeString.split(':');
+    return new Date().setHours(hours, minutes, 0, 0);
 }
 
 const path = require('path');

@@ -1,4 +1,4 @@
-const { default: mongoose, Schema } = require("mongoose")
+const { default: mongoose } = require("mongoose")
 
 const recSchema = mongoose.Schema({
     recipe_id: {

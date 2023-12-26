@@ -113,7 +113,7 @@ module.exports = {
 
         return res.status(201).json(result);
 
-    },
+    }, //done
     loginDoctor: async function(req, res){
         const {username, password} = req.body;
         const checkUser = await db.Doctor.findOne({
@@ -153,7 +153,7 @@ module.exports = {
                 return res.status(400).json(result);
             }
         }
-    },
+    }, //done
     editDoctor: async function(req, res){
         // const uploadFile = upload.single("profile_picture");
         // uploadFile(req, res, async function (err){
@@ -218,7 +218,7 @@ module.exports = {
                 }
             }
         // })
-    },
+    }, //done
     uploadImage: async function(req, res){
         // try {
             uploadFile(req, res, async function (err) {
@@ -235,7 +235,7 @@ module.exports = {
         // } catch(error){
         //     return res.status(500).send(error);
         // }
-    },
+    }, //done
     addRecipe: async function(req, res){
         const doctorId = req.body.doctor_id;
         const name = req.body.name;
@@ -302,7 +302,7 @@ module.exports = {
             }
             res.status(201).json(result);
         }
-    },
+    }, //done
     viewUser: async function(req, res){
         const search = req.body.search;
         const cariUser = await db.User.findAll({
@@ -339,7 +339,7 @@ module.exports = {
             }
             res.status(200).json(result);
         }
-    },
+    }, //done
     rekomendasiMenu: async function(req, res){
         const namaDokter = req.body.nama_dokter;
         const nama = req.body.nama_resep;
@@ -382,12 +382,12 @@ module.exports = {
             }
             res.status(201).json(result);
         }
-    },
+    }, //done
     getAllDoctor : async function (req, res){
         const getAllDoctor = await db.Doctor.findAll()
 
         return res.status(200).send(getAllDoctor)
-    },
+    }, //done
     getLoginUser: async function(req, res){
         const token = req.headers['x-auth-token'];
         if (!token){
@@ -414,7 +414,7 @@ module.exports = {
         } catch(err){
             return res.status(400).send('Invalid JWT Key');
         }
-    },
+    }, //done
     getAllUsers: async function(req, res){
         const {limit, filter, search} = req.query;        
         let result = [];
@@ -460,7 +460,7 @@ module.exports = {
         }
 
         return res.status(200).send(result)
-    },
+    }, //done
     aturJadwal: async function (req, res){
         const username = req.params.username
         const tanggal = req.body.tanggal;
@@ -546,7 +546,7 @@ module.exports = {
                 }
             }
         }
-    },
+    }, //masih error
     viewJadwal: async function (req, res){
         try {
             const { id, currentdate } = req.params;

@@ -1,4 +1,4 @@
-const { default: mongoose, Schema } = require("mongoose")
+const { default: mongoose } = require("mongoose")
 
 const recipeSchema = mongoose.Schema({
     name: String,
@@ -15,7 +15,10 @@ const recipeSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    comments: String,
+    comments: {
+        type: String,
+        default: null
+    },
     image_url: String,
     calories: Number,
     carbo: Number,

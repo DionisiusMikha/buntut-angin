@@ -81,7 +81,7 @@ module.exports = {
     getAllUser: async function (req, res){
         const users = await db.User.findAll();
         return res.status(200).json(users);
-    },
+    }, //done
     registerUser: async function (req, res){
         const {display_name, email, username, password, birthdate, phone_number, address, weight, height, gender} = req.body;
         
@@ -130,7 +130,7 @@ module.exports = {
         }
 
         return res.status(201).json(result);
-    },
+    }, //done
     loginUser: async function(req, res){
         const {username, password} = req.body;
         
@@ -189,7 +189,7 @@ module.exports = {
                 return res.status(401).json(result);
             }
         }
-    },
+    }, //done
     getLoginUser: async function(req, res){
         const token = req.headers['x-auth-token'];
         if (!token){
@@ -216,7 +216,7 @@ module.exports = {
         } catch(err){
             return res.status(400).send('Invalid JWT Key');
         }
-    },
+    }, //done
     editUser: async function(req, res){
         const idUser = req.params.id_user;
         const { username, email, phone_number, birthdate, display_name, address, weight, height, gender } = req.body;
@@ -272,7 +272,7 @@ module.exports = {
                 }
             }
         }
-    },
+    }, //done
     editProfilePicture: async function(req, res){
         const idUser = req.params.id_user;
         const uploadFile = upload.single("file");
@@ -317,7 +317,7 @@ module.exports = {
                 }
             }
         })
-    },
+    }, //done
     cekProfilKonsultan: async function(req, res){
         // const idKonsultan = req.params.id_konsultan;
         const token = req.headers['x-auth-token'];
@@ -365,7 +365,7 @@ module.exports = {
                 return res.status(400).send('Invalid JWT Key');
             }
         }
-    },
+    }, //done
     getProfilePicture: async function(req, res){
         const idUser = req.params.id_user;
         const checkUser = await db.User.findByPk(idUser)
@@ -383,7 +383,7 @@ module.exports = {
             // return res.status(200).sendFile(`/assets/${checkUser.dataValues.username}.png`);
             return res.status(200).sendFile(path.join(__dirname,'..', '..', `${checkUser.dataValues.profile_picture}`));
         }
-    },
+    }, 
     getAllResep: async function(req, res){
         const {search, page} = req.query;
         let offsetValue;
@@ -401,6 +401,7 @@ module.exports = {
             limit: page == 1 ? 6 : 10,
             offset: offsetValue + 3
         });
+
 
         let resep = []
         for (let i = 0; i < getResep.length; i++){
@@ -446,39 +447,9 @@ module.exports = {
                 ingredients,
                 steps
             })
-
-            // result.push({
-            //     recipe_id: getResep[i].dataValues.id,
-            //     name: getResep[i].dataValues.name,
-            //     image  :getResep[i].dataValues.image_url,
-            //     description: getResep[i].dataValues.description,
-            //     like : getResep[i].dataValues.suka,
-            //     rating : getResep[i].dataValues.rating,
-            //     ingredients,
-            //     steps
-            // })
         }
-
-        // pagination
-        // if (page !== undefined && page !== ""){
-        //     const offset = (page - 1) * limit;
-        //     resep = resep.slice(offset, offset + limit)
-        // }
-
-        // limit
-        // if (limit !== undefined && limit !== ""){
-        //     resep = resep.slice(0, limit)
-        // }
-        
-        // search by name
-        // if (search !== undefined && search !== ""){
-        //     resep = resep.filter(item => {
-        //         return item.name.toLowerCase().includes(search.toLowerCase())
-        //     })
-        // }
-
         return res.status(200).json(resep);
-    },
+    }, //done
     getSchedule: async function(req, res){
         const allSched = await db.Doctor_Schedule.findAll();
 
@@ -820,7 +791,7 @@ module.exports = {
             }
         }
         
-    },
+    }, //done
     getUserByID: async function(req, res){
         const id = req.params.id;
         const user = await db.User.findByPk(id);
@@ -828,7 +799,7 @@ module.exports = {
             return res.status(404).json({msg: "User not found"});
         }
         return res.status(200).json(user);
-    }, 
+    }, //done
     updateLike : async function(req, res){
         const id = req.params.id;
         const resep = await db.Recipes.findOne({
@@ -847,7 +818,7 @@ module.exports = {
             }
         })
         return res.status(200).json({msg: "Recipe updated"});
-    },
+    }, //done
     sendVerificationEmail: async function (req, res) {
         const { email } = req.body;
 
@@ -975,5 +946,5 @@ module.exports = {
             "Visitor count" :  visitorCount
         }
         res.status(201).json(result);
-    }
+    } //done
 }
