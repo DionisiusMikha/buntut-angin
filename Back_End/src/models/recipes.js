@@ -1,18 +1,20 @@
-const { default: mongoose } = require("mongoose")
-let Float = require('mongoose-float').loadType(mongoose);
+const { default: mongoose, Schema } = require("mongoose")
 
 const recipeSchema = mongoose.Schema({
     name: String,
     description: String,
-    doctor_id: String,
+    doctor_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Doctor'
+    },
     like: Number,
-    rating: Float,
+    rating: Number,
     comments: String,
     image_url: String,
     calories: Number,
-    carbo: Float,
-    protein: Float,
-    fat: Float
+    carbo: Number,
+    protein: Number,
+    fat: Number
 })
 
 const Recipe = mongoose.model('Recipe', recipeSchema);

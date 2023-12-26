@@ -57,6 +57,10 @@ module.exports = {
             res.status(400).json(result);
         }
         else {
+            const today = new Date();
+            const birthDate = new Date(convertDate(birthdate));
+            let umur = today.getFullYear() - birthDate.getFullYear();
+        
             const newUser = new User({
                 display_name,
                 email,
@@ -65,6 +69,7 @@ module.exports = {
                 birthdate: convertDate(birthdate),
                 phone_number,
                 address,
+                age: umur,
                 weight,
                 height,
                 gender,
@@ -78,6 +83,7 @@ module.exports = {
                     "username" : username,
                     "email" : email,
                     "birthdate" : birthdate,
+                    "age" : umur,
                     "phone_number" : phone_number,
                     "address" : address,
                     "weigth" : weight,
