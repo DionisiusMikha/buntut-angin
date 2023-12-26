@@ -12,5 +12,6 @@ router.post("/recommendation", doctorController.rekomendasiMenu);
 router.get("/", doctorController.getAllDoctor);
 router.get("/getLoginDoctor", doctorController.getLoginDoctor);
 router.get("/users", doctorController.getAllUsers);
+router.post("/schedule/:username", doctorController.aturJadwal);
 
 module.exports = router;

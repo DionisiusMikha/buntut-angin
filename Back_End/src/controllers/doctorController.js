@@ -5,6 +5,7 @@ const Recipe = require('../models/recipes');
 const Ingredient = require('../models/ingredients');
 const Recommendation = require('../models/recommendation');
 const Step = require('../models/steps');
+const Schedule = require('../models/schedule');
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 const multer = require('multer');
@@ -18,6 +19,15 @@ function convertDate(tanggal) {
 
 function dateToString(tanggal) {
     return (tanggal.toISOString().slice(0, 10).replace('T', ' '))
+}
+
+const moment = require('moment')
+
+function convertTime(jam){
+    const format = 'HH:mm';
+    const time = moment(jam, format);
+
+    return time.format(format);
 }
 
 const path = require('path');
@@ -469,7 +479,51 @@ module.exports = {
                 res.status(404).json(result);
             }
             else {
-                
+                if (start >= end){
+                    const result = {
+                        "message" : "Start time must be less than end time"
+                    }
+                    res.status(400).json(result);
+                }
+                else {
+                    const startTime = convertTime(start);
+                    const endTime = convertTime(end);
+
+                    const checkSchedule = await Schedule.findOne({
+                        doctor_id: searchDoctor._id,
+                        tanggal: convertDate(tanggal)
+                    });
+
+                    // if ((startTime >= checkSchedule.start && endTime <= checkSchedule.end) || (startTime > checkSchedule.start && endTime < checkSchedule.end)){
+                    //     const result = {
+                    //         "message" : "Doctor has schedule on that time"
+                    //     }
+                    //     res.status(400).json(result);
+                    // }
+                    // else {
+                        let newSchedule = new Schedule({
+                            doctor_id: searchDoctor._id,
+                            tanggal: convertDate(tanggal),
+                            start: convertTime(start),
+                            end: convertTime(end)
+                        })
+
+                        try {
+                            let insertSched = await newSchedule.save();
+
+                            const result = {
+                                "Name" : searchDoctor.display_name,
+                                "tanggal" : dateToString(newSchedule.tanggal),
+                                "start" : convertTime(start),
+                                "end" : convertTime(end)
+                            }
+                            res.status(201).json(result);
+                        }
+                        catch(err){
+                            return res.status(400).json({msg: err.message});
+                        }
+                    // }
+                }
             }
         }
     }

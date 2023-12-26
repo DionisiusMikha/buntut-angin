@@ -7,8 +7,14 @@ const recipeSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Doctor'
     },
-    like: Number,
-    rating: Number,
+    like: {
+        type: Number,
+        default: 0
+    },
+    rating: {
+        type: Number,
+        default: 0
+    },
     comments: String,
     image_url: String,
     calories: Number,

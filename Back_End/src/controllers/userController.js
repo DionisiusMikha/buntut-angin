@@ -1,6 +1,7 @@
 require("dotenv").config()
 const User = require('../models/users');
 const Doctor = require('../models/doctor');
+const Recipe = require("../models/recipes");
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 const multer = require('multer');
@@ -311,5 +312,32 @@ module.exports = {
             return res.status(200).json(cekUser);
         }
     },
+    updateLike: async function(req, res){
+        const { recipe_id } = req.params;
+        const searchRecipe = await Recipe.findOne({
+            _id: recipe_id
+        })
 
+        if (!searchRecipe){
+            const result = {
+                "message" : "Recipe not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            let updateLike = await Recipe.updateOne({
+                _id: recipe_id
+            },{
+                $set: {
+                    like: parseInt(searchRecipe.like) + 1
+                }
+            })
+
+            const result = {
+                "message" : "Like added!"
+            }
+            res.status(200).json(result);
+        }
+    },
+    
 }
