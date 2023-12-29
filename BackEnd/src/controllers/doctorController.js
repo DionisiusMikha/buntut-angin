@@ -546,7 +546,7 @@ module.exports = {
                 }
             }
         }
-    }, //masih error
+    }, //done
     viewJadwal: async function (req, res){
         try {
             const { id, currentdate } = req.params;
@@ -571,7 +571,7 @@ module.exports = {
         } catch (error) {
             return res.status(400).send(error);
         }
-    },
+    }, //done
     changeStatus: async function (req, res){
         const { id, status } = req.body;
 
@@ -591,5 +591,5 @@ module.exports = {
         } catch (error) {
             return res.status(200).send(error);
         }
-    }
+    } //done
 }

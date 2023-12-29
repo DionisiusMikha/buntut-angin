@@ -93,7 +93,7 @@ module.exports = {
             })
         }
         return res.status(200).json(resep);
-    },
+    }, //done
     getAllUsers: async function(req, res){
         const {limit, filter, search} = req.query;        
         let result = [];
@@ -183,7 +183,7 @@ module.exports = {
         }
 
         return res.status(200).send(result)
-    },
+    }, //done
     updateRecipe: async function(req, res){
         const recipe_id = req.params.id;
         const name = req.body.name;
@@ -313,7 +313,7 @@ module.exports = {
             "rating" : 0,
         }
         res.status(201).json(result);
-    },
+    }, //done
     uploadImage: async function(req, res){
         const uploadFile = upload.single("file")
         uploadFile(req, res, async function (err) {
@@ -325,7 +325,7 @@ module.exports = {
             fs.renameSync(req.file.path, req.file.path.replace("uploads", "assets"))
             res.status(200).json(req.file);
         })
-    },
+    }, //done
     getUserById: async function(req, res){
         const {role, id} = req.params;
 
@@ -336,7 +336,7 @@ module.exports = {
             const getDoctor = await db.Doctor.findByPk(id)
             return res.status(200).send(getDoctor)
         }
-    },
+    }, //done (masi rusak)
     getRecipeById: async function(req, res){
         const id = req.params.id;
         let resep = [];
@@ -384,7 +384,7 @@ module.exports = {
 
         return res.status(200).send(resep)
         // return res.status(200).send(getIngredients)
-    },
+    }, //done
     addDoctor : async function(req, res){
         const { username, email, display_name, birthdate, password, phone_number, address} = req.body;
         console.log(req.body)
@@ -427,7 +427,7 @@ module.exports = {
         }
 
         return res.status(201).json(result);
-    },
+    }, //done
     addDietisian : async function(req, res){
         const {display_name, email, username, password, birthdate, phone_number, address, weight, height, gender} = req.body;
         
@@ -474,7 +474,7 @@ module.exports = {
         }
 
         return res.status(201).json(result);
-    },
+    }, //done
     getAllSubscriptions: async function(req, res){
         const {limit, search} = req.query;        
         let result = [];
@@ -650,5 +650,5 @@ module.exports = {
             "message" : "success",
             "data" : result
         })
-    },
+    }, //done
 }

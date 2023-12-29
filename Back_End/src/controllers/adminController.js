@@ -31,6 +31,12 @@ const upload = multer({
     limits: { fileSize: 3000000 }
 })
 
+function convertDate(tanggal) {
+    const [day, month, year] = tanggal.split('/');
+    const dateTime = new Date(`${year}-${month}-${day}T11:00:00`);
+    return dateTime;
+}
+
 module.exports = {
     getAllResep: async function(req, res){
         const {limit, search} = req.query;
@@ -299,5 +305,142 @@ module.exports = {
             steps: step
         })
         return res.status(200).send(resep)
+    },
+    addDoctor: async function(req, res){
+        const { username, email, display_name, birthdate, password, phone_number,address } = req.body;
+
+        const checkDoctor = await Doctor.findOne({
+            username: username,
+            email: email
+        });
+
+        if (checkDoctor){
+            const result = {
+                "message" : "User already exists"
+            }
+            res.status(400).json(result);
+        }
+        else {
+            const today = new Date();
+            const tanggal = new Date(birthdate);
+            let umur = today.getFullYear() - tanggal.getFullYear();
+
+            const newDoctor = new Doctor({
+                display_name,
+                email,
+                username,
+                password,
+                birthdate: convertDate(birthdate),
+                address,
+                phone_number
+            })
+
+            try {
+                let insertedDoctor = await newDoctor.save();
+                const result = {
+                    "message" : "Doctor added",
+                    "username" : username,
+                    "email" : email,
+                    "display_name" : display_name,
+                    "birthdate" : birthdate,
+                    "address" : address,
+                }
+                res.status(201).json(result);
+            }
+            catch(err){
+                return res.status(400).json({msg: err.message});
+            }
+        }
+    },
+    addDietisian: async function(req, res){
+        const {display_name, email, username, password, birthdate, phone_number, address, weight, height, gender} = req.body;
+
+        const checkUser = await User.findOne({
+            username: username,
+            email: email
+        })
+
+        if (checkUser){
+            const result = {
+                "message" : "User already exists"
+            }
+            res.status(400).json(result);
+        }
+        else {
+            const today = new Date();
+            const tanggal = new Date(birthdate);
+            let umur = today.getFullYear() - tanggal.getFullYear();
+
+            const newUser = new User({
+                display_name,
+                email,
+                username,
+                password,
+                birthdate: convertDate(birthdate),
+                balance: 0,
+                weight,
+                height,
+                gender,
+                address,
+                phone_number
+            })
+
+            try {
+                let insertedUser = await newUser.save();
+
+                const result = {
+                    "message" : "User added",
+                    "username" : username,
+                    "email" : email,
+                    "display_name" : display_name,
+                    "birthdate" : birthdate,
+                    "age" : umur,
+                    "jenis_kelamin" : genders
+                }
+                res.status(201).json(result);
+            }
+            catch(err){
+                return res.status(400).json({msg: err.message});
+            }
+        }
+    },
+    getTop3Recipes : async function (req, res){
+        const getResep = await Recipe.find()
+                         .sort({like: 'desc'})
+                         .limit(3)
+        
+        let result = [];
+        for (let i = 0; i < getResep.length; i++){
+            const getIngredients = await Ingredient.find({
+                recipe_id: getResep[i]._id
+            })
+
+            const getSteps = await Step.find({
+                recipe_id: getResep[i]._id
+            })
+
+            let ingredients = [];
+            for (let j = 0; j < getIngredients.length; j++){
+                ingredients.push(getIngredients[j].name + " " + getIngredients[j].qty + " " + getIngredients[j].uom)
+            }
+
+            let steps = [];
+            for (let j = 0; j < getSteps.length; j++){
+                steps.push(getSteps[j].desc)
+            }
+
+            result.push({
+                recipe_id: getResep[i]._id,
+                name: getResep[i].name,
+                image: getResep[i].image_url,
+                description: getResep[i].desc,
+                like: getResep[i].like,
+                rating: getResep[i].rating,
+                ingredients,
+                steps
+            })
+        }
+
+        res.status(200).json(result)
     }
 }

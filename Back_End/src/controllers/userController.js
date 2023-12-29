@@ -5,6 +5,9 @@ const Recipe = require("../models/recipes");
 const Ingredient = require("../models/ingredients");
 const Step = require('../models/steps');
 const Visitor = require('../models/visitor');
+const Consultation = require('../models/consultation');
+const Schedule = require('../models/schedule');
+const Subscription = require('../models/subscription');
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 const multer = require('multer');
@@ -19,6 +22,14 @@ function convertDate(tanggal) {
 
 function dateToString(tanggal) {
     return (tanggal.toISOString().slice(0, 10).replace('T', ' '))
+}
+
+const moment = require('moment')
+function convertTime(jam){
+    const format = 'HH:mm';
+    const time = moment(jam, format);
+
+    return time.format(format);
 }
 
 const path = require('path');
@@ -269,7 +280,7 @@ module.exports = {
             }
         })
     },
-    getAllDoctor: async function(req, res){
+    cekProfileDoctor: async function(req, res){
         const token = req.headers['x-auth-token'];
         if (!token){
             const result = {
@@ -501,6 +512,282 @@ module.exports = {
                 }
                 return res.status(200).json(result);
             }
+        }
+    },
+    janjian: async function(req, res){
+        const { username } = req.params;
+        const { tanggal, jam, nama_dokter } = req.body;
+
+        const checkUser = await User.findOne({
+            username: username
+        })
+
+        const checkDoctor = await Doctor.findOne({
+            display_name: nama_dokter
+        })
+
+        if (!checkUser){
+            const result = {
+                "message" : "User not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            if (!checkDoctor){
+                const result = {
+                    "message" : "Doctor not found"
+                }
+                res.status(404).json(result);
+            }
+            else {
+                const cariJadwal = await Schedule.findOne({
+                    doctor_id: checkDoctor._id,
+                    tanggal: convertDate(tanggal)
+                })
+
+                if (!cariJadwal){
+                    const result = {
+                        "message" : "Doctor schedule not found"
+                    }
+                    res.status(404).json(result);
+                }
+                else {
+                    if (convertDate(tanggal).toISOString().slice(0, 10).replace('T', ' ') != cariJadwal.tanggal.toISOString().slice(0, 10).replace('T', ' ')){
+                        const result = {
+                            "message" : "Doctor doesn't have schedule on that date!"
+                        }
+                        res.status(400).json(result);
+                    }
+                    else {
+                        const scheduleStart = convertTime(cariJadwal.start);
+                        const scheduleEnd = convertTime(cariJadwal.end);
+                        const time = convertTime(jam);
+
+                        if ((time > scheduleStart || time >= scheduleStart) && (time < scheduleEnd || time <= scheduleEnd)){
+                            const newConsul = new Consultation({
+                                doctor_id: checkDoctor._id,
+                                user_id: checkUser._id,
+                                tanggal: convertDate(tanggal),
+                                jam: time,
+                                status: 0
+                            })
+
+                            try {
+                                let insertConsul = await newConsul.save();
+                                let text = "";
+                                const checkConsul = await Consultation.findOne({
+                                    _id: newConsul._id
+                                });
+
+                                if (checkConsul.status == 0){
+                                    text = "Pending"
+                                }
+                                else if (checkConsul.status == 1) {
+                                    text = "Accepted"
+                                }
+                                else if (checkConsul.status == 2){
+                                    text = "Rejected"
+                                }
+                                
+                                const result = {
+                                    "message" : "Noted!",
+                                    "tanggal" : tanggal,
+                                    "jam" : jam,
+                                    "status" : text
+                                }
+                                res.status(201).json(result);
+                            }
+                            catch(err){
+                                console.log(err.message);
+                                return res.status(400).json({msg: err.message})
+                            }
+                        }
+                        else {
+                            const result = {
+                                "message" : "Outside of consultation hours"
+                            }
+                            res.status(400).json(result);
+                        }
+                    }
+                }
+            }
+        }
+    },
+    getSchedule: async function(req, res){
+        const allSched = await Schedule.find();
+
+        let jadwal = [];
+        for (let i = 0; i < allSched.length; i++){
+            const doctorName = await Doctor.find({
+                _id: allSched[i].doctor_id
+            })
+
+            jadwal.push({
+                "Nama dokter" : "Dr. " + doctorName[0].display_name,
+                "Tanggal" : dateToString(allSched[i].tanggal),
+                "Jam mulai" : convertTime(allSched[i].start),
+                "Jam selesai" : convertTime(allSched[i].end)
+            })
+        }
+        
+        const result = {
+            jadwal
+        }
+        res.status(200).json(result);
+    },
+    getAllDoctor: async function(req, res){
+        try {
+            const result = await Doctor.find();
+
+            res.status(200).json(result);
+        }
+        catch(err){
+            return res.status(400).send(err);
+        }
+    },
+    subscription: async function(req, res){
+        const username = req.params.username;
+        const checkUser = await User.findOne({
+            username: username
+        })
+
+        if (!checkUser){
+            const result = {
+                "message" : "User not found"
+            }
+            res.status(404).json(result);
+        }
+        else {
+            const checkSubs = await Subscription.find({
+                user_id: checkUser._id
+            }).sort({_id: 'desc'}).limit(1)
+
+            const nomerSubs = await Subscription.findOne()
+                              .sort({id: 'desc'})
+                              .limit(1)
+            
+            let today = "";
+            if (checkSubs.length == 0){
+                today = new Date();
+            }
+            else {
+                today = new Date(checkSubs[0].period)
+            }
+            const bulanDepan = new Date(today);
+            bulanDepan.setDate(today.getDate() + 30);
+
+            const newSubs = new Subscription({
+                user_id: checkUser._id,
+                period: bulanDepan.toISOString().slice(0, 10)
+            })
+
+            let nomor = "";
+            if (nomerSubs._id == null){
+                nomor = nomerSubs._id = 0;
+            }
+            else {
+                nomor = nomerSubs._id + 1;
+            }
+
+            let orderId = new Date();
+            orderId = orderId.toISOString().slice(0, 10).replace('-', '').replace('-', '') + nomor;
+
+            const option = {
+                method: 'POST',
+                url: "https://app.sandbox.midtrans.com/snap/v1/transactions",
+                headers: {accept: 'application/json', 'content-type': 'application/json',
+                    authorization: 'Basic '+Buffer.from(process.env.SERVER_KEY).toString("base64")
+                },
+                data: {
+                    transaction_details: {
+                        order_id: orderId,
+                        gross_amount: 85000,
+                    },
+                    customer_details: {
+                        email: checkUser[0].email
+                    },
+                    credit_card: {secure: true},
+                    callbacks: { 
+                        finish: 'http://localhost:5173/dietisian/subs'
+                    } 
+                }
+            }
+
+            await axios.request(option).then( async (response)=>{
+                console.log("\nTrans created successfully\n", "\n")
+
+                const updateSubs = await Subscription.updateOne({
+                    _id: newSubs._id
+                }, {
+                    $set: {
+                        invoice_id: orderId
+                    }
+                })
+
+                return res.status(201).json({
+                    message: "Requested Payment",
+                    midtrans: response.data,
+                    data : {
+                        id : newSubs._id,
+                        orderId: orderId,
+                        gross_amount: 85000,
+                        email: checkUser[0].email
+                    }
+                })
+            })
+        }
+    },
+    changeStatusSubscription: async function(req, res){
+        const id = req.params.id;
+        const status = req.body.status;
+
+        if (status == "Success") {
+            const updateSubs = await Subscription.updateOne({
+                _id: id
+            }, {
+                $set: {
+                    status: 1
+                }
+            })
+
+            const result = {
+                "message" : "Subscription updated",
+                "status" : "Success",
+                "id" : id
+            }
+            res.status(200).json(result);
+        }
+        else if (status == "Pending"){
+            const updateSubs = await Subscription.updateOne({
+                _id: id
+            }, {
+                $set: {
+                    status: 0
+                }
+            })
+
+            const result = {
+                "message" : "Subscription updated",
+                "status" : "Pending",
+                "id" : id
+            }
+            res.status(200).json(result)
+        }
+        else if (status == "Canceled"){
+            const updateSubs = await Subscription.updateOne({
+                _id: id
+            }, {
+                $set: {
+                    status: -1
+                }
+            })
+
+            const result = {
+                "message" : "Subscription updated",
+                "status" : "Canceled",
+                "id" : id
+            }
+            res.status(200).json(result);
         }
     }
 }

@@ -61,7 +61,7 @@ function viewJadwal(id, date){
 }
 
 function getUserLogin(token){
-    return client.get("/getLoginUser", {
+    return client.get("/getLoginDoctor", {
         headers: {
             "x-auth-token": `${token}`,
         },

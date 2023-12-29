@@ -7,13 +7,18 @@ router.post("/register", userController.registerUser);
 router.post("/login", userController.loginUser);
 router.get("/getLoginUser", userController.getLoginUser);
 router.put("/edit/:id_user", userController.editUser);
-router.get("/visitor-count", userController.visitorCount);
 router.put("/profile_picture/:id_user", userController.editProfilePicture);
-router.get("/getAllDoctor", userController.getAllDoctor);
-router.get("/resep", userController.getAllResep);
-router.get("/:id_user", userController.getUserByID);
+router.get("/cek-profile", userController.cekProfileDoctor);
+router.get("/users/:id_user", userController.getUserByID);
 router.put("/updateLike/:recipe_id", userController.updateLike);
+router.get("/resep", userController.getAllResep);
+router.get("/visitor-count", userController.visitorCount);
 router.post("/addRatingComment", userController.ratingComment);
+router.post("/janjian/:username", userController.janjian);
+router.get("/jadwal", userController.getSchedule);
+router.post("/subscription/:username", userController.subscription);
+router.post("/changeStatusSubscription/:id", userController.changeStatusSubscription);
+router.get("/getAllDoctor", userController.getAllDoctor);
 
 
 module.exports = router;

@@ -575,7 +575,7 @@ module.exports = {
                 }
             }
         }
-    },
+    }, //done
     subscription: async function(req, res){
         const username = req.params.username;
         const cariUser = await db.User.findAll({
@@ -678,7 +678,7 @@ module.exports = {
                 })
             })
         }
-    },
+    }, //done
     changeStatusSubscription : async function (req, res){
         const id = req.params.id;
         const status = req.body.status;
@@ -725,7 +725,7 @@ module.exports = {
             }
             return res.status(200).json(result);    
         }
-    },
+    }, //done
     ratingComment : async function (req, res){
         const {rating, comment, userId, recipeId} = req.body;
         const checkUser = await db.User.findByPk(userId);

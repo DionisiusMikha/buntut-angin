@@ -24,7 +24,7 @@ function getAllRecipes(limit, search){
 }
 
 function addNewRecipe(name, desc, image, ingredientsName, ingredientsQty, ingredientsUom, steps, calories, carbo, protein, fat){
-    return client.post("/resep", {
+    return client.post("/add_recipe", {
         name : name,
         description : desc,
         image_url : image,

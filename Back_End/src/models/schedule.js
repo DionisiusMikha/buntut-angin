@@ -6,8 +6,8 @@ const schedSchema = mongoose.Schema({
         ref: 'Doctor'
     },
     tanggal: Date,
-    start: Date,
-    end: Date
+    start: String,
+    end: String
 })
 
 const Schedule = mongoose.model('Schedule', schedSchema);

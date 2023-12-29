@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
     age: Number,
     weight: Number,
     height: Number,
-    genders: String,
+    gender: String,
     email_verification_code: {
         type: String,
         default: null,

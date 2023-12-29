@@ -6,6 +6,7 @@ const Ingredient = require('../models/ingredients');
 const Recommendation = require('../models/recommendation');
 const Step = require('../models/steps');
 const Schedule = require('../models/schedule');
+const Consultation = require('../models/consultation');
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 const multer = require('multer');
@@ -21,18 +22,18 @@ function dateToString(tanggal) {
     return (tanggal.toISOString().slice(0, 10).replace('T', ' '))
 }
 
-// const moment = require('moment')
-// function convertTime(jam){
-//     const format = 'HH:mm';
-//     const time = moment(jam, format);
+const moment = require('moment')
+function convertTime(jam){
+    const format = 'HH:mm';
+    const time = moment(jam, format);
 
-//     return time.format(format);
-// }
-
-const convertTime = timeString => {
-    const [hours, minutes] = timeString.split(':');
-    return new Date().setHours(hours, minutes, 0, 0);
+    return time.format(format);
 }
+
+// const convertTime = timeString => {
+//     const [hours, minutes] = timeString.split(':');
+//     return new Date().setHours(hours, minutes, 0, 0);
+// }
 
 const path = require('path');
 const storage = multer.diskStorage({
@@ -490,45 +491,110 @@ module.exports = {
                     res.status(400).json(result);
                 }
                 else {
-                    const startTime = convertTime(start);
-                    const endTime = convertTime(end);
-
                     const checkSchedule = await Schedule.findOne({
                         doctor_id: searchDoctor._id,
                         tanggal: convertDate(tanggal)
                     });
 
-                    // if ((startTime >= checkSchedule.start && endTime <= checkSchedule.end) || (startTime > checkSchedule.start && endTime < checkSchedule.end)){
-                    //     const result = {
-                    //         "message" : "Doctor has schedule on that time"
-                    //     }
-                    //     res.status(400).json(result);
-                    // }
-                    // else {
+                    if (checkSchedule){
+                        const scheduleStart = convertTime(checkSchedule.start);
+                        const scheduleEnd = convertTime(checkSchedule.end);
+                        const startTime = convertTime(start);
+                        const endTime = convertTime(end);
+
+                        if (
+                            (startTime >= scheduleStart && startTime < scheduleEnd) || 
+                            (endTime > scheduleStart && endTime <= scheduleEnd)
+                        ){
+                            const result = {
+                                "message" : "Doctor has schedule on that time"
+                            }
+                            res.status(400).json(result);
+                        }
+                        else {
+                            let newSchedule = new Schedule({
+                                doctor_id: searchDoctor._id,
+                                tanggal: convertDate(tanggal),
+                                start: start,
+                                end: end
+                            });
+
+                            try {
+                                let insertSched = await newSchedule.save();
+                                const result = {
+                                    "Name" : "Dr. " + searchDoctor.display_name,
+                                    "tanggal" : dateToString(newSchedule.tanggal),
+                                    "start" : start,
+                                    "end" : end
+                                }
+                                res.status(201).json(result);
+                            }
+                            catch(err){
+                                return res.status(400).json({msg: err.message})
+                            }
+                        }
+                    }
+                    else {
                         let newSchedule = new Schedule({
                             doctor_id: searchDoctor._id,
                             tanggal: convertDate(tanggal),
-                            start: convertTime(start),
-                            end: convertTime(end)
+                            start: start,
+                            end: end
                         })
 
                         try {
                             let insertSched = await newSchedule.save();
-
                             const result = {
-                                "Name" : searchDoctor.display_name,
+                                "Name" : "Dr. " + searchDoctor.display_name,
                                 "tanggal" : dateToString(newSchedule.tanggal),
-                                "start" : convertTime(start),
-                                "end" : convertTime(end)
+                                "start" : start,
+                                "end" : end
                             }
                             res.status(201).json(result);
                         }
                         catch(err){
-                            return res.status(400).json({msg: err.message});
+                            return res.status(400).json({msg: err.message})
                         }
-                    // }
+                    }
                 }
             }
+        }
+    },
+    changeStatus: async function(req, res){
+        const { id, status } = req.body;
+
+        try {
+            const updateConsul = await Consultation.updateOne({
+                _id: id
+            }, {
+                $set: {
+                    status: status
+                }
+            })
+
+            const result = {
+                "message" : "Status updated"
+            }
+            res.status(200).json(result);
+        }
+        catch(err){
+            res.status(400).json({msg: err.message});
+        }
+    },
+    viewJadwal: async function(req, res){
+        try {
+            const { id, tanggal } = req.params
+            const date = convertDate(tanggal)
+
+            const schedule = await Schedule.findOne({
+                doctor_id: id,
+                tanggal: date
+            })
+
+            return res.status(200).json(schedule);
+        }
+        catch(err){
+            return res.status(400).json({msg: err.message})
         }
     }
 }

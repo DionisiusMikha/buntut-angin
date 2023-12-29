@@ -78,11 +78,11 @@ function editUser(user_id, data){
 }
 
 function uploadProfilePicture(image, user_id){
-    return client.put(`/edit-picture/${user_id}`, image);
+    return client.put(`/profile_picture/${user_id}`, image);
 }
 
 function cekProfilKonsultan(){
-    return client.get("/cekProfil");
+    return client.get("/cek-profile");
 }
 
 function getUserLogin(token){
@@ -120,7 +120,7 @@ function getSomeRecipes(page, limit, search){
             page : page
         }
     })
-}
+} // ganemu ndemana function nde backend e
 
 function changeStatusSubscription(id, status){
     return client.post(`/changeStatusSubscription/${id}`, {
@@ -145,7 +145,7 @@ function addRatingComment(recipeId, userId, rating, comment){
 
 function getUserByID(id){
     console.log(id)
-    return client.get(`/getUserByID/${id}`)
+    return client.get(`/users/${id}`)
 }
 
 function updateLike(id){
@@ -153,13 +153,12 @@ function updateLike(id){
 }
 
 function getAllKonsultan(){
-    return client.get("/get-all-konsultan")
+    return client.get("/getAllDoctor")
 }
 
-function ajukanKonsultasi(doctor_id, user_id, tanggal, jam){
-    return client.post("/pengajuan-konsultasi", {
-        doctor_id: doctor_id,
-        user_id: user_id,
+function ajukanKonsultasi(username, tanggal, jam, nama_dokter){
+    return client.post(`/janjian/${username}`, {
+        nama_dokter: nama_dokter,
         tanggal: tanggal, 
         jam: jam,
     })
