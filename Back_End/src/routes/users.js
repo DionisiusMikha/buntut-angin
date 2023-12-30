@@ -14,11 +14,15 @@ router.put("/updateLike/:recipe_id", userController.updateLike);
 router.get("/resep", userController.getAllResep);
 router.get("/visitor-count", userController.visitorCount);
 router.post("/addRatingComment", userController.ratingComment);
-router.post("/janjian/:username", userController.janjian);
+router.post("/pengajuan-konsultasi", userController.ajukanKonsultasi);
 router.get("/jadwal", userController.getSchedule);
 router.post("/subscription/:username", userController.subscription);
 router.post("/changeStatusSubscription/:id", userController.changeStatusSubscription);
 router.get("/getAllDoctor", userController.getAllDoctor);
+router.put("/send-verification-email", userController.sendVerificationEmail);
+router.put("/verify-email", userController.verifyEmail);
+router.put("/change-password", userController.changePassword);
+router.get("/get-all-email", userController.getAllEmail);
 
 
 module.exports = router;

@@ -180,6 +180,20 @@ module.exports = {
             }
         }
     },
+    uploadImage: async function(req, res){
+        uploadFile(req, res, async function (err){
+            const uploadFile = upload.single("file")
+
+            if (err instanceof multer.MulterError){
+                return res.status(400).send({msg: "File too large"})
+            }
+            else if (err){
+                return res.status(400).send({msg: "File not supported"})
+            }
+            fs.renameSync(req.file.path, req.file.path.replace("uploads", "assets"))
+            return res.status(200).json(req.file);
+        })
+    },
     editProfilePicture: async function(req, res){
         const idDoctor = req.params.id_doctor;
         const uploadFile = upload.single("profile_picture");

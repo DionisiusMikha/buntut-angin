@@ -4,6 +4,7 @@ const Doctor = require('../models/doctor');
 const Recipe = require("../models/recipes");
 const Ingredient = require("../models/ingredients");
 const Step = require('../models/steps');
+const Subscription = require('../models/subscription')
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const jwt = require("jsonwebtoken");
 const multer = require('multer');
@@ -241,6 +242,58 @@ module.exports = {
             }
         }
     },
+    updateRecipe: async function(req, res){
+        const { recipe_id } = req.params;
+        const { name, description, ingredientsName, ingredientsQty, ingredientsUom, steps, image_url, calories, carbo, protein, fat } = req.body;
+
+        let updateRecipe = await Recipe.updateOne({
+            _id: recipe_id
+        }, {
+            $set: {
+                name,
+                description,
+                image_url,
+                calories,
+                carbo,
+                protein,
+                fat
+            }
+        })
+
+        let bahan = await Ingredient.updateOne({
+            recipe_id: recipe_id
+        }, {
+            $set: {
+                name: ingredientsName,
+                qty: ingredientsQty,
+                uom: ingredientsUom
+            }
+        })
+
+        let panjangBahan = JSON.parse(ingredientsName).length;
+        let panjangLangkah = JSON.parse(steps).length;
+
+        let langkah = await Step.updateOne({
+            recipe_id: recipe_id
+        }, {
+            $set: {
+                desc: steps
+            }
+        })
+
+        const result = {
+            "recipe_id" : recipe_id,
+            "name" : name,
+            "description" : description,
+            "by" : "admin",
+            "total_ingredients" : panjangBahan,
+            "total_steps" : panjangLangkah,
+            "image_url" : image_url,
+            "like" : 0,
+            "rating" : 0
+        }
+        res.status(200).json(result);
+    },
     uploadImage: async function(req, res){
         const uploadFile = upload.single("picture")
         uploadFile(req, res, async function (err) {
@@ -442,5 +495,134 @@ module.exports = {
         }
 
         res.status(200).json(result)
+    },
+    getAllSubscriptions: async function(req, res){
+        const {limit, search} = req.query;        
+        let result = [];
+
+        const getSubs = await Subscription.find()
+                        .select('id user_id period status invoice_id')
+                        .sort({_id: 'desc'})
+        
+        for (let i = 0; i < getSubs.length; i++){
+            if (getSubs[i].status == 1){
+                if (result.length == 0){
+                    const getUser = await User.findOne({
+                        _id: getSubs[i].user_id
+                    })
+
+                    let statusSubs = "";
+                    const today = new Date();
+                    
+                    if (getSubs[i].period > today){
+                        statusSubs = "active"
+                    }
+                    else {
+                        statusSubs = "expired"
+                    }
+                    result.push({
+                        id  :getSubs[i]._id,
+                        userId : getSubs[i].user_id,
+                        name: getUser.display_name,
+                        period : new Date(getSubs[i].period).toISOString().slice(0, 10).replace('T', ' '),
+                        statusPembayaran: getSubs[i].status,
+                        status: statusSubs,
+                        invoice_id : getSubs[i].invoice_id
+                    })
+                }
+                else {
+                    let ada = false;
+                    for (let j = 0; j < result.length; j++){
+                        if (result[j].userId == getSubs[i].user_id){
+                            ada = true;
+                        }
+                    }
+                    if (!ada){
+                        const getUser = await User.findOne({
+                            _id: getSubs[i].user_id
+                        })
+
+                        let statusSubs = "";
+                        const today = new Date();
+                        if (getSubs[i].period > today){
+                            statusSubs = "active"
+                        }
+                        else {
+                            statusSubs = "expired"
+                        }
+                        result.push({
+                            id  :getSubs[i]._id,
+                            userId : getSubs[i].user_id,
+                            name: getUser.display_name,
+                            period : new Date(getSubs[i].period).toISOString().slice(0, 10).replace('T', ' '),
+                            statusPembayaran: getSubs[i].status,
+                            status: statusSubs,
+                            invoice_id : getSubs[i].invoice_id
+                        })
+                    }
+                }
+            }
+        }
+        result.sort((a, b) => {
+            if (a.name < b.name){
+                return -1
+            }
+            if (a.name > b.name){
+                return 1
+            }
+            return 0
+        })
+
+        if (limit !== undefined && limit !== ""){
+            result = result.slice(0, limit)
+        }
+
+        // search by name
+        if (search !== undefined && search !== ""){
+            result = result.filter(item => {
+                return item.name.toLowerCase().includes(search.toLowerCase())
+            })
+        }
+
+        return res.status(200).send(result)
+    },
+    getSubscriptionsById: async function(req, res){
+        const { user_id } = req.params;
+        const getSubs = await Subscription.find({
+            user_id: user_id
+        })
+        const getUser = await User.findOne({
+            _id: user_id
+        })
+
+        let result = [];
+        let totalBayar = 0;
+        for (let i = 0; i < getSubs.length; i++){
+            let statusSubs = "";
+            const today = new Date();
+            if (getSubs[i].period > today && getSubs[i].status == 1){
+                statusSubs = "active"
+            }
+            else {
+                statusSubs = "expired"
+            }
+            if (getSubs[i].status == 1){
+                totalBayar += 85000
+            }
+            result.push({
+                id  :getSubs[i]._id,
+                userId : getSubs[i].user_id,
+                period : new Date(getSubs[i].period).toISOString().slice(0, 10).replace('T', ' '),
+                statusPembayaran: getSubs[i].status,
+                status: statusSubs,
+                invoice_id : getSubs[i].invoice_id,
+            })
+        }
+        return res.status(200).send({
+            "message" : "success",
+            "user" : getUser,
+            "data" : result,
+            total : totalBayar,
+        })
     }
 }

@@ -13,6 +13,15 @@ const jwt = require("jsonwebtoken");
 const multer = require('multer');
 const fs = require('fs');
 const ip = require('ip');
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.MY_EMAIL,
+      pass: process.env.MY_PASSWORD,
+    },
+});
 
 function convertDate(tanggal) {
     const [day, month, year] = tanggal.split('/');
@@ -31,6 +40,10 @@ function convertTime(jam){
 
     return time.format(format);
 }
+
+const generateVerificationCode = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+};
 
 const path = require('path');
 
@@ -663,7 +676,7 @@ module.exports = {
             }).sort({_id: 'desc'}).limit(1)
 
             const nomerSubs = await Subscription.findOne()
-                              .sort({id: 'desc'})
+                              .sort({_id: 'desc'})
                               .limit(1)
             
             let today = "";
@@ -789,5 +802,114 @@ module.exports = {
             }
             res.status(200).json(result);
         }
+    },
+    sendVerificationEmail: async function(req, res){
+        const { email } = req.body;
+        try {
+            const verificationCode = generateVerificationCode();
+
+            let updateUser = await User.updateOne({
+                email: email
+            }, {
+                $set: {
+                    email_verification_code: verificationCode
+                }
+            })
+
+            const mailOptions = {
+                from: process.env.EMAIL,
+                to: email,
+                subject: 'Email Verification Code',
+                text: `Your verification code is: ${verificationCode}`,
+            };
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  console.error('Error sending email:', error);
+                  return res.status(500).json({ message: 'Internal Server Error' });
+                }
+        
+                console.log('Email sent:', info.response);
+                res.status(200).json({ message: 'Email sent successfully' });
+            });
+        }
+        catch(err){
+            console.error('Error sending verification email:', err);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    },
+    verifyEmail: async function(req, res){
+        const {email, verificationCode} = req.body;
+
+        try {
+            const result = await User.findOne({
+                email: email,
+                email_verification_code: verificationCode
+            })
+
+            if (!result){
+                return res.status(400).json({ message: 'Invalid verification code' });
+            }
+
+            let updateUser = await User.updateOne({
+                email: email
+            }, {
+                $set: {
+                    is_email_verified: true
+                }
+            })
+            res.status(200).json({ message: 'Email verified successfully' });
+        }
+        catch(err){
+            console.error('Error verifying email:', err);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    },
+    changePassword: async function(req, res){
+        const {email, newPassword} = req.body;
+
+        try {
+            const result = await User.findOne({
+                email: email
+            })
+
+            if (!result) {
+                return res.status(404).json({ message: 'Email not found' });
+            }
+
+            let updateUser = await User.updateOne({
+                email: email
+            }, {
+                $set: {
+                    password: newPassword
+                }
+            })
+            res.status(200).json({ message: 'Password reset successfully' });
+        }
+        catch(err){
+            console.error('Error resetting password:', err);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    },
+    ajukanKonsultasi: async function(req, res){
+        const { doctor_id, user_id, tanggal, jam } = req.body;
+        try {
+            const result = new Consultation({
+                doctor_id,
+                user_id,
+                tanggal, 
+                jam,
+                status: 0
+            })
+
+            let insertConsul = await result.save();
+
+            return res.status(201).send({message: "created"})
+        } catch (error) {
+            return res.status(400).send(error)
+        }
+    },
+    getAllEmail: async function(req, res){
+        const result = await User.find().select('email');
+        return res.status(200).json(result);
     }
 }

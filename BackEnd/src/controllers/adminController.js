@@ -250,7 +250,7 @@ module.exports = {
             "rating" : 0,
         }
         res.status(201).json(result);
-    },
+    }, //done
     addRecipe: async function(req, res){
         const doctorId = -1; //-1 kalo admin
         const name = req.body.name;
@@ -535,7 +535,6 @@ module.exports = {
                     }
                 }
             }
-            
         }
 
         // sort by name

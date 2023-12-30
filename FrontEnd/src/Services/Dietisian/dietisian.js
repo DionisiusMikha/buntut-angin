@@ -156,11 +156,12 @@ function getAllKonsultan(){
     return client.get("/getAllDoctor")
 }
 
-function ajukanKonsultasi(username, tanggal, jam, nama_dokter){
-    return client.post(`/janjian/${username}`, {
-        nama_dokter: nama_dokter,
+function ajukanKonsultasi(doctor_id, tanggal, jam, user_id){
+    return client.post(`/pengajuan-konsultasi`, {
+        doctor_id: doctor_id,
         tanggal: tanggal, 
         jam: jam,
+        user_id: user_id
     })
     .then((response) => {
         console.log(response);

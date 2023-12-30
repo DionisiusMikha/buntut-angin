@@ -821,7 +821,6 @@ module.exports = {
     }, //done
     sendVerificationEmail: async function (req, res) {
         const { email } = req.body;
-
         try {
           const verificationCode = generateVerificationCode();
 

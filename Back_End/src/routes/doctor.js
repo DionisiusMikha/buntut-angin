@@ -15,5 +15,9 @@ router.get("/users", doctorController.getAllUsers);
 router.post("/schedule/:username", doctorController.aturJadwal);
 router.put("/edit-status", doctorController.changeStatus);
 router.get("/get-jadwal/:id/:tanggal", doctorController.viewJadwal);
+router.post("/image", doctorController.uploadImage);
+
+//image
+router.post("/image/:name", doctorController.uploadImage);
 
 module.exports = router;

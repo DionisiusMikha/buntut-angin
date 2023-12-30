@@ -11,5 +11,8 @@ router.get("/resep/:recipe_id", adminController.getRecipeById);
 router.post("/users/doctor", adminController.addDoctor);
 router.post("/users/dietisian", adminController.addDietisian);
 router.get("/getTop3Recipes", adminController.getTop3Recipes);
+router.put("/resep/:recipe_id", adminController.updateRecipe);
+router.get("/subs", adminController.getAllSubscriptions);
+router.get("/subs/:user_id", adminController.getSubscriptionsById);
 
 module.exports = router
