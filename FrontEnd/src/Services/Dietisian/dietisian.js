@@ -153,7 +153,7 @@ function updateLike(id){
 }
 
 function getAllKonsultan(){
-    return client.get("/getAllDoctor")
+    return client.get("/get-all-konsultan")
 }
 
 function ajukanKonsultasi(doctor_id, tanggal, jam, user_id){

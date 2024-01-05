@@ -10,7 +10,9 @@ const Status = ({ isOpen, onClose, doctor_id, user_id }) => {
     const ajukan = async() => {
         try {
             const result = await DietisianService.ajukanKonsultasi(doctor_id, user_id, watch("tanggal"), watch("jam"));
-
+            if (result.status == 400){
+                alert("Jadwal tabrakan")
+            }
             onClose();
         } catch (error) {
             throw error;

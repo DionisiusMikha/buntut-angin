@@ -69,6 +69,10 @@ const upload = multer({
 })
 
 module.exports = {
+    test : async function (req, res){
+        // console.log("tes");
+        return res.status(200).send("MASOK")
+    },
     getAllUser: async function(req, res){
         const users = await User.find();
         return res.status(200).json(users);
@@ -88,25 +92,24 @@ module.exports = {
             res.status(400).json(result);
         }
         else {
-            const today = new Date();
-            const birthDate = new Date(convertDate(birthdate));
-            let umur = today.getFullYear() - birthDate.getFullYear();
-        
-            const newUser = new User({
-                display_name,
-                email,
-                username,
-                password,
-                birthdate: convertDate(birthdate),
-                phone_number,
-                address,
-                age: umur,
-                weight,
-                height,
-                gender,
-                balance: 0
-            })
             try {
+                const today = new Date();
+                const tanggal = birthdate.split('-');
+                let umur = today.getFullYear() - parseInt(tanggal[0]);
+                const newUser = new User({
+                    display_name,
+                    email,
+                    username,
+                    password,
+                    birthdate: birthdate,
+                    phone_number,
+                    address,
+                    age: umur,
+                    weight,
+                    height,
+                    gender,
+                    balance: 0
+                })
                 const insertedUser = await newUser.save();
                 const result = {
                     "message" : "New user added",

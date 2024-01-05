@@ -13,7 +13,7 @@ export default function Konsultasi() {
     const fetch = async() => {
         try {
             const result = await DietisianService.getAllKonsultan();
-
+            console.log(result.data);
             setListKonsultan([...result.data]);
         } catch (error) {
             throw error;
@@ -53,7 +53,7 @@ export default function Konsultasi() {
     return (
         <>
             <div className="w-full h-full px-8 py-10">
-                {console.log(user)}
+                {/* {console.log(user)} */}
                 <div className="w-full h-full flex flex-col items-center bg-white rounded-xl px-24 py-12">
                     <h1 className="mb-8 text-3xl font-semibold">Pilih Konsultan</h1>
                     <div className="overflow-y-auto no-scrollbar w-full h-full grid grid-cols-3 gap-y-12 gap-x-12">

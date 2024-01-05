@@ -448,6 +448,28 @@ module.exports = {
                 steps
             })
         }
+
+        // jika user sudah subs
+        const token = req.headers['x-auth-token'];
+        if (token){
+            try {
+                let userdata = jwt.verify(token, PRIVATE_KEY);
+                const checkSubs = await db.Subscription.findAll({
+                    where: {
+                        user_id: userdata.id,
+                        status: 1
+                    }
+                })
+                if (checkSubs.length > 0){
+                    for (let i = 0; i < resep.length; i++){
+                        resep[i].like = resep[i].like + 1;
+                    }
+                }
+            }
+            catch(err){
+                return res.status(400).send('Invalid JWT Key');
+            }
+        }
         return res.status(200).json(resep);
     }, //done
     getSchedule: async function(req, res){
@@ -904,6 +926,17 @@ module.exports = {
     ajukanKonsultasi: async function(req, res){
         const { doctor_id, user_id, tanggal, jam } = req.body;
         try {
+            // cek tabrakn
+            const cekTabrakan = await db.Consultation.findAll({
+                where: {
+                    doctor_id: doctor_id,
+                    tanggal: tanggal,
+                    jam: jam
+                }
+            })
+            if (cekTabrakan.length > 0){
+                return res.status(400).send({message: "Tabrakan"})
+            }
             const result = await db.Consultation.create({
                 doctor_id,
                 user_id,
@@ -911,7 +944,6 @@ module.exports = {
                 jam,
                 status: 0
             })
-
             return res.status(201).send({message: "created"})
         } catch (error) {
             return res.status(400).send(error)

@@ -76,7 +76,7 @@ app.post("/api/users/send_recovery_email", (req, res) => {
 app.listen(port, async() => {
     try{
         await mongoose.connect(`mongodb://127.0.0.1:27017/${db}`)
-        console.log('Database connected!');
+        console.log('Database connected to mongo!');
     }
     catch(err){
         console.log('Error database connection \n', err);
