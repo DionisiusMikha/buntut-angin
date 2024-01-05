@@ -49,7 +49,7 @@ module.exports = {
                 recipe_id: getResep[i]._id
             })
             const getSteps = await Step.find({
-                recipe_id: getResep[i]._id
+                recipe_id: getResep[i]  ._id
             })
 
             let ingredients = [];
