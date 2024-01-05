@@ -156,13 +156,13 @@ module.exports = {
                     "message" : "Login success",
                     "token" : token
                 }
-                res.status(200).json(result);
+                return res.status(200).json(result);
             }
             else {
                 const result = {
                     "message" : "Wrong password"
                 }
-                res.status(400).json(result);
+                return res.status(400).json(result);
             }
         }
     },
@@ -176,7 +176,9 @@ module.exports = {
         else {
             try {
                 const userLogin = jwt.verify(token, PRIVATE_KEY);
-                const user = await User.findOne(userLogin.username);
+                console.log(userLogin);
+                // const user = await User.findOne(userLogin.username);
+                const user = await User.findById(userLogin.id)
 
                 if (!user){
                     const result = {

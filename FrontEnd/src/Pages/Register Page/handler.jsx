@@ -14,7 +14,7 @@ const register = async (data) => {
     }
 
 
-    // return window.location = "/login";
+    return window.location = "/login";
 }
 
 export default { register };

@@ -45,12 +45,12 @@ const LoginPage = () => {
             navigate("/admin/home")
         } else {
             const res = await DietisianService.loginUser(data.username, data.password);
-            
+            // console.log(res.status)
             if(res.status == 200){
                 try {
+                    navigate("/dietisian/home");
                     dispatch(getDietisian(res.data.token))
                     localStorage.setItem("token", res.data.token)
-                    navigate("/dietisian/home");
                 } catch (error) {
                     console.log(error)   
                 }
